@@ -3,7 +3,7 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 26
     defaultConfig {
-        applicationId "com.example.logan.inventorymanager"
+        applicationId "com.cpen391group13.inventorymanager"
         minSdkVersion 15
         targetSdkVersion 26
         versionCode 1
