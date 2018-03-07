@@ -74,7 +74,7 @@ public class Overview extends AppCompatActivity
         if (id == R.id.overview) {
             // Handle the camera action
         } else if (id == R.id.nav_warehouses) {
-
+    
         } else if (id == R.id.nav_controls) {
 
         } else if (id == R.id.nav_scan) {
