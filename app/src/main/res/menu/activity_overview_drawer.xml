@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/overview"
+            android:icon="@drawable/ic_view_agenda_black_24dp"
+            android:title="Overview" />
+        <item
+            android:id="@+id/nav_warehouses"
+            android:icon="@drawable/ic_location_city_black_24dp"
+            android:title="Warehouses" />
+        <item
+            android:id="@+id/nav_controls"
+            android:icon="@drawable/ic_settings_remote_black_24dp"
+            android:title="Controls" />
+        <item
+            android:id="@+id/nav_scan"
+            android:icon="@drawable/ic_menu_camera"
+            android:title="New Scan" />
+    </group>
+</menu>
