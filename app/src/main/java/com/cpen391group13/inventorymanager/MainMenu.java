@@ -1,10 +1,9 @@
-package com.example.logan.inventorymanager;
+package com.cpen391group13.inventorymanager;
 
 import android.content.Intent;
+import android.app.Fragment;
+import android.app.FragmentManager;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -14,29 +13,31 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-public class Overview extends AppCompatActivity
+public class MainMenu extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_overview);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setContentView(R.layout.activity_main);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        getFragmentManager().beginTransaction().replace(R.id.main_layout, new OverviewFragment()).commit();
+
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
     }
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
@@ -69,20 +70,36 @@ public class Overview extends AppCompatActivity
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        // instantiate a fragment
+        Fragment fragment = null;
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
         if (id == R.id.overview) {
+            toolbar.setTitle("Overview");
+            fragment = new OverviewFragment();
+        }
+        else if (id == R.id.nav_warehouses) {
 
-        } else if (id == R.id.nav_warehouses) {
-
-        } else if (id == R.id.nav_controls) {
-
-        } else if (id == R.id.nav_scan) {
+        }
+        else if (id == R.id.nav_controls) {
+            toolbar.setTitle("Test");
+            fragment = new TestFragment();
+        }
+        else if (id == R.id.nav_scan) {
 
         }
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if(fragment != null)
+        {
+            FragmentManager fm = getFragmentManager();
+            fm.beginTransaction().replace(R.id.main_layout, fragment).commit();
+            DrawerLayout dl = findViewById(R.id.drawer_layout);
+            dl.closeDrawers();
+        }
+
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
