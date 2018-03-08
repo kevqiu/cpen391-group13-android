@@ -1,6 +1,5 @@
-package com.cpen391group13.inventorymanager;
+package com.cpen391group13.inventorymanager.ui;
 
-import android.content.Intent;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.os.Bundle;
@@ -13,31 +12,36 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-public class MainMenu extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+import com.cpen391group13.inventorymanager.R;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
+public class MainMenu extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+    @BindView(R.id.toolbar) Toolbar toolbar;
+    @BindView(R.id.drawer_layout) DrawerLayout drawer;
+    @BindView(R.id.nav_view) NavigationView navigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        ButterKnife.bind(this);
+
         setSupportActionBar(toolbar);
 
         getFragmentManager().beginTransaction().replace(R.id.main_layout, new OverviewFragment()).commit();
 
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
     }
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
@@ -70,7 +74,6 @@ public class MainMenu extends AppCompatActivity
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         // instantiate a fragment
         Fragment fragment = null;
         // Handle navigation view item clicks here.
@@ -91,8 +94,7 @@ public class MainMenu extends AppCompatActivity
 
         }
 
-        if(fragment != null)
-        {
+        if (fragment != null) {
             FragmentManager fm = getFragmentManager();
             fm.beginTransaction().replace(R.id.main_layout, fragment).commit();
             DrawerLayout dl = findViewById(R.id.drawer_layout);
