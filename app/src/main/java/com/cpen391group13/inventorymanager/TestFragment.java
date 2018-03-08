@@ -7,6 +7,13 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
+
+import com.cpen391group13.inventorymanager.models.Warehouse;
+import com.cpen391group13.inventorymanager.services.WarehouseService;
+
+import java.util.ArrayList;
 
 
 /**
@@ -18,16 +25,37 @@ import android.view.ViewGroup;
 public class TestFragment extends Fragment {
 
 //    private OnFragmentInteractionListener mListener;
+    View view;
+    WarehouseService service;
+
+    Button testButton;
+    TextView testText;
+
+    int counter = 0;
 
     public TestFragment() {
         // Required empty public constructor
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_test, container, false);
+        view = inflater.inflate(R.layout.fragment_test, container, false);
+        service = new WarehouseService("/warehouses");
+
+        testButton = view.findViewById(R.id.test_button);
+        testText = view.findViewById(R.id.test_text);
+
+        testButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                ArrayList<Warehouse> warehouses = service.getAll();
+
+                testText.setText(String.valueOf(++counter));
+            }
+        });
+
+        return view;
     }
 
 //
