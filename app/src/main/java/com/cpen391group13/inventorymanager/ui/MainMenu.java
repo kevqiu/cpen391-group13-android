@@ -84,7 +84,8 @@ public class MainMenu extends AppCompatActivity implements NavigationView.OnNavi
             fragment = new OverviewFragment();
         }
         else if (id == R.id.nav_warehouses) {
-
+            toolbar.setTitle("Warehouses");
+            fragment = new WarehouseFragment();
         }
         else if (id == R.id.nav_controls) {
             toolbar.setTitle("Test");
