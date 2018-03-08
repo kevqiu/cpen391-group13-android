@@ -4,7 +4,7 @@
     android:id="@+id/overview_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.cpen391group13.inventorymanager.OverviewFragment">
+    tools:context="com.cpen391group13.inventorymanager.ui.OverviewFragment">
 
     <TextView
         android:id="@+id/textView"

@@ -1,4 +1,4 @@
-package com.example.logan.inventorymanager;
+package com.cpen391group13.inventorymanager;
 
 import org.junit.Test;
 
