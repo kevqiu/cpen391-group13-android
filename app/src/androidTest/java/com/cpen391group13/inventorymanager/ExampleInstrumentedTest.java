@@ -1,4 +1,4 @@
-package com.example.logan.inventorymanager;
+package com.cpen391group13.inventorymanager;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("com.example.logan.inventorymanager", appContext.getPackageName());
+        assertEquals("com.cpen391group13.inventorymanager", appContext.getPackageName());
     }
 }

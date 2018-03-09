@@ -9,6 +9,31 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.support.annotation.NonNull;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Toast;
+
+import com.cpen391group13.inventorymanager.api.models.Warehouse;
+import com.cpen391group13.inventorymanager.api.service.WarehouseClient;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
+import java.util.ListIterator;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 
 /**
@@ -18,26 +43,20 @@ import android.view.ViewGroup;
  * to handle interaction events.
  * Use the {@link WarehouseFragment#newInstance} factory method to
  * create an instance of this fragment.
+ *
+ * Adapted from https://developer.android.com/samples/RecyclerView/src/com.example.android.recyclerview/RecyclerViewFragment.html
  */
 public class WarehouseFragment extends Fragment {
-    //TODO: Recylcer view in fragment?
-    /*private RecyclerView mRecyclerView;
-    private RecyclerView.Adapter mAdapter;
-    private RecyclerView.LayoutManager mLayoutManager;*/
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    /*private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";*/
+    //bind views
+    @BindView(R.id.warehouse_recycler_view) RecyclerView recyclerView;
 
-    // TODO: Rename and change types of parameters
-    /*private String mParam1;
-    private String mParam2;
-
-    private OnFragmentInteractionListener mListener;*/
+    private WarehouseAdapter warehouseAdapter;
+    private RecyclerView.LayoutManager layoutManager;
 
     public WarehouseFragment() {
         // Required empty public constructor
     }
+
 
     /**
      * Use this factory method to create a new instance of
@@ -57,29 +76,60 @@ public class WarehouseFragment extends Fragment {
         return fragment;
     }*/
 
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        /*if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }*/
-        //TODO: Recylcer view in fragment?
-        /*mRecyclerView = (RecyclerView) findViewById(R.id.warehouse_recycler_view);
-
-        mLayoutManager = new LinearLayoutManager(this);
-        mRecyclerView.setLayoutManager(mLayoutManager);
-
-        mAdapter = new MyAdapter(myDataset);
-        mRecyclerView.setAdapter(mAdapter);*/
-
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_warehouse, container, false);
+        View view = inflater.inflate(R.layout.fragment_warehouse, container, false);
+        ButterKnife.bind(this, view);
+
+        /*Retrofit.Builder builder = new Retrofit.Builder()
+                .baseUrl("http://192.168.1.107:5000")
+                .addConverterFactory(GsonConverterFactory.create());
+
+        final Retrofit retrofit = builder.build();
+
+        WarehouseClient client = retrofit.create(WarehouseClient.class);
+        Call<List<Warehouse>> call = client.getWarehouses();
+
+        call.enqueue(new Callback<List<Warehouse>>() {
+            @Override
+            public void onResponse(Call<List<Warehouse>> call, Response<List<Warehouse>> response) {
+                List<Warehouse> warehouses = response.body();
+
+                warehouseAdapter = new WarehouseAdapter(getActivity(), warehouses);
+                recyclerView.setAdapter(warehouseAdapter);
+            }
+
+            @Override
+            public void onFailure(Call<List<Warehouse>> call, Throwable t) {
+                Toast.makeText(getActivity(), "error :(", Toast.LENGTH_SHORT).show();
+            }
+        });*/
+
+        Warehouse warehouse1 = new Warehouse(1, "UBC", 49, -123);
+        Warehouse warehouse2 = new Warehouse(2, "UofT", 43, -79);
+        Warehouse warehouse3 = new Warehouse(4, "McGill", 45, -73);
+
+        List<Warehouse> warehouses = new ArrayList<Warehouse>();
+        warehouses.add(warehouse1);
+        warehouses.add(warehouse2);
+        warehouses.add(warehouse3);
+
+
+        warehouseAdapter = new WarehouseAdapter(getActivity(), warehouses);
+        recyclerView.setAdapter(warehouseAdapter);
+
+        layoutManager = new LinearLayoutManager(getActivity());
+        recyclerView.setLayoutManager(layoutManager);
+
+        return view;
     }
 
     /*// TODO: Rename method, update argument and hook method into UI event

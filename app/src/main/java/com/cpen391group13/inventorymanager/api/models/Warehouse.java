@@ -1,4 +1,4 @@
-package com.cpen391group13.inventorymanager.models;
+package com.cpen391group13.inventorymanager.api.models;
 
 /**
  * Created by Kevin on 3/7/2018.
