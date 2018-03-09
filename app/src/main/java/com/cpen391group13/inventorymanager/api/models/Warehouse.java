@@ -11,12 +11,12 @@ public class Warehouse {
     private float longitude;
 
 
-//    public Warehouse(int id, String location, float latitude, float longitude) {
-//        this.id = id;
-//        this.location = location;
-//        this.latitude = latitude;
-//        this.longitude = longitude;
-//    }
+    public Warehouse(int id, String location, float latitude, float longitude) {
+        this.id = id;
+        this.location = location;
+        this.latitude = latitude;
+        this.longitude = longitude;
+    }
 
     public int getId() {
         return id;

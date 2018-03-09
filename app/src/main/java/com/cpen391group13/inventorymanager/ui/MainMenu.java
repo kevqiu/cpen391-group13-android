@@ -13,6 +13,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.cpen391group13.inventorymanager.R;
+import com.cpen391group13.inventorymanager.WarehouseFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
