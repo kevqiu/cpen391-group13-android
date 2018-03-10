@@ -1,9 +1,14 @@
 package com.cpen391group13.inventorymanager.ui;
 
+import android.Manifest;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.app.FragmentTransaction;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -11,6 +16,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.cpen391group13.inventorymanager.R;
 import com.cpen391group13.inventorymanager.WarehouseFragment;
@@ -22,6 +28,8 @@ public class MainMenu extends AppCompatActivity implements NavigationView.OnNavi
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.drawer_layout) DrawerLayout drawer;
     @BindView(R.id.nav_view) NavigationView navigationView;
+
+    Fragment nextFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +47,25 @@ public class MainMenu extends AppCompatActivity implements NavigationView.OnNavi
         toggle.syncState();
 
         navigationView.setNavigationItemSelectedListener(this);
+
+        drawer.addDrawerListener(new DrawerLayout.DrawerListener() {
+            @Override public void onDrawerSlide(View drawerView, float slideOffset) {}
+            @Override public void onDrawerOpened(View drawerView) {}
+            @Override public void onDrawerStateChanged(int newState) {}
+
+            @Override
+            public void onDrawerClosed(View drawerView) {
+                //Set your new fragment here
+                if (nextFragment != null) {
+                    getFragmentManager()
+                            .beginTransaction()
+                            .replace(R.id.main_layout, nextFragment)
+                            .addToBackStack(null)
+                            .commit();
+                    nextFragment = null;
+                }
+            }
+        });
     }
 
     @Override
@@ -93,18 +120,18 @@ public class MainMenu extends AppCompatActivity implements NavigationView.OnNavi
             fragment = new TestFragment();
         }
         else if (id == R.id.nav_scan) {
-
+            toolbar.setTitle("Test");
+            fragment = new MapsFragment();
         }
 
         if (fragment != null) {
-            FragmentManager fm = getFragmentManager();
-            fm.beginTransaction().replace(R.id.main_layout, fragment).commit();
-            DrawerLayout dl = findViewById(R.id.drawer_layout);
-            dl.closeDrawers();
+            drawer.closeDrawers();
+
+            nextFragment = fragment;
         }
 
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+
 }

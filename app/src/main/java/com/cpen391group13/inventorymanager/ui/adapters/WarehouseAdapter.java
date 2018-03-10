@@ -1,4 +1,4 @@
-package com.cpen391group13.inventorymanager.ui;
+package com.cpen391group13.inventorymanager.ui.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
