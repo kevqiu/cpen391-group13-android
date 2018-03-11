@@ -12,6 +12,7 @@ import android.widget.Toast;
 import com.cpen391group13.inventorymanager.R;
 import com.cpen391group13.inventorymanager.api.models.Warehouse;
 import com.cpen391group13.inventorymanager.api.service.WarehouseClient;
+import com.cpen391group13.inventorymanager.ui.adapters.WarehouseAdapter;
 
 import java.util.List;
 
@@ -24,7 +25,6 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class TestFragment extends Fragment {
-    @BindView(R.id.test_button) Button testButton;
     @BindView(R.id.test_list) ListView listView;
 
     @Override
@@ -39,25 +39,20 @@ public class TestFragment extends Fragment {
 
         final Retrofit retrofit = builder.build();
 
-        testButton.setOnClickListener(new View.OnClickListener() {
+        WarehouseClient client = retrofit.create(WarehouseClient.class);
+        Call<List<Warehouse>> call = client.getWarehouses();
+
+        call.enqueue(new Callback<List<Warehouse>>() {
             @Override
-            public void onClick(View view) {
-                WarehouseClient client = retrofit.create(WarehouseClient.class);
-                Call<List<Warehouse>> call = client.getWarehouses();
+            public void onResponse(Call<List<Warehouse>> call, Response<List<Warehouse>> response) {
+                List<Warehouse> warehouses = response.body();
 
-                call.enqueue(new Callback<List<Warehouse>>() {
-                    @Override
-                    public void onResponse(Call<List<Warehouse>> call, Response<List<Warehouse>> response) {
-                        List<Warehouse> warehouses = response.body();
+                listView.setAdapter(new WarehouseAdapter(getActivity(), warehouses));
+            }
 
-                        listView.setAdapter(new WarehouseAdapter(getActivity(), warehouses));
-                    }
-
-                    @Override
-                    public void onFailure(Call<List<Warehouse>> call, Throwable t) {
-                         Toast.makeText(getActivity(), "error :(", Toast.LENGTH_SHORT).show();
-                    }
-                });
+            @Override
+            public void onFailure(Call<List<Warehouse>> call, Throwable t) {
+                Toast.makeText(getActivity(), "error :(", Toast.LENGTH_SHORT).show();
             }
         });
 
