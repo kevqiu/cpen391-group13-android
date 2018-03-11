@@ -1,11 +1,9 @@
 package com.cpen391group13.inventorymanager.ui;
 
-import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Fragment;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,14 +18,13 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MapsFragment extends Fragment {
+public class LocationFragment extends Fragment {
     @BindView(R.id.location_text) TextView locationText;
     @BindView(R.id.lat_lng_text) TextView latLngText;
     @BindView(R.id.close_map_btn) ImageButton closeMapButton;
@@ -36,6 +33,9 @@ public class MapsFragment extends Fragment {
     private GoogleMap googleMap;
     boolean showMarker = false;
 
+    LatLng latLng;
+    String location;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_location, container, false);
@@ -43,11 +43,13 @@ public class MapsFragment extends Fragment {
 
         mapView.onCreate(savedInstanceState);
 
-        //mapView.onResume(); // needed to get the map to display immediately
+        Bundle bundle = getArguments();
+        latLng = bundle.getParcelable("latlng");
+        location = bundle.getString("warehouse");
 
-        ActivityCompat.requestPermissions(getActivity(),
-                new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-                1);
+        final String latLngString = String.format("(%.6f, %.6f)", latLng.latitude, latLng.longitude);
+        latLngText.setText(latLngString);
+        locationText.setText(location);
 
         try {
             MapsInitializer.initialize(getActivity().getApplicationContext());
@@ -67,12 +69,13 @@ public class MapsFragment extends Fragment {
                 }
 
                 // For dropping a marker at a point on the Map
-                LatLng vancouver = new LatLng(49.2827, -123.1207);
-                googleMap.addMarker(new MarkerOptions().position(vancouver).title("Warehouse Location").snippet("Lat: Long:"));
+                googleMap.addMarker(new MarkerOptions()
+                        .position(latLng)
+                        .title(location)
+                        .snippet(latLngString));
 
                 // For zooming automatically to the location of the marker
-                CameraPosition cameraPosition = new CameraPosition.Builder().target(vancouver).zoom(14).build();
-                googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+                googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 14));
             }
         });
 
@@ -80,6 +83,7 @@ public class MapsFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Log.v("mapfrag", "closing fragment");
+                getFragmentManager().popBackStack();
             }
         });
 
@@ -95,16 +99,12 @@ public class MapsFragment extends Fragment {
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     showMarker = true;
                 } else {
-
                     // permission denied, boo! Disable the
                     // functionality that depends on this permission.
                     Toast.makeText(getActivity(), "Permission denied for location services", Toast.LENGTH_SHORT).show();
                 }
                 return;
             }
-
-            // other 'case' lines to check for other
-            // permissions this app might request
         }
     }
 

@@ -40,7 +40,7 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name=".ui.MapsFragment"
+            android:name=".ui.LocationFragment"
             android:label="@string/title_activity_maps_fragment"></activity>
     </application>
 

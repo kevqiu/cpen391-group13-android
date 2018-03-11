@@ -2,13 +2,9 @@ package com.cpen391group13.inventorymanager.ui;
 
 import android.Manifest;
 import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -40,6 +36,10 @@ public class MainMenu extends AppCompatActivity implements NavigationView.OnNavi
         setSupportActionBar(toolbar);
 
         getFragmentManager().beginTransaction().replace(R.id.main_layout, new OverviewFragment()).commit();
+
+        ActivityCompat.requestPermissions(this,
+                new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                1);
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -120,8 +120,6 @@ public class MainMenu extends AppCompatActivity implements NavigationView.OnNavi
             fragment = new TestFragment();
         }
         else if (id == R.id.nav_scan) {
-            toolbar.setTitle("Test");
-            fragment = new MapsFragment();
         }
 
         if (fragment != null) {
