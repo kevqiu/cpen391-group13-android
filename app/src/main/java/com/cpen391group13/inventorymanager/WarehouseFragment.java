@@ -115,12 +115,18 @@ public class WarehouseFragment extends Fragment {
 
         Warehouse warehouse1 = new Warehouse(1, "UBC", 49, -123);
         Warehouse warehouse2 = new Warehouse(2, "UofT", 43, -79);
-        Warehouse warehouse3 = new Warehouse(4, "McGill", 45, -73);
+        Warehouse warehouse3 = new Warehouse(3, "McGill", 45, -73);
+        Warehouse warehouse4 = new Warehouse(4, "SFU", 49, -122);
+        Warehouse warehouse5 = new Warehouse(5, "Western", 43, -81);
+        Warehouse warehouse6 = new Warehouse(4, "Harvard", 42, -71);
 
         List<Warehouse> warehouses = new ArrayList<Warehouse>();
         warehouses.add(warehouse1);
         warehouses.add(warehouse2);
         warehouses.add(warehouse3);
+        warehouses.add(warehouse4);
+        warehouses.add(warehouse5);
+        warehouses.add(warehouse6);
 
 
         warehouseAdapter = new WarehouseAdapter(getActivity(), warehouses);

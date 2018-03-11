@@ -31,7 +31,7 @@ public class WarehouseAdapter extends RecyclerView.Adapter<WarehouseAdapter.View
         @BindView(R.id.warehouse_text) TextView warehouseName;
         @BindView(R.id.gps_text) TextView warehouseLocation;
         // each data item is just a string in this case
-        public ViewHolder(TextView v) {
+        public ViewHolder(View v) {
             super(v);
             ButterKnife.bind(this, v);
             v.setOnClickListener(this);
@@ -57,11 +57,11 @@ public class WarehouseAdapter extends RecyclerView.Adapter<WarehouseAdapter.View
     // Create new views (invoked by the layout manager)
     @Override
     public WarehouseAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        Context context = parent.getContext();
+        LayoutInflater inflater = LayoutInflater.from(context);
         // create a new view
-        TextView v = (TextView) LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.warehouse_recycler_view, parent, false);
-        ViewHolder vh = new ViewHolder(v);
-        return vh;
+        View v = inflater.inflate(R.layout.warehouse_recycler_view, parent, false);
+        return new ViewHolder(v);
     }
 
     // Replace the contents of a view (invoked by the layout manager)
