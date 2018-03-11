@@ -89,8 +89,8 @@ public class WarehouseFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_warehouse, container, false);
         ButterKnife.bind(this, view);
 
-        /*Retrofit.Builder builder = new Retrofit.Builder()
-                .baseUrl("http://192.168.1.107:5000")
+        Retrofit.Builder builder = new Retrofit.Builder()
+                .baseUrl("http://192.168.137.1:5000")
                 .addConverterFactory(GsonConverterFactory.create());
 
         final Retrofit retrofit = builder.build();
@@ -103,16 +103,15 @@ public class WarehouseFragment extends Fragment {
             public void onResponse(Call<List<Warehouse>> call, Response<List<Warehouse>> response) {
                 List<Warehouse> warehouses = response.body();
 
-                warehouseAdapter = new WarehouseAdapter(getActivity(), warehouses);
-                recyclerView.setAdapter(warehouseAdapter);
+                recyclerView.setAdapter(new WarehouseAdapter(getActivity(), warehouses));
             }
 
             @Override
             public void onFailure(Call<List<Warehouse>> call, Throwable t) {
                 Toast.makeText(getActivity(), "error :(", Toast.LENGTH_SHORT).show();
             }
-        });*/
-
+        });
+        /*
         Warehouse warehouse1 = new Warehouse(1, "UBC", 49, -123);
         Warehouse warehouse2 = new Warehouse(2, "UofT", 43, -79);
         Warehouse warehouse3 = new Warehouse(3, "McGill", 45, -73);
@@ -130,7 +129,7 @@ public class WarehouseFragment extends Fragment {
 
 
         warehouseAdapter = new WarehouseAdapter(getActivity(), warehouses);
-        recyclerView.setAdapter(warehouseAdapter);
+        recyclerView.setAdapter(warehouseAdapter);*/
 
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);

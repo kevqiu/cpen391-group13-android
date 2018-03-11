@@ -34,7 +34,7 @@ public class TestFragment extends Fragment {
         ButterKnife.bind(this, view);
 
         Retrofit.Builder builder = new Retrofit.Builder()
-                .baseUrl("http://192.168.1.107:5000")
+                .baseUrl("http://192.168.137.1:5000")
                 .addConverterFactory(GsonConverterFactory.create());
 
         final Retrofit retrofit = builder.build();

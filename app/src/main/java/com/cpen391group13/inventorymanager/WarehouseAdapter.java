@@ -1,6 +1,8 @@
 package com.cpen391group13.inventorymanager;
 
+import android.app.Activity;
 import android.content.Context;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -9,6 +11,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.cpen391group13.inventorymanager.api.models.Warehouse;
+import com.cpen391group13.inventorymanager.ui.LocationFragment;
+import com.google.android.gms.maps.model.LatLng;
 
 import java.util.List;
 
@@ -39,7 +43,21 @@ public class WarehouseAdapter extends RecyclerView.Adapter<WarehouseAdapter.View
 
         @Override
         public void onClick(View v){
-            Log.v("Clicked","A tag has been clicked in warehouse view");
+            Warehouse item = values.get(getAdapterPosition());
+
+            LocationFragment mapFrag = new LocationFragment();
+            Bundle bundle = new Bundle();
+            LatLng latlng = new LatLng(item.getLatitude(), item.getLongitude());
+            bundle.putParcelable("latlng", latlng);
+            bundle.putString("warehouse", item.getLocation());
+            mapFrag.setArguments(bundle);
+
+            ((Activity) context).getFragmentManager()
+                    .beginTransaction()
+                    .add(R.id.main_layout, mapFrag)
+                    .addToBackStack(null)
+                    .commit();
+
         }
     }
 
