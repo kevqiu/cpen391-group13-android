@@ -8,14 +8,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import com.cpen391group13.inventorymanager.R;
 import com.cpen391group13.inventorymanager.api.models.Warehouse;
 import com.cpen391group13.inventorymanager.ui.LocationFragment;
 import com.google.android.gms.maps.model.LatLng;
-
 import java.util.List;
-
 import butterknife.*;
 
 /**
@@ -28,13 +25,10 @@ public class WarehouseAdapter extends RecyclerView.Adapter<WarehouseAdapter.View
     private List<Warehouse> values;
 
     // Provide a reference to the views for each data item
-    // Complex data items may need more than one view per item, and
-    // you provide access to all the views for a data item in a view holder
-
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         @BindView(com.cpen391group13.inventorymanager.R.id.warehouse_text) TextView warehouseName;
         @BindView(R.id.gps_text) TextView warehouseLocation;
-        // each data item is just a string in this case
+
         public ViewHolder(View v) {
             super(v);
             ButterKnife.bind(this, v);
@@ -44,7 +38,6 @@ public class WarehouseAdapter extends RecyclerView.Adapter<WarehouseAdapter.View
         @Override
         public void onClick(View v){
             Warehouse item = values.get(getAdapterPosition());
-
             LocationFragment mapFrag = new LocationFragment();
             Bundle bundle = new Bundle();
             LatLng latlng = new LatLng(item.getLatitude(), item.getLongitude());
@@ -57,17 +50,11 @@ public class WarehouseAdapter extends RecyclerView.Adapter<WarehouseAdapter.View
                     .add(R.id.main_layout, mapFrag)
                     .addToBackStack(null)
                     .commit();
-
         }
     }
 
-
-
-    // Provide a suitable constructor (depends on the kind of dataset)
+    // Constructor for this dataset
     public WarehouseAdapter(Context context, List<Warehouse> values) {
-        // TODO: Not sure what this is for
-        // super(context, R.layout.warehouse_recycler_view, values);
-
         this.context = context;
         this.values = values;
     }
@@ -78,7 +65,7 @@ public class WarehouseAdapter extends RecyclerView.Adapter<WarehouseAdapter.View
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
         // create a new view
-        View v = inflater.inflate(R.layout.warehouse_recycler_view, parent, false);
+        View v = inflater.inflate(R.layout.warehouse_recycler_item, parent, false);
         return new ViewHolder(v);
     }
 

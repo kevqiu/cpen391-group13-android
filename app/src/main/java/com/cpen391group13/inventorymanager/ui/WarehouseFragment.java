@@ -8,14 +8,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
-
 import com.cpen391group13.inventorymanager.R;
 import com.cpen391group13.inventorymanager.api.models.Warehouse;
 import com.cpen391group13.inventorymanager.api.service.WarehouseClient;
 import com.cpen391group13.inventorymanager.ui.adapters.WarehouseAdapter;
-
 import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import retrofit2.Call;
@@ -24,14 +21,8 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-
 /**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link WarehouseFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link WarehouseFragment#newInstance} factory method to
- * create an instance of this fragment.
+ * Fragment for the warehouse view
  *
  * Adapted from https://developer.android.com/samples/RecyclerView/src/com.example.android.recyclerview/RecyclerViewFragment.html
  */
@@ -39,12 +30,7 @@ public class WarehouseFragment extends Fragment {
     //bind views
     @BindView(R.id.warehouse_recycler_view) RecyclerView recyclerView;
 
-    private WarehouseAdapter warehouseAdapter;
     private RecyclerView.LayoutManager layoutManager;
-
-    public WarehouseFragment() {
-        // Required empty public constructor
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
