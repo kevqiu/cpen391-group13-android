@@ -15,7 +15,6 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.cpen391group13.inventorymanager.R;
-import com.cpen391group13.inventorymanager.WarehouseFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -116,10 +115,10 @@ public class MainMenu extends AppCompatActivity implements NavigationView.OnNavi
             fragment = new WarehouseFragment();
         }
         else if (id == R.id.nav_controls) {
-            toolbar.setTitle("Test");
-            fragment = new TestFragment();
+            toolbar.setTitle("Controls");
         }
         else if (id == R.id.nav_scan) {
+            toolbar.setTitle("Controls");
         }
 
         if (fragment != null) {

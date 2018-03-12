@@ -1,12 +1,12 @@
 package com.cpen391group13.inventorymanager.ui;
 
-import android.app.Fragment;
 import android.os.Bundle;
+import android.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import com.cpen391group13.inventorymanager.R;
@@ -24,13 +24,38 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class TestFragment extends Fragment {
-    @BindView(R.id.test_list) ListView listView;
+
+/**
+ * A simple {@link Fragment} subclass.
+ * Activities that contain this fragment must implement the
+ * {@link WarehouseFragment.OnFragmentInteractionListener} interface
+ * to handle interaction events.
+ * Use the {@link WarehouseFragment#newInstance} factory method to
+ * create an instance of this fragment.
+ *
+ * Adapted from https://developer.android.com/samples/RecyclerView/src/com.example.android.recyclerview/RecyclerViewFragment.html
+ */
+public class WarehouseFragment extends Fragment {
+    //bind views
+    @BindView(R.id.warehouse_recycler_view) RecyclerView recyclerView;
+
+    private WarehouseAdapter warehouseAdapter;
+    private RecyclerView.LayoutManager layoutManager;
+
+    public WarehouseFragment() {
+        // Required empty public constructor
+    }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_test, container, false);
+        View view = inflater.inflate(R.layout.fragment_warehouse, container, false);
         ButterKnife.bind(this, view);
 
         Retrofit.Builder builder = new Retrofit.Builder()
@@ -47,7 +72,7 @@ public class TestFragment extends Fragment {
             public void onResponse(Call<List<Warehouse>> call, Response<List<Warehouse>> response) {
                 List<Warehouse> warehouses = response.body();
 
-                listView.setAdapter(new WarehouseAdapter(getActivity(), warehouses));
+                recyclerView.setAdapter(new WarehouseAdapter(getActivity(), warehouses));
             }
 
             @Override
@@ -56,6 +81,8 @@ public class TestFragment extends Fragment {
             }
         });
 
+        layoutManager = new LinearLayoutManager(getActivity());
+        recyclerView.setLayoutManager(layoutManager);
+
         return view;
-    }
-}
+    }}
