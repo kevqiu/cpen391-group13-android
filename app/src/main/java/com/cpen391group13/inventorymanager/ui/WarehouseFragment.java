@@ -45,7 +45,7 @@ public class WarehouseFragment extends Fragment {
         ButterKnife.bind(this, view);
 
         Retrofit.Builder builder = new Retrofit.Builder()
-                .baseUrl("http://192.168.137.1:5000")
+                .baseUrl("http://128.189.236.6:5000")
                 .addConverterFactory(GsonConverterFactory.create());
 
         final Retrofit retrofit = builder.build();
