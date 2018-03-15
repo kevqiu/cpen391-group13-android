@@ -13,6 +13,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import com.cpen391group13.inventorymanager.R;
 import com.cpen391group13.inventorymanager.api.models.Warehouse;
+import com.cpen391group13.inventorymanager.ui.CategoryFragment;
 import com.cpen391group13.inventorymanager.ui.LocationFragment;
 import com.google.android.gms.maps.model.LatLng;
 import java.util.List;
@@ -59,12 +60,15 @@ public class WarehouseAdapter extends RecyclerView.Adapter<WarehouseAdapter.View
             }
             else {
                 Log.d("Warehouse pressed", item.getLocation());
-//                CategoryFragment categoryFrag = new CategoryFragment();
-//                ((Activity) context).getFragmentManager()
-//                        .beginTransaction()
-//                        .replace(R.id.main_layout, categoryFrag)
-//                        .addToBackStack(null)
-//                        .commit();
+                CategoryFragment categoryFrag = new CategoryFragment();
+                Bundle bundle = new Bundle();
+                bundle.putString("warehouse", item.getLocation());
+                categoryFrag.setArguments(bundle);
+                ((Activity) context).getFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.main_layout, categoryFrag)
+                        .addToBackStack(null)
+                        .commit();
             }
         }
     }
