@@ -2,8 +2,10 @@ package com.cpen391group13.inventorymanager.ui;
 
 import android.os.Bundle;
 import android.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,9 +28,10 @@ import retrofit2.converter.gson.GsonConverterFactory;
  *
  * Adapted from https://developer.android.com/samples/RecyclerView/src/com.example.android.recyclerview/RecyclerViewFragment.html
  */
-public class WarehouseFragment extends Fragment {
+public class WarehouseFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
     //bind views
     @BindView(R.id.warehouse_recycler_view) RecyclerView recyclerView;
+    @BindView(R.id.swipe_refresh_warehouse) SwipeRefreshLayout swipeRefreshLayout;
 
     private RecyclerView.LayoutManager layoutManager;
 
@@ -44,8 +47,24 @@ public class WarehouseFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_warehouse, container, false);
         ButterKnife.bind(this, view);
 
+        swipeRefreshLayout.setOnRefreshListener(this);
+
+        refreshWarehouses();
+
+        layoutManager = new LinearLayoutManager(getActivity());
+        recyclerView.setLayoutManager(layoutManager);
+
+        return view;
+    }
+
+    @Override
+    public void onRefresh() {
+        refreshWarehouses();
+    }
+
+    private void refreshWarehouses(){
         Retrofit.Builder builder = new Retrofit.Builder()
-                .baseUrl("http://128.189.236.6:5000")
+                .baseUrl("http://192.168.1.72:5000")
                 .addConverterFactory(GsonConverterFactory.create());
 
         final Retrofit retrofit = builder.build();
@@ -66,9 +85,10 @@ public class WarehouseFragment extends Fragment {
                 Toast.makeText(getActivity(), "error :(", Toast.LENGTH_SHORT).show();
             }
         });
+        if(swipeRefreshLayout.isRefreshing())
+            swipeRefreshLayout.setRefreshing(false);
 
-        layoutManager = new LinearLayoutManager(getActivity());
-        recyclerView.setLayoutManager(layoutManager);
+        Log.d("LOAD", "Got warehosues to load");
 
-        return view;
-    }}
+    }
+}
