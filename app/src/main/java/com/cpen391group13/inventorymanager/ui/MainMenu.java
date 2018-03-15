@@ -120,6 +120,11 @@ public class MainMenu extends AppCompatActivity implements NavigationView.OnNavi
         else if (id == R.id.nav_scan) {
             toolbar.setTitle("New Scan");
         }
+        else if (id == R.id.nav_settings) {
+            toolbar.setTitle("Settings");
+            fragment = new SettingsFragment();
+        }
+
 
         if (fragment != null) {
             drawer.closeDrawers();
