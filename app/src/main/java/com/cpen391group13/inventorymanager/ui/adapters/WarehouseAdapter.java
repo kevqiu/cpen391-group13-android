@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.cpen391group13.inventorymanager.R;
 import com.cpen391group13.inventorymanager.api.models.Warehouse;
+import com.cpen391group13.inventorymanager.ui.CategoryFragment;
 import com.cpen391group13.inventorymanager.ui.LocationFragment;
 import com.google.android.gms.maps.model.LatLng;
 
