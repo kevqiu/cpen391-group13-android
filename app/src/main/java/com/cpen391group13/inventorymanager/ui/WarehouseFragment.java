@@ -2,8 +2,10 @@ package com.cpen391group13.inventorymanager.ui;
 
 import android.os.Bundle;
 import android.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,10 +28,14 @@ import retrofit2.converter.gson.GsonConverterFactory;
  *
  * Adapted from https://developer.android.com/samples/RecyclerView/src/com.example.android.recyclerview/RecyclerViewFragment.html
  */
-public class WarehouseFragment extends Fragment {
+public class WarehouseFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
     //bind views
     @BindView(R.id.warehouse_recycler_view) RecyclerView recyclerView;
+    @BindView(R.id.swipe_refresh_warehouse) SwipeRefreshLayout swipeRefreshLayout;
 
+    private Retrofit.Builder builder;
+    private Retrofit retrofit;
+    private WarehouseClient client;
     private RecyclerView.LayoutManager layoutManager;
 
     @Override
@@ -44,15 +50,31 @@ public class WarehouseFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_warehouse, container, false);
         ButterKnife.bind(this, view);
 
-        Retrofit.Builder builder = new Retrofit.Builder()
-                .baseUrl("http://192.168.137.1:5000")
+        swipeRefreshLayout.setOnRefreshListener(this);
+
+        builder = new Retrofit.Builder()
+                .baseUrl("http://192.168.1.72:5000")
                 .addConverterFactory(GsonConverterFactory.create());
 
-        final Retrofit retrofit = builder.build();
+        retrofit = builder.build();
 
-        WarehouseClient client = retrofit.create(WarehouseClient.class);
+        client = retrofit.create(WarehouseClient.class);
+
+        refreshWarehouses();
+
+        layoutManager = new LinearLayoutManager(getActivity());
+        recyclerView.setLayoutManager(layoutManager);
+
+        return view;
+    }
+
+    @Override
+    public void onRefresh() {
+        refreshWarehouses();
+    }
+
+    private void refreshWarehouses(){
         Call<List<Warehouse>> call = client.getWarehouses();
-
         call.enqueue(new Callback<List<Warehouse>>() {
             @Override
             public void onResponse(Call<List<Warehouse>> call, Response<List<Warehouse>> response) {
@@ -66,9 +88,10 @@ public class WarehouseFragment extends Fragment {
                 Toast.makeText(getActivity(), "error :(", Toast.LENGTH_SHORT).show();
             }
         });
+        if(swipeRefreshLayout.isRefreshing())
+            swipeRefreshLayout.setRefreshing(false);
 
-        layoutManager = new LinearLayoutManager(getActivity());
-        recyclerView.setLayoutManager(layoutManager);
+        Log.d("LOAD", "Got warehosues to load");
 
-        return view;
-    }}
+    }
+}

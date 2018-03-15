@@ -118,7 +118,7 @@ public class MainMenu extends AppCompatActivity implements NavigationView.OnNavi
             toolbar.setTitle("Controls");
         }
         else if (id == R.id.nav_scan) {
-            toolbar.setTitle("Controls");
+            toolbar.setTitle("New Scan");
         }
 
         if (fragment != null) {

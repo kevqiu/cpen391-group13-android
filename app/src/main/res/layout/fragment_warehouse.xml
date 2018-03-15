@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- A RecyclerView with some commonly used attributes -->
-<android.support.v7.widget.RecyclerView
+<android.support.v4.widget.SwipeRefreshLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/warehouse_recycler_view"
-    android:layout_height="match_parent"
+    android:id="@+id/swipe_refresh_warehouse"
     android:layout_width="match_parent"
-    />
+    android:layout_height="wrap_content">
+    <!-- A RecyclerView with some commonly used attributes -->
+    <android.support.v7.widget.RecyclerView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/warehouse_recycler_view"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:paddingBottom="16dp" />
+</android.support.v4.widget.SwipeRefreshLayout>
