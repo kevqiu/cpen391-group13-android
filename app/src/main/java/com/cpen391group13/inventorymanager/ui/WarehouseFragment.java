@@ -33,6 +33,9 @@ public class WarehouseFragment extends Fragment implements SwipeRefreshLayout.On
     @BindView(R.id.warehouse_recycler_view) RecyclerView recyclerView;
     @BindView(R.id.swipe_refresh_warehouse) SwipeRefreshLayout swipeRefreshLayout;
 
+    private Retrofit.Builder builder;
+    private Retrofit retrofit;
+    private WarehouseClient client;
     private RecyclerView.LayoutManager layoutManager;
 
     @Override
@@ -49,6 +52,14 @@ public class WarehouseFragment extends Fragment implements SwipeRefreshLayout.On
 
         swipeRefreshLayout.setOnRefreshListener(this);
 
+        builder = new Retrofit.Builder()
+                .baseUrl("http://192.168.1.72:5000")
+                .addConverterFactory(GsonConverterFactory.create());
+
+        retrofit = builder.build();
+
+        client = retrofit.create(WarehouseClient.class);
+
         refreshWarehouses();
 
         layoutManager = new LinearLayoutManager(getActivity());
@@ -63,15 +74,7 @@ public class WarehouseFragment extends Fragment implements SwipeRefreshLayout.On
     }
 
     private void refreshWarehouses(){
-        Retrofit.Builder builder = new Retrofit.Builder()
-                .baseUrl("http://192.168.1.72:5000")
-                .addConverterFactory(GsonConverterFactory.create());
-
-        final Retrofit retrofit = builder.build();
-
-        WarehouseClient client = retrofit.create(WarehouseClient.class);
         Call<List<Warehouse>> call = client.getWarehouses();
-
         call.enqueue(new Callback<List<Warehouse>>() {
             @Override
             public void onResponse(Call<List<Warehouse>> call, Response<List<Warehouse>> response) {
