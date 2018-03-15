@@ -11,11 +11,14 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
+
 import com.cpen391group13.inventorymanager.R;
 import com.cpen391group13.inventorymanager.api.models.Warehouse;
 import com.cpen391group13.inventorymanager.ui.LocationFragment;
 import com.google.android.gms.maps.model.LatLng;
+
 import java.util.List;
+
 import butterknife.*;
 
 /**
@@ -28,10 +31,13 @@ public class WarehouseAdapter extends RecyclerView.Adapter<WarehouseAdapter.View
     private List<Warehouse> values;
 
     // Provide a reference to the views for each data item
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-        @BindView(com.cpen391group13.inventorymanager.R.id.warehouse_text) TextView warehouseName;
-        @BindView(R.id.gps_text) TextView warehouseLocation;
-        @BindView(R.id.gps_button) ImageButton button;
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        @BindView(com.cpen391group13.inventorymanager.R.id.warehouse_text)
+        TextView warehouseName;
+        @BindView(R.id.gps_text)
+        TextView warehouseLocation;
+        @BindView(R.id.gps_button)
+        ImageButton button;
 
         public ViewHolder(View v) {
             super(v);
@@ -41,9 +47,9 @@ public class WarehouseAdapter extends RecyclerView.Adapter<WarehouseAdapter.View
         }
 
         @Override
-        public void onClick(View v){
+        public void onClick(View v) {
             Warehouse item = values.get(getAdapterPosition());
-            if (v.getId() == R.id.gps_button){
+            if (v.getId() == R.id.gps_button) {
                 LocationFragment mapFrag = new LocationFragment();
                 Bundle bundle = new Bundle();
                 LatLng latlng = new LatLng(item.getLatitude(), item.getLongitude());
@@ -56,15 +62,14 @@ public class WarehouseAdapter extends RecyclerView.Adapter<WarehouseAdapter.View
                         .add(R.id.main_layout, mapFrag)
                         .addToBackStack(null)
                         .commit();
-            }
-            else {
-                Log.d("Warehouse pressed", item.getLocation());
-//                CategoryFragment categoryFrag = new CategoryFragment();
-//                ((Activity) context).getFragmentManager()
-//                        .beginTransaction()
-//                        .replace(R.id.main_layout, categoryFrag)
-//                        .addToBackStack(null)
-//                        .commit();
+            } else {
+                CategoryFragment categoryFrag = new CategoryFragment();
+                ((Activity) context).getFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.main_layout, categoryFrag)
+                        .addToBackStack(null)
+                        .commit();
+
             }
         }
     }
