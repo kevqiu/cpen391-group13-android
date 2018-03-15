@@ -59,6 +59,12 @@ public class WarehouseAdapter extends RecyclerView.Adapter<WarehouseAdapter.View
             }
             else {
                 Log.d("Warehouse pressed", item.getLocation());
+//                CategoryFragment categoryFrag = new CategoryFragment();
+//                ((Activity) context).getFragmentManager()
+//                        .beginTransaction()
+//                        .replace(R.id.main_layout, categoryFrag)
+//                        .addToBackStack(null)
+//                        .commit();
             }
         }
     }

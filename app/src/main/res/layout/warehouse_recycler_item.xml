@@ -53,6 +53,7 @@
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
+                    android:background="#FF69B4"
                     app:srcCompat="@drawable/ic_location_on_black_36dp" />
             </RelativeLayout>
 
