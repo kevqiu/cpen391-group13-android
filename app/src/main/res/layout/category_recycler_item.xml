@@ -7,7 +7,6 @@
     android:background="@android:color/transparent">
 
     <android.support.v7.widget.CardView
-        android:id="@+id/cv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@android:drawable/dialog_holo_light_frame"
@@ -21,41 +20,22 @@
             android:layout_height="match_parent"
             android:layout_margin="16dp">
 
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-
                 <TextView
-                    android:id="@+id/warehouse_text"
+                    android:id="@+id/category_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
                     android:layout_centerHorizontal="false"
                     android:textSize="30sp"/>
 
+            <!--
                 <TextView
                     android:id="@+id/gps_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/warehouse_text"
-                    android:layout_centerHorizontal="false"/>
+                    android:layout_centerHorizontal="false"/>-->
 
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-
-                <ImageButton
-                    android:id="@+id/gps_button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:background="@color/colorAccent"
-                    app:srcCompat="@drawable/ic_location_on_black_36dp" />
-            </RelativeLayout>
 
         </RelativeLayout>
 

@@ -79,9 +79,13 @@ public class WarehouseFragment extends Fragment implements SwipeRefreshLayout.On
         call.enqueue(new Callback<List<Warehouse>>() {
             @Override
             public void onResponse(Call<List<Warehouse>> call, Response<List<Warehouse>> response) {
-                List<Warehouse> warehouses = response.body();
-
-                recyclerView.setAdapter(new WarehouseAdapter(getActivity(), warehouses));
+                if(response.isSuccessful()) {
+                    List<Warehouse> warehouses = response.body();
+                    recyclerView.setAdapter(new WarehouseAdapter(getActivity(), warehouses));
+                }
+                else{
+                    Toast.makeText(getActivity(), "AHHHHHHHH :(", Toast.LENGTH_SHORT).show();
+                }
             }
 
             @Override

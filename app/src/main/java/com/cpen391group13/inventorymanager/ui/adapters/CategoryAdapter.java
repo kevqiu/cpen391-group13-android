@@ -8,58 +8,45 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
+
 import com.cpen391group13.inventorymanager.R;
+import com.cpen391group13.inventorymanager.api.models.Category;
 import com.cpen391group13.inventorymanager.api.models.Warehouse;
 import com.cpen391group13.inventorymanager.ui.CategoryFragment;
 import com.cpen391group13.inventorymanager.ui.LocationFragment;
 import com.google.android.gms.maps.model.LatLng;
+
 import java.util.List;
-import butterknife.*;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
- * Created by Logan on 2018-03-08.
+ * Created by Logan on 3/15/2018.
  */
 
-public class WarehouseAdapter extends RecyclerView.Adapter<WarehouseAdapter.ViewHolder> {
+public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHolder> {
 
     private Context context;
-    private List<Warehouse> values;
+    private List<Category> values;
 
     // Provide a reference to the views for each data item
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-        @BindView(com.cpen391group13.inventorymanager.R.id.warehouse_text) TextView warehouseName;
-        @BindView(R.id.gps_text) TextView warehouseLocation;
-        @BindView(R.id.gps_button) ImageButton button;
+        @BindView(com.cpen391group13.inventorymanager.R.id.category_text) TextView categoryName;
 
         public ViewHolder(View v) {
             super(v);
             ButterKnife.bind(this, v);
             v.setOnClickListener(this);
-            button.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View v){
-            Warehouse item = values.get(getAdapterPosition());
-            if (v.getId() == R.id.gps_button){
-                LocationFragment mapFrag = new LocationFragment();
-                Bundle bundle = new Bundle();
-                LatLng latlng = new LatLng(item.getLatitude(), item.getLongitude());
-                bundle.putParcelable("latlng", latlng);
-                bundle.putString("warehouse", item.getLocation());
-                mapFrag.setArguments(bundle);
-
-                ((Activity) context).getFragmentManager()
-                        .beginTransaction()
-                        .add(R.id.main_layout, mapFrag)
-                        .addToBackStack(null)
-                        .commit();
-            }
-            else {
-                Log.d("Warehouse pressed", item.getLocation());
+            Category item = values.get(getAdapterPosition());
+                Log.d("Category pressed", item.getCategory());
+                /*
                 CategoryFragment categoryFrag = new CategoryFragment();
                 Bundle bundle = new Bundle();
                 bundle.putInt("warehouse_id", item.getId());
@@ -68,39 +55,39 @@ public class WarehouseAdapter extends RecyclerView.Adapter<WarehouseAdapter.View
                         .beginTransaction()
                         .replace(R.id.main_layout, categoryFrag)
                         .addToBackStack(null)
-                        .commit();
-            }
+                        .commit();*/
+
         }
     }
 
     // Constructor for this dataset
-    public WarehouseAdapter(Context context, List<Warehouse> values) {
+    public CategoryAdapter(Context context, List<Category> values) {
         this.context = context;
         this.values = values;
     }
 
     // Create new views (invoked by the layout manager)
     @Override
-    public WarehouseAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public CategoryAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
         // create a new view
-        View v = inflater.inflate(R.layout.warehouse_recycler_item, parent, false);
-        return new ViewHolder(v);
+        View v = inflater.inflate(R.layout.category_recycler_item, parent, false);
+        return new CategoryAdapter.ViewHolder(v);
     }
 
     // Replace the contents of a view (invoked by the layout manager)
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(CategoryAdapter.ViewHolder holder, int position) {
+        String categoryText;
         // - get element from your dataset at this position
-        Warehouse item = values.get(position);
+        Category item = values.get(position);
+        categoryText = item.getCategory();
+        categoryText = categoryText.substring(0,1).toUpperCase() + categoryText.substring(1);
 
         // - replace the contents of the view with that element
-        TextView warehouseName = holder.warehouseName;
-        warehouseName.setText(item.getLocation());
-
-        TextView warehouseLocation = holder.warehouseLocation;
-        warehouseLocation.setText("(" + item.getLatitude() + "," + item.getLongitude() + ")");
+        TextView categoryName = holder.categoryName;
+        categoryName.setText(categoryText);
 
     }
 
