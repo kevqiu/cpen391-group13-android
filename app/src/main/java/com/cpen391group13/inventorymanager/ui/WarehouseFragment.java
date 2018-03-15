@@ -13,6 +13,7 @@ import android.widget.Toast;
 import com.cpen391group13.inventorymanager.R;
 import com.cpen391group13.inventorymanager.api.models.Warehouse;
 import com.cpen391group13.inventorymanager.api.service.WarehouseClient;
+import com.cpen391group13.inventorymanager.helpers.PreferencesHelper;
 import com.cpen391group13.inventorymanager.ui.adapters.WarehouseAdapter;
 import java.util.List;
 import butterknife.BindView;
@@ -53,7 +54,7 @@ public class WarehouseFragment extends Fragment implements SwipeRefreshLayout.On
         swipeRefreshLayout.setOnRefreshListener(this);
 
         builder = new Retrofit.Builder()
-                .baseUrl("http://192.168.1.72:5000")
+                .baseUrl(PreferencesHelper.getServerPath(this.getContext()))
                 .addConverterFactory(GsonConverterFactory.create());
 
         retrofit = builder.build();

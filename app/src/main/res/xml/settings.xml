@@ -1,0 +1,25 @@
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory
+        android:title="Settings">
+
+        <EditTextPreference
+            android:dialogTitle="Enter server IP address"
+            android:digits="0123456789."
+            android:icon="@drawable/ic_cloud_circle_black_24dp"
+            android:inputType="numberDecimal"
+            android:key="IP"
+            android:title="IP Address" />
+
+        <EditTextPreference
+            android:dialogTitle="Enter server port"
+            android:digits="0123456789"
+            android:icon="@drawable/ic_device_hub_black_24dp"
+            android:inputType="numberDecimal"
+            android:key="Port"
+            android:title="Port Number" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>
