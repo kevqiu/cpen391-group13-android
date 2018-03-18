@@ -28,13 +28,12 @@
                     android:layout_centerHorizontal="false"
                     android:textSize="30sp"/>
 
-            <!--
                 <TextView
-                    android:id="@+id/gps_text"
+                    android:id="@+id/category_count_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/warehouse_text"
-                    android:layout_centerHorizontal="false"/>-->
+                    android:layout_below="@+id/category_text"
+                    android:layout_centerHorizontal="false"/>
 
 
         </RelativeLayout>

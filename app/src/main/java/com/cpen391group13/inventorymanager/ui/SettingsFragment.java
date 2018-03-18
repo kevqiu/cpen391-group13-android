@@ -23,6 +23,7 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
     {
         // create the settings fragment
         super.onCreate(savedInstanceState);
+        getActivity().setTitle("Settings");
         // get preferences from the XML layout
         addPreferencesFromResource(R.xml.settings);
         getPreferenceScreen().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);

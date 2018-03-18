@@ -14,9 +14,9 @@ public class Item {
     private int categoryId;
     @SerializedName("warehouse_id")
     private int warehouseId;
-    private DateFormat datetime;
+    private String datetime;
 
-    public Item(int id, int categoryId, int warehouseId, DateFormat datetime){
+    public Item(int id, int categoryId, int warehouseId, String datetime){
         this.id = id;
         this.categoryId = categoryId;
         this.warehouseId = warehouseId;
@@ -29,5 +29,5 @@ public class Item {
 
     public int getWarehouseId(){return warehouseId;}
 
-    public DateFormat getDatetime(){return datetime;}
+    public String getDatetime(){return datetime;}
 }

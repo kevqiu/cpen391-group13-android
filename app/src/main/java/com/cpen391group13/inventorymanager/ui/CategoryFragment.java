@@ -10,7 +10,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import butterknife.BindView;
@@ -28,31 +27,35 @@ import com.cpen391group13.inventorymanager.api.service.CategoryClient;
 import com.cpen391group13.inventorymanager.api.service.ItemClient;
 import com.cpen391group13.inventorymanager.helpers.PreferencesHelper;
 import com.cpen391group13.inventorymanager.ui.adapters.CategoryAdapter;
+import com.cpen391group13.inventorymanager.ui.adapters.CategoryAdapterItem;
 
-import java.util.Dictionary;
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 
 /**
  * Fragment for category view
- *
- * TODO: Add communication, make CategoryClient, update toolbar
- *
+ * <p>
+ * //TODO: update toolbar
  */
-public class CategoryFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener{
-    @BindView(R.id.category_recycler_view) RecyclerView recyclerView;
-    @BindView(R.id.swipe_refresh_category) SwipeRefreshLayout swipeRefreshLayout;
+public class CategoryFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
+    @BindView(R.id.category_recycler_view)
+    RecyclerView recyclerView;
+    @BindView(R.id.swipe_refresh_category)
+    SwipeRefreshLayout swipeRefreshLayout;
 
     private int warehouse_id;
     private Retrofit.Builder builder;
     private Retrofit retrofit;
-    private CategoryClient client;
+    private CategoryClient categoryClient;
+    private ItemClient itemClient;
     private RecyclerView.LayoutManager layoutManager;
+    List<CategoryAdapterItem> categoryAdapterItems;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) { super.onCreate(savedInstanceState); }
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -62,10 +65,10 @@ public class CategoryFragment extends Fragment implements SwipeRefreshLayout.OnR
 
         swipeRefreshLayout.setOnRefreshListener(this);
 
+        getActivity().setTitle("Categories");
+
         Bundle bundle = getArguments();
         warehouse_id = bundle.getInt("warehouse_id");
-
-        //categoryText.setText("Category view opened on " + warehouse_id);
 
         builder = new Retrofit.Builder()
                 .baseUrl(PreferencesHelper.getServerPath(this.getContext()))
@@ -73,7 +76,8 @@ public class CategoryFragment extends Fragment implements SwipeRefreshLayout.OnR
 
         retrofit = builder.build();
 
-        client = retrofit.create(CategoryClient.class);
+        categoryClient = retrofit.create(CategoryClient.class);
+        itemClient = retrofit.create(ItemClient.class);
 
         fetchCategories();
 
@@ -88,31 +92,60 @@ public class CategoryFragment extends Fragment implements SwipeRefreshLayout.OnR
         fetchCategories();
     }
 
-    //TODO: Create CategoryAdapterItem class under adapters that takes a category
-    //TODO: increment category count, getter for category and for category count
-    private void fetchCategories(){
-        Call<List<Category>> call = client.getCategories();
+    private void fetchCategories() {
+        Call<List<Category>> call = categoryClient.getCategories();
         call.enqueue(new Callback<List<Category>>() {
             @Override
-            public void onResponse(Call<List<Category>> call, Response<List<Category>> response) {
-                if(response.isSuccessful()) {
-                    List<Category> categories = response.body();
-
-                    recyclerView.setAdapter(new CategoryAdapter(getActivity(), categories));
-                }
-                else{
-                    Toast.makeText(getActivity(), "AHHHHHHHH :(", Toast.LENGTH_SHORT).show();
+            public void onResponse(Call<List<Category>> call, final Response<List<Category>> response) {
+                if (response.isSuccessful()) {
+                    final List<Category> categories = response.body();
+                    categoryAdapterItems = new ArrayList<>();
+                    // Add a 'all' category
+                    categoryAdapterItems.add(new CategoryAdapterItem("all"));
+                    // Loop through categories and make a new CategoryAdapterItem for each
+                    for (Category category : categories) {
+                        CategoryAdapterItem categoryAdapterItem = new CategoryAdapterItem(category.getCategory());
+                        categoryAdapterItems.add(categoryAdapterItem);
+                    }
+                    // Get items to be able to set the category count
+                    fetchItems();
+                } else {
+                    Toast.makeText(getActivity(), "Category Response Failed", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<List<Category>> call, Throwable t) {
-                Toast.makeText(getActivity(), "error :(", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Category error :(", Toast.LENGTH_SHORT).show();
             }
         });
-        if(swipeRefreshLayout.isRefreshing())
+        if (swipeRefreshLayout.isRefreshing())
             swipeRefreshLayout.setRefreshing(false);
+    }
 
-        Log.d("LOAD", "Got categories to load");
+    private void fetchItems() {
+        Call<List<Item>> itemCall = itemClient.getItems(null, String.valueOf(warehouse_id));
+        itemCall.enqueue(new Callback<List<Item>>() {
+            @Override
+            public void onResponse(Call<List<Item>> itemCall, Response<List<Item>> itemResponse) {
+                if (itemResponse.isSuccessful()) {
+                    List<Item> items = itemResponse.body();
+                    // Set 'All' count
+                    categoryAdapterItems.get(0).setCategoryCount(items.size());
+                    // Loop through items and increment count for specific category
+                    for (Item item : items) {
+                        categoryAdapterItems.get(item.getCategoryId()).incrementCategoryCount();
+                    }
+                    recyclerView.setAdapter(new CategoryAdapter(getActivity(), categoryAdapterItems));
+                } else {
+                    Toast.makeText(getActivity(), "Item Response Failed", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Item>> itemCall, Throwable t) {
+                Toast.makeText(getActivity(), "Item error :(", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

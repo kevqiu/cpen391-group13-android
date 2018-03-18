@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.cpen391group13.inventorymanager.R;
 import com.cpen391group13.inventorymanager.api.models.Category;
+import com.cpen391group13.inventorymanager.api.models.Item;
 import com.cpen391group13.inventorymanager.api.models.Warehouse;
 import com.cpen391group13.inventorymanager.ui.CategoryFragment;
 import com.cpen391group13.inventorymanager.ui.LocationFragment;
@@ -30,11 +31,12 @@ import butterknife.ButterKnife;
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHolder> {
 
     private Context context;
-    private List<Category> values;
+    private List<CategoryAdapterItem> values;
 
     // Provide a reference to the views for each data item
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         @BindView(com.cpen391group13.inventorymanager.R.id.category_text) TextView categoryName;
+        @BindView(R.id.category_count_text) TextView categoryCount;
 
         public ViewHolder(View v) {
             super(v);
@@ -44,8 +46,9 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
 
         @Override
         public void onClick(View v){
-            Category item = values.get(getAdapterPosition());
-                Log.d("Category pressed", item.getCategory());
+            CategoryAdapterItem item = values.get(getAdapterPosition());
+                //Log.d("Category pressed", item.getCategory());
+                //Log.d("Count", String.valueOf(item.getCategoryCount()));
                 /*
                 CategoryFragment categoryFrag = new CategoryFragment();
                 Bundle bundle = new Bundle();
@@ -61,7 +64,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
     }
 
     // Constructor for this dataset
-    public CategoryAdapter(Context context, List<Category> values) {
+    public CategoryAdapter(Context context, List<CategoryAdapterItem> values) {
         this.context = context;
         this.values = values;
     }
@@ -81,13 +84,17 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
     public void onBindViewHolder(CategoryAdapter.ViewHolder holder, int position) {
         String categoryText;
         // - get element from your dataset at this position
-        Category item = values.get(position);
+        CategoryAdapterItem item = values.get(position);
         categoryText = item.getCategory();
         categoryText = categoryText.substring(0,1).toUpperCase() + categoryText.substring(1);
 
         // - replace the contents of the view with that element
         TextView categoryName = holder.categoryName;
         categoryName.setText(categoryText);
+
+        TextView categoryCount = holder.categoryCount;
+        //categoryCount.setText("Count: " + String.valueOf(item.getCategoryCount()));
+        categoryCount.setText("Count: " + String.valueOf(item.getCategoryCount()));
 
     }
 

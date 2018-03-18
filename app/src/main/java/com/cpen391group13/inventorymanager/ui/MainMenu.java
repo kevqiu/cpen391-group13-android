@@ -111,7 +111,6 @@ public class MainMenu extends AppCompatActivity implements NavigationView.OnNavi
             fragment = new OverviewFragment();
         }
         else if (id == R.id.nav_warehouses) {
-            toolbar.setTitle("Warehouses");
             fragment = new WarehouseFragment();
         }
         else if (id == R.id.nav_controls) {
@@ -121,7 +120,6 @@ public class MainMenu extends AppCompatActivity implements NavigationView.OnNavi
             toolbar.setTitle("New Scan");
         }
         else if (id == R.id.nav_settings) {
-            toolbar.setTitle("Settings");
             fragment = new SettingsFragment();
         }
 

@@ -3,6 +3,7 @@ package com.cpen391group13.inventorymanager.ui;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -15,6 +16,8 @@ import com.cpen391group13.inventorymanager.api.models.Warehouse;
 import com.cpen391group13.inventorymanager.api.service.WarehouseClient;
 import com.cpen391group13.inventorymanager.helpers.PreferencesHelper;
 import com.cpen391group13.inventorymanager.ui.adapters.WarehouseAdapter;
+
+import java.util.Date;
 import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -50,6 +53,8 @@ public class WarehouseFragment extends Fragment implements SwipeRefreshLayout.On
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_warehouse, container, false);
         ButterKnife.bind(this, view);
+
+        getActivity().setTitle("Warehouses");
 
         swipeRefreshLayout.setOnRefreshListener(this);
 
@@ -95,8 +100,5 @@ public class WarehouseFragment extends Fragment implements SwipeRefreshLayout.On
         });
         if(swipeRefreshLayout.isRefreshing())
             swipeRefreshLayout.setRefreshing(false);
-
-        Log.d("LOAD", "Got warehosues to load");
-
     }
 }
