@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 import com.cpen391group13.inventorymanager.R;
 import com.cpen391group13.inventorymanager.api.models.Warehouse;
+import com.cpen391group13.inventorymanager.api.service.RetrofitClient;
 import com.cpen391group13.inventorymanager.api.service.WarehouseClient;
 import com.cpen391group13.inventorymanager.helpers.PreferencesHelper;
 import com.cpen391group13.inventorymanager.ui.adapters.WarehouseAdapter;
@@ -34,7 +35,6 @@ public class WarehouseFragment extends Fragment implements SwipeRefreshLayout.On
     @BindView(R.id.warehouse_recycler_view) RecyclerView recyclerView;
     @BindView(R.id.swipe_refresh_warehouse) SwipeRefreshLayout swipeRefreshLayout;
 
-    private Retrofit.Builder builder;
     private Retrofit retrofit;
     private WarehouseClient client;
     private RecyclerView.LayoutManager layoutManager;
@@ -53,12 +53,7 @@ public class WarehouseFragment extends Fragment implements SwipeRefreshLayout.On
 
         swipeRefreshLayout.setOnRefreshListener(this);
 
-        builder = new Retrofit.Builder()
-                .baseUrl(PreferencesHelper.getServerPath(this.getContext()))
-                .addConverterFactory(GsonConverterFactory.create());
-
-        retrofit = builder.build();
-
+        retrofit = RetrofitClient.getClient(this.getContext());
         client = retrofit.create(WarehouseClient.class);
 
         refreshWarehouses();
