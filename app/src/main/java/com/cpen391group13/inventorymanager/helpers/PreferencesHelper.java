@@ -14,7 +14,7 @@ public class PreferencesHelper {
         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context);
         String ip = sharedPrefs.getString("IP", null);
         String port = sharedPrefs.getString("Port", null);
-        return ip != null && port != null ? String.format("http://%s:%s", ip, port) : null;
+        return ip != null && port != null ? String.format("http://%s:%s", ip, port) : "http://localhost:8000";
     }
 }
 
