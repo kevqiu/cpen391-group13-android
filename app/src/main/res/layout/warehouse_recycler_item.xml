@@ -53,11 +53,7 @@
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-<<<<<<< HEAD
-                    android:background="#FF69B4"
-=======
                     android:background="@null"
->>>>>>> 44453349561c74f24ff4ac258339c708c4ebac4f
                     app:srcCompat="@drawable/ic_location_on_black_36dp" />
             </RelativeLayout>
 
