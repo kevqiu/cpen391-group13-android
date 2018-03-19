@@ -20,9 +20,6 @@ import com.cpen391group13.inventorymanager.api.service.WarehouseClient;
 
 /**
  * Fragment for category view
- *
- * TODO: Add communication, make CategoryClient, update toolbar
- *
  */
 public class CategoryFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener{
     @BindView(R.id.category_recycler_view) RecyclerView recyclerView;
