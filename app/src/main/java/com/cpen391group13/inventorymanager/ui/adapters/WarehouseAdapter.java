@@ -69,7 +69,6 @@ public class WarehouseAdapter extends RecyclerView.Adapter<WarehouseAdapter.View
                         .replace(R.id.main_layout, categoryFrag)
                         .addToBackStack(null)
                         .commit();
-
             }
         }
     }
