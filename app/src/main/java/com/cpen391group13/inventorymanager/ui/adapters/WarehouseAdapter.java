@@ -32,6 +32,7 @@ public class WarehouseAdapter extends RecyclerView.Adapter<WarehouseAdapter.View
     private List<Warehouse> values;
 
     // Provide a reference to the views for each data item
+
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         @BindView(com.cpen391group13.inventorymanager.R.id.warehouse_text)
         TextView warehouseName;
@@ -64,7 +65,11 @@ public class WarehouseAdapter extends RecyclerView.Adapter<WarehouseAdapter.View
                         .addToBackStack(null)
                         .commit();
             } else {
+                Log.d("Warehouse pressed", item.getLocation());
                 CategoryFragment categoryFrag = new CategoryFragment();
+                Bundle bundle = new Bundle();
+                bundle.putInt("warehouse_id", item.getId());
+                categoryFrag.setArguments(bundle);
                 ((Activity) context).getFragmentManager()
                         .beginTransaction()
                         .replace(R.id.main_layout, categoryFrag)

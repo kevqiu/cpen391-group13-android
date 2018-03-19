@@ -5,11 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
     <!-- A RecyclerView with some commonly used attributes -->
+<<<<<<< HEAD
     <TextView xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:text="Category Fragment Opened"
         />
+=======
+>>>>>>> 44453349561c74f24ff4ac258339c708c4ebac4f
     <android.support.v7.widget.RecyclerView
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/category_recycler_view"
