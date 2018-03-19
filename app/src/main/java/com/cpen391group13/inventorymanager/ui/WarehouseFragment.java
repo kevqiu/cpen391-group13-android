@@ -35,7 +35,6 @@ public class WarehouseFragment extends Fragment implements SwipeRefreshLayout.On
     @BindView(R.id.warehouse_recycler_view) RecyclerView recyclerView;
     @BindView(R.id.swipe_refresh_warehouse) SwipeRefreshLayout swipeRefreshLayout;
 
-    private Retrofit retrofit;
     private WarehouseClient client;
     private RecyclerView.LayoutManager layoutManager;
 
@@ -53,7 +52,7 @@ public class WarehouseFragment extends Fragment implements SwipeRefreshLayout.On
 
         swipeRefreshLayout.setOnRefreshListener(this);
 
-        retrofit = RetrofitClient.getClient(this.getContext());
+        Retrofit retrofit = RetrofitClient.getClient(this.getContext());
         client = retrofit.create(WarehouseClient.class);
 
         refreshWarehouses();
@@ -84,10 +83,9 @@ public class WarehouseFragment extends Fragment implements SwipeRefreshLayout.On
                 Toast.makeText(getActivity(), "error :(", Toast.LENGTH_SHORT).show();
             }
         });
-        if(swipeRefreshLayout.isRefreshing())
+        
+        if (swipeRefreshLayout.isRefreshing()) {
             swipeRefreshLayout.setRefreshing(false);
-
-        Log.d("LOAD", "Got warehosues to load");
-
+        }
     }
 }

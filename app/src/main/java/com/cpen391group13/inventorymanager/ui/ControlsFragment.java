@@ -26,7 +26,6 @@ public class ControlsFragment extends Fragment {
     @BindView(R.id.position_3_btn) Button pos3Button;
     @BindView(R.id.position_4_btn) Button pos4Button;
 
-    private Retrofit retrofit;
     private ControlsClient client;
 
     @Override
@@ -36,7 +35,7 @@ public class ControlsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_controls, container, false);
         ButterKnife.bind(this, view);
 
-        retrofit = RetrofitClient.getClient(this.getContext());
+        Retrofit retrofit = RetrofitClient.getClient(this.getContext());
         client = retrofit.create(ControlsClient.class);
 
         autosortButton.setOnClickListener(new View.OnClickListener() {

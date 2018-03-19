@@ -4,16 +4,13 @@ import android.content.Context;
 
 import com.cpen391group13.inventorymanager.helpers.PreferencesHelper;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
- * Created by Kevin on 3/19/2018.
+ * Singleton class for the Retrofit client.
+ * Only gets initialized on first call or on baseUrl change
  */
-
 public class RetrofitClient {
     private static Retrofit retrofit = null;
     private static String lastBaseUrl = "";
