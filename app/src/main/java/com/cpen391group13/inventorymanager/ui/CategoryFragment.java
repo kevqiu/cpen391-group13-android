@@ -6,7 +6,6 @@ import android.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,14 +17,13 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 import com.cpen391group13.inventorymanager.R;
 import com.cpen391group13.inventorymanager.api.models.Category;
 import com.cpen391group13.inventorymanager.api.models.Item;
 import com.cpen391group13.inventorymanager.api.service.CategoryClient;
 import com.cpen391group13.inventorymanager.api.service.ItemClient;
-import com.cpen391group13.inventorymanager.helpers.PreferencesHelper;
+import com.cpen391group13.inventorymanager.api.service.RetrofitClient;
 import com.cpen391group13.inventorymanager.ui.adapters.CategoryAdapter;
 import com.cpen391group13.inventorymanager.ui.adapters.CategoryAdapterItem;
 
@@ -33,18 +31,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-/**
- * Fragment for category view
- */
 public class CategoryFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
-    @BindView(R.id.category_recycler_view)
-    RecyclerView recyclerView;
-    @BindView(R.id.swipe_refresh_category)
-    SwipeRefreshLayout swipeRefreshLayout;
+    @BindView(R.id.category_recycler_view) RecyclerView recyclerView;
+    @BindView(R.id.swipe_refresh_category) SwipeRefreshLayout swipeRefreshLayout;
 
     private int warehouse_id;
-    private Retrofit.Builder builder;
-    private Retrofit retrofit;
     private CategoryClient categoryClient;
     private ItemClient itemClient;
     private RecyclerView.LayoutManager layoutManager;
@@ -68,11 +59,7 @@ public class CategoryFragment extends Fragment implements SwipeRefreshLayout.OnR
         Bundle bundle = getArguments();
         warehouse_id = bundle.getInt("warehouse_id");
 
-        builder = new Retrofit.Builder()
-                .baseUrl(PreferencesHelper.getServerPath(this.getContext()))
-                .addConverterFactory(GsonConverterFactory.create());
-
-        retrofit = builder.build();
+        Retrofit retrofit = RetrofitClient.getClient(this.getContext());
 
         categoryClient = retrofit.create(CategoryClient.class);
         itemClient = retrofit.create(ItemClient.class);

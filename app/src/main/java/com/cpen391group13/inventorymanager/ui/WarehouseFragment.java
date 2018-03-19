@@ -3,10 +3,8 @@ package com.cpen391group13.inventorymanager.ui;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,10 +14,8 @@ import com.cpen391group13.inventorymanager.R;
 import com.cpen391group13.inventorymanager.api.models.Warehouse;
 import com.cpen391group13.inventorymanager.api.service.RetrofitClient;
 import com.cpen391group13.inventorymanager.api.service.WarehouseClient;
-import com.cpen391group13.inventorymanager.helpers.PreferencesHelper;
 import com.cpen391group13.inventorymanager.ui.adapters.WarehouseAdapter;
 
-import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
@@ -28,7 +24,6 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Fragment for the warehouse view
@@ -36,11 +31,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * Adapted from https://developer.android.com/samples/RecyclerView/src/com.example.android.recyclerview/RecyclerViewFragment.html
  */
 public class WarehouseFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
-    //bind views
-    @BindView(R.id.warehouse_recycler_view)
-    RecyclerView recyclerView;
-    @BindView(R.id.swipe_refresh_warehouse)
-    SwipeRefreshLayout swipeRefreshLayout;
+    @BindView(R.id.warehouse_recycler_view) RecyclerView recyclerView;
+    @BindView(R.id.swipe_refresh_warehouse) SwipeRefreshLayout swipeRefreshLayout;
 
     private WarehouseClient client;
     private RecyclerView.LayoutManager layoutManager;

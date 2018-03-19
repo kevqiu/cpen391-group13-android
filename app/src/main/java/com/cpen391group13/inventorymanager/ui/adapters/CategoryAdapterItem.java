@@ -1,9 +1,5 @@
 package com.cpen391group13.inventorymanager.ui.adapters;
 
-/**
- * Created by Logan on 2018-03-17.
- */
-
 public class CategoryAdapterItem {
     private String category;
     private int categoryCount;

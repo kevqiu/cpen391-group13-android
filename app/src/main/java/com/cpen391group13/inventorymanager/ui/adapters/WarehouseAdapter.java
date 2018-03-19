@@ -8,7 +8,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -34,12 +33,9 @@ public class WarehouseAdapter extends RecyclerView.Adapter<WarehouseAdapter.View
     // Provide a reference to the views for each data item
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        @BindView(com.cpen391group13.inventorymanager.R.id.warehouse_text)
-        TextView warehouseName;
-        @BindView(R.id.gps_text)
-        TextView warehouseLocation;
-        @BindView(R.id.gps_button)
-        ImageButton button;
+        @BindView(com.cpen391group13.inventorymanager.R.id.warehouse_text) TextView warehouseName;
+        @BindView(R.id.gps_text) TextView warehouseLocation;
+        @BindView(R.id.gps_button) ImageButton button;
 
         public ViewHolder(View v) {
             super(v);
