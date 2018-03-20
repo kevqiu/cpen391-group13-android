@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "633773734026",
+    "firebase_url": "https://invmgmt-cpen391grp13.firebaseio.com",
+    "project_id": "invmgmt-cpen391grp13",
+    "storage_bucket": "invmgmt-cpen391grp13.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:633773734026:android:11c665bc8cd584c3",
+        "android_client_info": {
+          "package_name": "com.cpen391group13.inventorymanager"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "633773734026-nougf2sok6k3vj8itdrss2q3gnnikm3l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDYDiWO_hXGNJ5Lylvg8esRB31I8Fjnr4E"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
