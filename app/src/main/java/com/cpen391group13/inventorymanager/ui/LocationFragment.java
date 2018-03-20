@@ -82,7 +82,6 @@ public class LocationFragment extends Fragment {
         closeMapButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.v("mapfrag", "closing fragment");
                 getFragmentManager().popBackStack();
             }
         });
