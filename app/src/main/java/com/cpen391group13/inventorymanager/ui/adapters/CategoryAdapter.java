@@ -16,6 +16,7 @@ import com.cpen391group13.inventorymanager.api.models.Category;
 import com.cpen391group13.inventorymanager.api.models.Item;
 import com.cpen391group13.inventorymanager.api.models.Warehouse;
 import com.cpen391group13.inventorymanager.ui.CategoryFragment;
+import com.cpen391group13.inventorymanager.ui.ItemFragment;
 import com.cpen391group13.inventorymanager.ui.LocationFragment;
 import com.google.android.gms.maps.model.LatLng;
 
@@ -46,19 +47,20 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
 
         @Override
         public void onClick(View v){
-            CategoryAdapterItem item = values.get(getAdapterPosition());
-                //Log.d("Category pressed", item.getCategory());
-                //Log.d("Count", String.valueOf(item.getCategoryCount()));
-                /*
-                CategoryFragment categoryFrag = new CategoryFragment();
-                Bundle bundle = new Bundle();
-                bundle.putInt("warehouse_id", item.getId());
-                categoryFrag.setArguments(bundle);
-                ((Activity) context).getFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.main_layout, categoryFrag)
-                        .addToBackStack(null)
-                        .commit();*/
+            CategoryAdapterItem category = values.get(getAdapterPosition());
+            Log.d("Category pressed", String.valueOf(category.getCategoryId()));
+            Log.d("Warehouse", String.valueOf(category.getWarehouseId()));
+
+            ItemFragment itemFrag = new ItemFragment();
+            Bundle bundle = new Bundle();
+            bundle.putInt("category_id", category.getCategoryId());
+            bundle.putInt("warehouse_id", category.getWarehouseId());
+            itemFrag.setArguments(bundle);
+            ((Activity) context).getFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.main_layout, itemFrag)
+                    .addToBackStack(null)
+                    .commit();
 
         }
     }

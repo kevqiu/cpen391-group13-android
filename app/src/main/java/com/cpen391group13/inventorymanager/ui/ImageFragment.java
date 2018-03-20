@@ -39,10 +39,8 @@ public class ImageFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_image, container, false);
         ButterKnife.bind(this, view);
 
-        // TODO: change this when we integrate with ItemView
         Bundle bundle = getArguments();
-//      int itemId = bundle.getInt("item_id");
-        int itemId = 1;
+        int itemId = bundle.getInt("item_id");
 
         // image stored on server under /items/{id}/image endpoint
         String url = String.format("%s/items/%d/image",
