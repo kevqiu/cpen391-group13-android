@@ -93,7 +93,6 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
         categoryName.setText(categoryText);
 
         TextView categoryCount = holder.categoryCount;
-        //categoryCount.setText("Count: " + String.valueOf(item.getCategoryCount()));
         categoryCount.setText("Count: " + String.valueOf(item.getCategoryCount()));
 
     }
