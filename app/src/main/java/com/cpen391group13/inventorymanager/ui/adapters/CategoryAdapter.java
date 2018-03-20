@@ -97,6 +97,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
         TextView categoryCount = holder.categoryCount;
         categoryCount.setText("Count: " + String.valueOf(item.getCategoryCount()));
 
+        //TODO: Add colour
     }
 
     // Return the size of your dataset (invoked by the layout manager)

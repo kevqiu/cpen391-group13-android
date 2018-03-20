@@ -14,6 +14,7 @@ import com.cpen391group13.inventorymanager.R;
 import com.cpen391group13.inventorymanager.api.models.Item;
 import com.cpen391group13.inventorymanager.ui.ImageFragment;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import butterknife.BindView;
@@ -29,6 +30,9 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         @BindView(R.id.item_text) TextView itemName;
+        @BindView(R.id.item_datetime) TextView itemDatetime;
+        @BindView(R.id.item_category) TextView itemCategory;
+        @BindView(R.id.item_warehouse) TextView itemWarehouse;
 
         public ViewHolder(View v){
             super(v);
@@ -68,12 +72,46 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(ViewHolder holder, int position){
         Item item = values.get(position);
+
         Log.d("Item Category:", String.valueOf(item.getCategoryId()));
         Log.d("Item Id", String.valueOf(item.getId()));
         Log.d("Item Warehouse", String.valueOf(item.getWarehouseId()));
 
         TextView itemName = holder.itemName;
-        itemName.setText(String.valueOf(item.getId()));
+        itemName.setText("Item " + String.valueOf(item.getId()));
+
+        String time = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss")
+                .format(item.getDatetime());
+        TextView itemDatetime = holder.itemDatetime;
+        itemDatetime.setText("Time Taken: " + time + " GMT");
+
+        TextView itemCategory = holder.itemCategory;
+        switch (item.getCategoryId()){
+            case 1: itemCategory.setText("Category: Red");
+                    break;
+            case 2: itemCategory.setText("Category: Green");
+                    break;
+            case 3: itemCategory.setText("Category: Blue");
+                    break;
+            default: itemCategory.setText("Category: Uh-oh");
+                    break;
+        }
+        //TODO: Don't use switch + add colour
+        //itemCategory.setText("Category: " + item.getCategoryId().toString());
+
+        TextView itemWarehouse = holder.itemWarehouse;
+        switch (item.getWarehouseId()){
+            case 1: itemWarehouse.setText("Warehouse: UBC");
+                break;
+            case 2: itemWarehouse.setText("Warehouse: UofT");
+                break;
+            case 3: itemWarehouse.setText("Warehouse: McGill");
+                break;
+            default: itemWarehouse.setText("Warehouse: Uh-oh");
+                break;
+        }
+        //TODO: Don't use switch + add colour
+        //itemWarehouse.setText("Warehouse: " + item.getWarehouseId().toString());
     }
 
     @Override

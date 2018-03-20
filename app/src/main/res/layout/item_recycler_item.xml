@@ -28,12 +28,26 @@
                 android:layout_centerHorizontal="false"
                 android:textSize="30sp"/>
 
-            <!--<TextView
-                android:id="@+id/category_count_text"
+            <TextView
+                android:id="@+id/item_datetime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/category_text"
-                android:layout_centerHorizontal="false"/>-->
+                android:layout_below="@+id/item_text"
+                android:layout_centerHorizontal="false"/>
+
+            <TextView
+                android:id="@+id/item_category"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/item_datetime"
+                android:layout_centerHorizontal="false"/>
+
+            <TextView
+                android:id="@+id/item_warehouse"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/item_category"
+                android:layout_centerHorizontal="false"/>
 
 
         </RelativeLayout>
