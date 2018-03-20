@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.cpen391group13.inventorymanager.R;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -36,9 +37,13 @@ public class MainMenu extends AppCompatActivity implements NavigationView.OnNavi
 
         getFragmentManager().beginTransaction().replace(R.id.main_layout, new OverviewFragment()).commit();
 
+        // get location permissions for Google maps
         ActivityCompat.requestPermissions(this,
                 new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                 1);
+
+        // subscribe to the 'sort' topic for FCM
+        FirebaseMessaging.getInstance().subscribeToTopic("sort");
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
