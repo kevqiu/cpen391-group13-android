@@ -3,6 +3,8 @@ package com.cpen391group13.inventorymanager.api.service;
 import android.content.Context;
 
 import com.cpen391group13.inventorymanager.helpers.PreferencesHelper;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -16,11 +18,12 @@ public class RetrofitClient {
     private static String lastBaseUrl = "";
 
     public static Retrofit getClient(Context context) {
+        Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss").create();
         String baseUrl = PreferencesHelper.getServerPath(context);
         if (retrofit == null || !lastBaseUrl.equals(baseUrl)) {
             retrofit = new Retrofit.Builder()
                     .baseUrl(baseUrl)
-                    .addConverterFactory(GsonConverterFactory.create())
+                    .addConverterFactory(GsonConverterFactory.create(gson))
                     .build();
         }
         return retrofit;

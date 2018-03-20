@@ -27,7 +27,7 @@ import retrofit2.Retrofit;
 
 /**
  * Fragment for the warehouse view
- * <p>
+ *
  * Adapted from https://developer.android.com/samples/RecyclerView/src/com.example.android.recyclerview/RecyclerViewFragment.html
  */
 public class WarehouseFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
