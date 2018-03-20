@@ -6,6 +6,7 @@ import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 /**
@@ -15,4 +16,7 @@ import retrofit2.http.Query;
 public interface ItemClient {
     @GET("/items")
     Call<List<Item>> getItems(@Query("category_id") String categoryId, @Query("warehouse_id") String warehouseId);
+
+    @GET("/items/{id}")
+    Call<Item> getItem(@Path("id") String id);
 }
