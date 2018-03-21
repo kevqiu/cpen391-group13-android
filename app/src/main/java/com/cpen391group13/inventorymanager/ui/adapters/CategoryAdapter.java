@@ -3,6 +3,7 @@ package com.cpen391group13.inventorymanager.ui.adapters;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -38,6 +39,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         @BindView(com.cpen391group13.inventorymanager.R.id.category_text) TextView categoryName;
         @BindView(R.id.category_count_text) TextView categoryCount;
+        @BindView(R.id.category_cardview) CardView categoryCardView;
 
         public ViewHolder(View v) {
             super(v);
@@ -97,7 +99,21 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
         TextView categoryCount = holder.categoryCount;
         categoryCount.setText("Count: " + String.valueOf(item.getCategoryCount()));
 
-        //TODO: Add colour
+        CardView categoryCardView = holder.categoryCardView;
+        switch (item.getCategoryId()){
+            case 0: categoryCardView.setBackgroundResource(R.drawable.other_gradient);
+                    break;
+            case 1: categoryCardView.setBackgroundResource(R.drawable.red_gradient);
+                    break;
+            case 2: categoryCardView.setBackgroundResource(R.drawable.green_gradient);
+                    break;
+            case 3: categoryCardView.setBackgroundResource(R.drawable.blue_gradient);
+                    break;
+            case 4: categoryCardView.setBackgroundResource(R.drawable.other_gradient);
+                    break;
+            default:categoryCardView.setBackgroundResource(R.drawable.other_gradient);
+                    break;
+        }
     }
 
     // Return the size of your dataset (invoked by the layout manager)
