@@ -7,6 +7,7 @@
     android:background="@android:color/transparent">
 
     <android.support.v7.widget.CardView
+        android:id="@+id/item_cardview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@android:drawable/dialog_holo_light_frame"
@@ -26,29 +27,16 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="false"
-                android:textSize="30sp"/>
-
-            <TextView
-                android:id="@+id/item_datetime"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/item_text"
-                android:layout_centerHorizontal="false"/>
-
-            <TextView
-                android:id="@+id/item_category"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/item_datetime"
-                android:layout_centerHorizontal="false"/>
+                android:textSize="30sp"
+                android:textColor="@color/colorWhite"/>
 
             <TextView
                 android:id="@+id/item_warehouse"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/item_category"
-                android:layout_centerHorizontal="false"/>
-
+                android:layout_below="@+id/item_text"
+                android:layout_centerHorizontal="false"
+                android:textColor="@color/colorWhite"/>
 
         </RelativeLayout>
 

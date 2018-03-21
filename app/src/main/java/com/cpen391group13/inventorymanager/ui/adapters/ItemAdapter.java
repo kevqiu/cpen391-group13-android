@@ -2,7 +2,9 @@ package com.cpen391group13.inventorymanager.ui.adapters;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -20,6 +22,8 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static java.lang.Integer.valueOf;
+
 /**
  * Created by Logan on 2018-03-20.
  */
@@ -30,8 +34,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         @BindView(R.id.item_text) TextView itemName;
-        @BindView(R.id.item_datetime) TextView itemDatetime;
-        @BindView(R.id.item_category) TextView itemCategory;
+        @BindView(R.id.item_cardview) CardView itemCardView;
         @BindView(R.id.item_warehouse) TextView itemWarehouse;
 
         public ViewHolder(View v){
@@ -73,31 +76,21 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
     public void onBindViewHolder(ViewHolder holder, int position){
         Item item = values.get(position);
 
-        Log.d("Item Category:", String.valueOf(item.getCategoryId()));
-        Log.d("Item Id", String.valueOf(item.getId()));
-        Log.d("Item Warehouse", String.valueOf(item.getWarehouseId()));
-
         TextView itemName = holder.itemName;
         itemName.setText("Item " + String.valueOf(item.getId()));
 
-        String time = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss")
-                .format(item.getDatetime());
-        TextView itemDatetime = holder.itemDatetime;
-        itemDatetime.setText("Time Taken: " + time + " GMT");
-
-        TextView itemCategory = holder.itemCategory;
+        CardView itemCardView = holder.itemCardView;
         switch (item.getCategoryId()){
-            case 1: itemCategory.setText("Category: Red");
+            case 1: itemCardView.setBackgroundResource(R.drawable.red_gradient);
                     break;
-            case 2: itemCategory.setText("Category: Green");
+            case 2: itemCardView.setBackgroundResource(R.drawable.green_gradient);
                     break;
-            case 3: itemCategory.setText("Category: Blue");
+            case 3: itemCardView.setBackgroundResource(R.drawable.blue_gradient);
                     break;
-            default: itemCategory.setText("Category: Uh-oh");
+            case 4: itemCardView.setBackgroundResource(R.drawable.other_gradient);
                     break;
+            default: break;
         }
-        //TODO: Don't use switch + add colour
-        //itemCategory.setText("Category: " + item.getCategoryId().toString());
 
         TextView itemWarehouse = holder.itemWarehouse;
         switch (item.getWarehouseId()){
@@ -110,8 +103,6 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
             default: itemWarehouse.setText("Warehouse: Uh-oh");
                 break;
         }
-        //TODO: Don't use switch + add colour
-        //itemWarehouse.setText("Warehouse: " + item.getWarehouseId().toString());
     }
 
     @Override

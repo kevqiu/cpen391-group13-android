@@ -2,7 +2,6 @@ package com.cpen391group13.inventorymanager.api.models;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.text.DateFormat;
 import java.util.Date;
 
 /**

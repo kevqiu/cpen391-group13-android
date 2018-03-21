@@ -12,7 +12,6 @@ import retrofit2.http.GET;
  */
 
 public interface WarehouseClient {
-
     @GET("/warehouses")
     Call<List<Warehouse>> getWarehouses();
 }
