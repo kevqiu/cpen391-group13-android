@@ -2,7 +2,7 @@ package com.cpen391group13.inventorymanager.ui;
 
 import android.app.Fragment;
 import android.os.Bundle;
-import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -25,13 +25,15 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
+import static com.cpen391group13.inventorymanager.helpers.WarehouseHelper.getWarehouseById;
+
 /**
  * Created by Logan on 2018-03-20.
  */
 
-public class ItemFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener{
+public class ItemFragment extends Fragment{
     @BindView(R.id.item_recycler_view) RecyclerView recyclerView;
-    @BindView(R.id.swipe_refresh_item) SwipeRefreshLayout swipeRefreshLayout;
+    @BindView(R.id.item_fab) FloatingActionButton itemFab;
 
     private int warehouse_id;
     private int category_id;
@@ -48,19 +50,23 @@ public class ItemFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         View view = inflater.inflate(R.layout.fragment_item, container, false);
         ButterKnife.bind(this, view);
 
-        swipeRefreshLayout.setOnRefreshListener(this);
-
-        getActivity().setTitle("Items");
+        itemFab.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+                fetchItems(true);
+            }
+        });
 
         Bundle bundle = getArguments();
         warehouse_id = bundle.getInt("warehouse_id");
         category_id = bundle.getInt("category_id");
 
+        getActivity().setTitle(getWarehouseById(warehouse_id) + "Items");
+
         Retrofit retrofit = RetrofitClient.getClient(this.getContext());
 
         itemClient = retrofit.create(ItemClient.class);
 
-        fetchItems();
+        fetchItems(false);
 
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
@@ -68,12 +74,7 @@ public class ItemFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         return view;
     }
 
-    @Override
-    public void onRefresh(){
-        fetchItems();
-    }
-
-    private void fetchItems(){
+    private void fetchItems(boolean refresh){
         Call<List<Item>> call;
         if(category_id != 0){
             call = itemClient.getItems(String.valueOf(category_id), String.valueOf(warehouse_id));
@@ -96,11 +97,7 @@ public class ItemFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                 Toast.makeText(getActivity(), "error :(", Toast.LENGTH_SHORT).show();
             }
         });
-
-        if(swipeRefreshLayout.isRefreshing()){
-            swipeRefreshLayout.setRefreshing(false);
-        }
-
+        if(refresh)
+            Toast.makeText(getActivity(), "Refreshed", Toast.LENGTH_SHORT).show();
     }
-
 }

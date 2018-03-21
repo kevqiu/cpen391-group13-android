@@ -16,13 +16,10 @@ import com.cpen391group13.inventorymanager.R;
 import com.cpen391group13.inventorymanager.api.models.Item;
 import com.cpen391group13.inventorymanager.ui.ImageFragment;
 
-import java.text.SimpleDateFormat;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
-import static java.lang.Integer.valueOf;
 
 /**
  * Created by Logan on 2018-03-20.
@@ -35,7 +32,6 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         @BindView(R.id.item_text) TextView itemName;
         @BindView(R.id.item_cardview) CardView itemCardView;
-        @BindView(R.id.item_warehouse) TextView itemWarehouse;
 
         public ViewHolder(View v){
             super(v);
@@ -90,18 +86,6 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
             case 4: itemCardView.setBackgroundResource(R.drawable.other_gradient);
                     break;
             default: break;
-        }
-
-        TextView itemWarehouse = holder.itemWarehouse;
-        switch (item.getWarehouseId()){
-            case 1: itemWarehouse.setText("Warehouse: UBC");
-                break;
-            case 2: itemWarehouse.setText("Warehouse: UofT");
-                break;
-            case 3: itemWarehouse.setText("Warehouse: McGill");
-                break;
-            default: itemWarehouse.setText("Warehouse: Uh-oh");
-                break;
         }
     }
 
