@@ -21,6 +21,8 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static com.cpen391group13.inventorymanager.helpers.CategoryHelper.getCategoryById;
+
 /**
  * Created by Logan on 2018-03-20.
  */
@@ -76,17 +78,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
         itemName.setText("Item " + String.valueOf(item.getId()));
 
         CardView itemCardView = holder.itemCardView;
-        switch (item.getCategoryId()){
-            case 1: itemCardView.setBackgroundResource(R.drawable.red_gradient);
-                    break;
-            case 2: itemCardView.setBackgroundResource(R.drawable.green_gradient);
-                    break;
-            case 3: itemCardView.setBackgroundResource(R.drawable.blue_gradient);
-                    break;
-            case 4: itemCardView.setBackgroundResource(R.drawable.other_gradient);
-                    break;
-            default: break;
-        }
+        itemCardView.setBackgroundResource(getCategoryById(item.getCategoryId()));
     }
 
     @Override
