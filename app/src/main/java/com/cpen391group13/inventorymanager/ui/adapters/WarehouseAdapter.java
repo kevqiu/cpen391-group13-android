@@ -3,6 +3,7 @@ package com.cpen391group13.inventorymanager.ui.adapters;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -36,6 +37,7 @@ public class WarehouseAdapter extends RecyclerView.Adapter<WarehouseAdapter.View
         @BindView(com.cpen391group13.inventorymanager.R.id.warehouse_text) TextView warehouseName;
         @BindView(R.id.gps_text) TextView warehouseLocation;
         @BindView(R.id.gps_button) ImageButton button;
+        @BindView(R.id.warehouse_cardview) CardView warehouseCardView;
 
         public ViewHolder(View v) {
             super(v);
@@ -104,6 +106,8 @@ public class WarehouseAdapter extends RecyclerView.Adapter<WarehouseAdapter.View
         TextView warehouseLocation = holder.warehouseLocation;
         warehouseLocation.setText("(" + item.getLatitude() + "," + item.getLongitude() + ")");
 
+        CardView warehouseCardView = holder.warehouseCardView;
+        warehouseCardView.setBackgroundResource(R.drawable.other_gradient);
     }
 
     // Return the size of your dataset (invoked by the layout manager)

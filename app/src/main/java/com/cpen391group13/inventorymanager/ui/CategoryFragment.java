@@ -6,7 +6,6 @@ import android.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +29,8 @@ import com.cpen391group13.inventorymanager.ui.adapters.CategoryAdapterItem;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.cpen391group13.inventorymanager.helpers.WarehouseHelper.getWarehouseById;
 
 
 public class CategoryFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
@@ -55,10 +56,10 @@ public class CategoryFragment extends Fragment implements SwipeRefreshLayout.OnR
 
         swipeRefreshLayout.setOnRefreshListener(this);
 
-        getActivity().setTitle("Categories");
-
         Bundle bundle = getArguments();
         warehouse_id = bundle.getInt("warehouse_id");
+
+        getActivity().setTitle(getWarehouseById(warehouse_id) + "Categories");
 
         Retrofit retrofit = RetrofitClient.getClient(this.getContext());
 
@@ -87,10 +88,10 @@ public class CategoryFragment extends Fragment implements SwipeRefreshLayout.OnR
                     final List<Category> categories = response.body();
                     categoryAdapterItems = new ArrayList<>();
                     // Add a 'all' category
-                    categoryAdapterItems.add(new CategoryAdapterItem("all"));
+                    categoryAdapterItems.add(new CategoryAdapterItem("all", 0, warehouse_id));
                     // Loop through categories and make a new CategoryAdapterItem for each
                     for (Category category : categories) {
-                        CategoryAdapterItem categoryAdapterItem = new CategoryAdapterItem(category.getCategory());
+                        CategoryAdapterItem categoryAdapterItem = new CategoryAdapterItem(category.getCategory(), category.getId(), warehouse_id);
                         categoryAdapterItems.add(categoryAdapterItem);
                     }
                     // Get items to be able to set the category count

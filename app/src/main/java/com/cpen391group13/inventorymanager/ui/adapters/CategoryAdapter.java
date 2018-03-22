@@ -3,6 +3,7 @@ package com.cpen391group13.inventorymanager.ui.adapters;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,6 +17,7 @@ import com.cpen391group13.inventorymanager.api.models.Category;
 import com.cpen391group13.inventorymanager.api.models.Item;
 import com.cpen391group13.inventorymanager.api.models.Warehouse;
 import com.cpen391group13.inventorymanager.ui.CategoryFragment;
+import com.cpen391group13.inventorymanager.ui.ItemFragment;
 import com.cpen391group13.inventorymanager.ui.LocationFragment;
 import com.google.android.gms.maps.model.LatLng;
 
@@ -37,6 +39,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         @BindView(com.cpen391group13.inventorymanager.R.id.category_text) TextView categoryName;
         @BindView(R.id.category_count_text) TextView categoryCount;
+        @BindView(R.id.category_cardview) CardView categoryCardView;
 
         public ViewHolder(View v) {
             super(v);
@@ -46,19 +49,20 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
 
         @Override
         public void onClick(View v){
-            CategoryAdapterItem item = values.get(getAdapterPosition());
-                //Log.d("Category pressed", item.getCategory());
-                //Log.d("Count", String.valueOf(item.getCategoryCount()));
-                /*
-                CategoryFragment categoryFrag = new CategoryFragment();
-                Bundle bundle = new Bundle();
-                bundle.putInt("warehouse_id", item.getId());
-                categoryFrag.setArguments(bundle);
-                ((Activity) context).getFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.main_layout, categoryFrag)
-                        .addToBackStack(null)
-                        .commit();*/
+            CategoryAdapterItem category = values.get(getAdapterPosition());
+            Log.d("Category pressed", String.valueOf(category.getCategoryId()));
+            Log.d("Warehouse", String.valueOf(category.getWarehouseId()));
+
+            ItemFragment itemFrag = new ItemFragment();
+            Bundle bundle = new Bundle();
+            bundle.putInt("category_id", category.getCategoryId());
+            bundle.putInt("warehouse_id", category.getWarehouseId());
+            itemFrag.setArguments(bundle);
+            ((Activity) context).getFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.main_layout, itemFrag)
+                    .addToBackStack(null)
+                    .commit();
 
         }
     }
@@ -95,6 +99,21 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
         TextView categoryCount = holder.categoryCount;
         categoryCount.setText("Count: " + String.valueOf(item.getCategoryCount()));
 
+        CardView categoryCardView = holder.categoryCardView;
+        switch (item.getCategoryId()){
+            case 0: categoryCardView.setBackgroundResource(R.drawable.other_gradient);
+                    break;
+            case 1: categoryCardView.setBackgroundResource(R.drawable.red_gradient);
+                    break;
+            case 2: categoryCardView.setBackgroundResource(R.drawable.green_gradient);
+                    break;
+            case 3: categoryCardView.setBackgroundResource(R.drawable.blue_gradient);
+                    break;
+            case 4: categoryCardView.setBackgroundResource(R.drawable.other_gradient);
+                    break;
+            default:categoryCardView.setBackgroundResource(R.drawable.other_gradient);
+                    break;
+        }
     }
 
     // Return the size of your dataset (invoked by the layout manager)
