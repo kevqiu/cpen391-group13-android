@@ -12,8 +12,8 @@ import android.widget.Toast;
 
 import com.cpen391group13.inventorymanager.R;
 import com.cpen391group13.inventorymanager.api.models.Item;
-import com.cpen391group13.inventorymanager.api.service.ItemClient;
-import com.cpen391group13.inventorymanager.api.service.RetrofitClient;
+import com.cpen391group13.inventorymanager.api.service.ItemService;
+import com.cpen391group13.inventorymanager.api.service.RetrofitService;
 import com.cpen391group13.inventorymanager.ui.adapters.ItemAdapter;
 
 import java.util.List;
@@ -37,7 +37,7 @@ public class ItemFragment extends Fragment{
 
     private int warehouse_id;
     private int category_id;
-    private ItemClient itemClient;
+    private ItemService itemService;
     private RecyclerView.LayoutManager layoutManager;
 
     @Override
@@ -62,9 +62,9 @@ public class ItemFragment extends Fragment{
 
         getActivity().setTitle(getWarehouseById(warehouse_id) + "Items");
 
-        Retrofit retrofit = RetrofitClient.getClient(this.getContext());
+        Retrofit retrofit = RetrofitService.getClient(this.getContext());
 
-        itemClient = retrofit.create(ItemClient.class);
+        itemService = retrofit.create(ItemService.class);
 
         fetchItems(false);
 
@@ -77,10 +77,10 @@ public class ItemFragment extends Fragment{
     private void fetchItems(boolean refresh){
         Call<List<Item>> call;
         if(category_id != 0){
-            call = itemClient.getItems(String.valueOf(category_id), String.valueOf(warehouse_id));
+            call = itemService.getItems(String.valueOf(category_id), String.valueOf(warehouse_id));
         }
         else{
-            call = itemClient.getItems(null, String.valueOf(warehouse_id));
+            call = itemService.getItems(null, String.valueOf(warehouse_id));
         }
         call.enqueue(new Callback<List<Item>>(){
             @Override

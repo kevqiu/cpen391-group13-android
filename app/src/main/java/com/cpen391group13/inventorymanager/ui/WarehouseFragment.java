@@ -11,9 +11,10 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.cpen391group13.inventorymanager.R;
+import com.cpen391group13.inventorymanager.api.client.WarehouseClient;
 import com.cpen391group13.inventorymanager.api.models.Warehouse;
-import com.cpen391group13.inventorymanager.api.service.RetrofitClient;
-import com.cpen391group13.inventorymanager.api.service.WarehouseClient;
+import com.cpen391group13.inventorymanager.api.service.RetrofitService;
+import com.cpen391group13.inventorymanager.api.service.WarehouseService;
 import com.cpen391group13.inventorymanager.ui.adapters.WarehouseAdapter;
 
 import java.util.List;
@@ -34,7 +35,8 @@ public class WarehouseFragment extends Fragment implements SwipeRefreshLayout.On
     @BindView(R.id.warehouse_recycler_view) RecyclerView recyclerView;
     @BindView(R.id.swipe_refresh_warehouse) SwipeRefreshLayout swipeRefreshLayout;
 
-    private WarehouseClient client;
+    private WarehouseService service;
+    private WarehouseClient warehouseClient;
     private RecyclerView.LayoutManager layoutManager;
 
     @Override
@@ -53,10 +55,13 @@ public class WarehouseFragment extends Fragment implements SwipeRefreshLayout.On
 
         swipeRefreshLayout.setOnRefreshListener(this);
 
-        Retrofit retrofit = RetrofitClient.getClient(this.getContext());
-        client = retrofit.create(WarehouseClient.class);
+        Retrofit retrofit = RetrofitService.getClient(this.getContext());
+        service = retrofit.create(WarehouseService.class);
 
-        refreshWarehouses();
+        warehouseClient = new WarehouseClient();
+        warehouseClient.fetchWarehouses(service);
+
+//        refreshWarehouses();
 
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
@@ -66,30 +71,30 @@ public class WarehouseFragment extends Fragment implements SwipeRefreshLayout.On
 
     @Override
     public void onRefresh() {
-        refreshWarehouses();
-    }
-
-    private void refreshWarehouses() {
-        Call<List<Warehouse>> call = client.getWarehouses();
-        call.enqueue(new Callback<List<Warehouse>>() {
-            @Override
-            public void onResponse(Call<List<Warehouse>> call, Response<List<Warehouse>> response) {
-                if (response.isSuccessful()) {
-                    List<Warehouse> warehouses = response.body();
-                    recyclerView.setAdapter(new WarehouseAdapter(getActivity(), warehouses));
-                } else {
-                    Toast.makeText(getActivity(), "AHHHHHHHH :(", Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<Warehouse>> call, Throwable t) {
-                Toast.makeText(getActivity(), "error :(", Toast.LENGTH_SHORT).show();
-            }
-        });
-
+//        refreshWarehouses();
+        warehouseClient.fetchWarehouses(service);
         if (swipeRefreshLayout.isRefreshing()) {
             swipeRefreshLayout.setRefreshing(false);
         }
     }
+
+//    private void refreshWarehouses() {
+//        Call<List<Warehouse>> call = service.getWarehouses();
+//        call.enqueue(new Callback<List<Warehouse>>() {
+//            @Override
+//            public void onResponse(Call<List<Warehouse>> call, Response<List<Warehouse>> response) {
+//                if (response.isSuccessful()) {
+//                    List<Warehouse> warehouses = response.body();
+//                    recyclerView.setAdapter(new WarehouseAdapter(getActivity(), warehouses));
+//                } else {
+//                    Toast.makeText(getActivity(), "AHHHHHHHH :(", Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<List<Warehouse>> call, Throwable t) {
+//                Toast.makeText(getActivity(), "error :(", Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//    }
 }

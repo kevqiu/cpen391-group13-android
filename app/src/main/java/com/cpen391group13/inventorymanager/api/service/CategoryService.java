@@ -11,7 +11,7 @@ import retrofit2.http.GET;
  * Created by Logan on 3/15/2018.
  */
 
-public interface CategoryClient {
+public interface CategoryService {
     @GET("/categories")
     Call<List<Category>> getCategories();
 }

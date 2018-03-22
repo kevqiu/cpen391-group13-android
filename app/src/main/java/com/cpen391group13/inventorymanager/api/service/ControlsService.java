@@ -8,7 +8,7 @@ import retrofit2.http.Path;
  * Created by Kevin on 3/7/2018.
  */
 
-public interface ControlsClient {
+public interface ControlsService {
 
     @POST("/controls/autosort")
     Call<Void> beginAutosortProcess();

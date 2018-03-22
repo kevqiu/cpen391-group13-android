@@ -11,7 +11,7 @@ import retrofit2.http.GET;
  * Created by Kevin on 3/7/2018.
  */
 
-public interface WarehouseClient {
+public interface WarehouseService {
     @GET("/warehouses")
     Call<List<Warehouse>> getWarehouses();
 }
