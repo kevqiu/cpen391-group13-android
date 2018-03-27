@@ -5,22 +5,15 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.cpen391group13.inventorymanager.R;
 import com.cpen391group13.inventorymanager.api.models.Cycle;
-import com.cpen391group13.inventorymanager.api.models.Warehouse;
-import com.cpen391group13.inventorymanager.ui.CategoryFragment;
 import com.cpen391group13.inventorymanager.ui.ItemFragment;
-import com.cpen391group13.inventorymanager.ui.LocationFragment;
-import com.google.android.gms.maps.model.LatLng;
 
-import java.text.SimpleDateFormat;
 import java.util.List;
 
 import butterknife.BindView;
@@ -40,7 +33,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         @BindView(R.id.cycle_text) TextView cycleText;
         @BindView(R.id.time_text) TextView cycleTimeRange;
-        @BindView(R.id.cycle_cardview) CardView warehouseCardView;
+        @BindView(R.id.history_cardview) CardView warehouseCardView;
 
         public ViewHolder(View v) {
             super(v);
