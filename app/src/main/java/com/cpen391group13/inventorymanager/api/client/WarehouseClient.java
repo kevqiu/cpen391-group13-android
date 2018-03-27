@@ -24,23 +24,23 @@ public class WarehouseClient {
         this.warehouses = null;
     }
 
-    public List<Warehouse> fetchWarehouses(WarehouseService service, Callback<List<Warehouse>> callback){
-        Call<List<Warehouse>> call = service.getWarehouses();
-        call.enqueue(new Callback<List<Warehouse>>() {
-            @Override
-            public void onResponse(Call<List<Warehouse>> call, Response<List<Warehouse>> response) {
-                if (response.isSuccessful()) {
-                    List<Warehouse> warehouses = response.body();
-                } else {
-                    //Toast.makeText(getActivity(), "AHHHHHHHH :(", Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<Warehouse>> call, Throwable t) {
-                //Toast.makeText(getActivity(), "error :(", Toast.LENGTH_SHORT).show();
-            }
-        });
-        return ;
-    }
+//    public List<Warehouse> fetchWarehouses(WarehouseService service, Callback<List<Warehouse>> callback){
+//        Call<List<Warehouse>> call = service.getWarehouses();
+//        call.enqueue(new Callback<List<Warehouse>>() {
+//            @Override
+//            public void onResponse(Call<List<Warehouse>> call, Response<List<Warehouse>> response) {
+//                if (response.isSuccessful()) {
+//                    List<Warehouse> warehouses = response.body();
+//                } else {
+//                    //Toast.makeText(getActivity(), "AHHHHHHHH :(", Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<List<Warehouse>> call, Throwable t) {
+//                //Toast.makeText(getActivity(), "error :(", Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//        return ;
+//    }
 }

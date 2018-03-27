@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/transparent">
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/overview_cardview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:drawable/dialog_holo_light_frame"
+        android:layout_marginTop="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="4dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="16dp">
+
+            <TextView
+                android:id="@+id/overview_warehouse_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="false"
+                android:textSize="30sp"
+                android:textColor="@color/colorWhite"/>
+
+            <TextView
+                android:id="@+id/overview_all_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/overview_warehouse_text"
+                android:layout_centerHorizontal="false"
+                android:textColor="@color/colorWhite"/>
+
+            <TextView
+                android:id="@+id/overview_all_count_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/overview_all_text"
+                android:layout_centerHorizontal="false"
+                android:textColor="@color/colorWhite"/>
+
+            <TextView
+                android:id="@+id/overview_red_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/overview_all_count_text"
+                android:layout_centerHorizontal="false"
+                android:textColor="@color/colorWhite"/>
+
+            <TextView
+                android:id="@+id/overview_red_count_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/overview_red_text"
+                android:layout_centerHorizontal="false"
+                android:textColor="@color/colorWhite"/>
+
+            <TextView
+                android:id="@+id/overview_blue_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/overview_red_count_text"
+                android:layout_centerHorizontal="false"
+                android:textColor="@color/colorWhite"/>
+
+            <TextView
+                android:id="@+id/overview_blue_count_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/overview_blue_text"
+                android:layout_centerHorizontal="false"
+                android:textColor="@color/colorWhite"/>
+
+            <TextView
+                android:id="@+id/overview_green_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/overview_blue_count_text"
+                android:layout_centerHorizontal="false"
+                android:textColor="@color/colorWhite"/>
+
+            <TextView
+                android:id="@+id/overview_green_count_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/overview_green_text"
+                android:layout_centerHorizontal="false"
+                android:textColor="@color/colorWhite"/>
+
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
+
+</LinearLayout>

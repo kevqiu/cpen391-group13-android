@@ -58,10 +58,10 @@ public class WarehouseFragment extends Fragment implements SwipeRefreshLayout.On
         Retrofit retrofit = RetrofitService.getClient(this.getContext());
         service = retrofit.create(WarehouseService.class);
 
-        warehouseClient = new WarehouseClient();
-        warehouseClient.fetchWarehouses(service);
+        //warehouseClient = new WarehouseClient();
+        //warehouseClient.fetchWarehouses(service);
 
-//        refreshWarehouses();
+        refreshWarehouses();
 
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
@@ -71,30 +71,30 @@ public class WarehouseFragment extends Fragment implements SwipeRefreshLayout.On
 
     @Override
     public void onRefresh() {
-//        refreshWarehouses();
-        warehouseClient.fetchWarehouses(service);
+        refreshWarehouses();
+        //warehouseClient.fetchWarehouses(service);
         if (swipeRefreshLayout.isRefreshing()) {
             swipeRefreshLayout.setRefreshing(false);
         }
     }
 
-//    private void refreshWarehouses() {
-//        Call<List<Warehouse>> call = service.getWarehouses();
-//        call.enqueue(new Callback<List<Warehouse>>() {
-//            @Override
-//            public void onResponse(Call<List<Warehouse>> call, Response<List<Warehouse>> response) {
-//                if (response.isSuccessful()) {
-//                    List<Warehouse> warehouses = response.body();
-//                    recyclerView.setAdapter(new WarehouseAdapter(getActivity(), warehouses));
-//                } else {
-//                    Toast.makeText(getActivity(), "AHHHHHHHH :(", Toast.LENGTH_SHORT).show();
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<List<Warehouse>> call, Throwable t) {
-//                Toast.makeText(getActivity(), "error :(", Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//    }
+    private void refreshWarehouses() {
+        Call<List<Warehouse>> call = service.getWarehouses();
+        call.enqueue(new Callback<List<Warehouse>>() {
+            @Override
+            public void onResponse(Call<List<Warehouse>> call, Response<List<Warehouse>> response) {
+                if (response.isSuccessful()) {
+                    List<Warehouse> warehouses = response.body();
+                    recyclerView.setAdapter(new WarehouseAdapter(getActivity(), warehouses));
+                } else {
+                    Toast.makeText(getActivity(), "AHHHHHHHH :(", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Warehouse>> call, Throwable t) {
+                Toast.makeText(getActivity(), "error :(", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 }
