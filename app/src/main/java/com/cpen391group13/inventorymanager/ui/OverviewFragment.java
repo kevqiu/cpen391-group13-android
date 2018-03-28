@@ -4,6 +4,7 @@ import android.app.Fragment;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -74,7 +75,7 @@ public class OverviewFragment extends Fragment implements SwipeRefreshLayout.OnR
         fetchWarehouses();
     }
 
-    private void fetchWarehouses(){
+    private void fetchWarehouses() {
         Call<List<Warehouse>> call = warehouseService.getWarehouses();
         call.enqueue(new Callback<List<Warehouse>>() {
             @Override
@@ -82,8 +83,8 @@ public class OverviewFragment extends Fragment implements SwipeRefreshLayout.OnR
                 if (response.isSuccessful()) {
                     List<Warehouse> warehouses = response.body();
                     overviewAdapterItems = new ArrayList<>();
-                    // Loop through warehouse and make a new OverviewAdapterItem for each
-                    for(Warehouse warehouse : warehouses){
+                    // Get each warehouse and create an OverviewAdapterItem for each
+                    for (Warehouse warehouse : warehouses) {
                         OverviewAdapterItem overviewAdapterItem = new OverviewAdapterItem(warehouse.getId(), warehouse.getLocation());
                         overviewAdapterItems.add(overviewAdapterItem);
                     }
@@ -105,24 +106,20 @@ public class OverviewFragment extends Fragment implements SwipeRefreshLayout.OnR
         }
     }
 
-    private void fetchCategories(){
+    private void fetchCategories() {
         Call<List<Category>> call = categoryService.getCategories();
         call.enqueue(new Callback<List<Category>>() {
             @Override
             public void onResponse(Call<List<Category>> call, final Response<List<Category>> response) {
                 if (response.isSuccessful()) {
                     List<Category> categories = response.body();
-                    // For each overAdapterItem add an all category
-                    for(OverviewAdapterItem overviewAdapterItem : overviewAdapterItems) {
-                        overviewAdapterItem.addListItem("All", 0);
-                    }
-                    // For each category, add that categoryAdapterItem to each warehouse
+                    // Get each category and add a list item for that category
                     for (Category category : categories) {
-                        for(OverviewAdapterItem overviewAdapterItem : overviewAdapterItems) {
+                        for (OverviewAdapterItem overviewAdapterItem : overviewAdapterItems) {
                             overviewAdapterItem.addListItem(category.getCategory(), category.getId());
-                            fetchItems(overviewAdapterItem.getWarehouseId());
                         }
                     }
+                    fetchItems();
                 } else {
                     Toast.makeText(getActivity(), "Category Response Failed", Toast.LENGTH_SHORT).show();
                 }
@@ -134,18 +131,19 @@ public class OverviewFragment extends Fragment implements SwipeRefreshLayout.OnR
             }
         });
     }
-    private void fetchItems(final int warehouseId) {
-        Call<List<Item>> itemCall = itemService.getItems(null, String.valueOf(warehouseId));
+
+    private void fetchItems() {
+        Call<List<Item>> itemCall = itemService.getItems(null, null);
         itemCall.enqueue(new Callback<List<Item>>() {
             @Override
             public void onResponse(Call<List<Item>> itemCall, Response<List<Item>> itemResponse) {
                 if (itemResponse.isSuccessful()) {
                     List<Item> items = itemResponse.body();
-                    // Set 'All' count
-                    overviewAdapterItems.get(warehouseId - 1).getCategoryAdapterItem(0).setCategoryCount(items.size());
-                    // Loop through items and increment count for specific category
+                    // Get each item and for corresponding warehouse increment all count and specific category count
                     for (Item item : items) {
-                       overviewAdapterItems.get(warehouseId - 1).getCategoryAdapterItem(item.getCategoryId()).incrementCategoryCount();
+                        OverviewAdapterItem currentItem = overviewAdapterItems.get(item.getWarehouseId() - 1);
+                        currentItem.getCategoryAdapterItem(0).incrementCategoryCount();
+                        currentItem.getCategoryAdapterItem(item.getCategoryId()).incrementCategoryCount();
                     }
                     recyclerView.setAdapter(new OverviewAdapter(getActivity(), overviewAdapterItems));
                 } else {

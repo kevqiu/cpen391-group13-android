@@ -16,6 +16,7 @@ public class OverviewAdapterItem {
         this.warehouseId = warehouseId;
         this.warehouseLocation = warehouseLocation;
         categoryAdapterItems = new ArrayList<CategoryAdapterItem>();
+        categoryAdapterItems.add(new CategoryAdapterItem("All", 0, warehouseId));
     }
 
     public void addListItem(String category, int categoryId){

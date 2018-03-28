@@ -49,6 +49,7 @@ public class OverviewAdapter extends RecyclerView.Adapter<OverviewAdapter.ViewHo
     public OverviewAdapter(Context context, List<OverviewAdapterItem> values) {
         this.context = context;
         this.values = values;
+        Log.d("VALUES:", values.get(0).getWarehouseLocation() + String.valueOf(values.get(1).getCategoryAdapterItem(1).getCategoryCount()));
     }
 
     // Create new views (invoked by the layout manager)
@@ -57,17 +58,17 @@ public class OverviewAdapter extends RecyclerView.Adapter<OverviewAdapter.ViewHo
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
         // create a new view
-        View v = inflater.inflate(R.layout.category_recycler_item, parent, false);
+        View v = inflater.inflate(R.layout.overview_recycler_item, parent, false);
         return new OverviewAdapter.ViewHolder(v);
     }
 
     // Replace the contents of a view (invoked by the layout manager)
     @Override
     public void onBindViewHolder(OverviewAdapter.ViewHolder holder, int position) {
-        String categoryText;
         // - get element from your dataset at this position
         OverviewAdapterItem item = values.get(position);
         warehouseText.setText(item.getWarehouseLocation());
+        Log.d("TEXT", "Setting text");
 
         allText.setText(item.getCategoryAdapterItem(0).getCategory());
         allCountText.setText(item.getCategoryAdapterItem(0).getCategoryCount());
