@@ -57,15 +57,21 @@ public class MainMenu extends AppCompatActivity implements NavigationView.OnNavi
         if (bundle != null) {
             ItemFragment itemFragment = new ItemFragment();
             Bundle itemBundle = new Bundle();
-            String timeRange = bundle.getString("start_time") + "," + bundle.getString("end_time");
-            itemBundle.putString("time_range", timeRange);
-            itemFragment.setArguments(itemBundle);
 
-            getFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.main_layout, itemFragment)
-                    .addToBackStack(null)
-                    .commit();
+            String startTime = bundle.getString("start_time");
+            String endTime = bundle.getString("end_time");
+
+            if (startTime != null && endTime != null) {
+                String timeRange = startTime + "," + endTime;
+                itemBundle.putString("time_range", timeRange);
+                itemFragment.setArguments(itemBundle);
+
+                getFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.main_layout, itemFragment)
+                        .addToBackStack(null)
+                        .commit();
+            }
         }
 
         drawer.addDrawerListener(new DrawerLayout.DrawerListener() {
