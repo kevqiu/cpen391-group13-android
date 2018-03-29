@@ -3,6 +3,7 @@ package com.cpen391group13.inventorymanager.ui;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -64,6 +65,9 @@ public class OverviewFragment extends Fragment implements SwipeRefreshLayout.OnR
         warehouseService = retrofit.create(WarehouseService.class);
         categoryService = retrofit.create(CategoryService.class);
         itemService = retrofit.create(ItemService.class);
+
+        layoutManager = new LinearLayoutManager(getActivity());
+        recyclerView.setLayoutManager(layoutManager);
         
         fetchWarehouses();
 
