@@ -60,9 +60,6 @@ public class NotificationService extends FirebaseMessagingService {
         // messages. For more see: https://firebase.google.com/docs/cloud-messaging/concept-options
         // [END_EXCLUDE]
 
-        // Not getting messages here? See why this may be: https://goo.gl/39bRNJ
-        Log.d(TAG, "From: " + remoteMessage.getFrom());
-
         JSONObject data = null;
         String title;
         String message;
@@ -76,9 +73,6 @@ public class NotificationService extends FirebaseMessagingService {
             try {
                 String startTime = data.getString("start_time");
                 String endTime = data.getString("end_time");
-
-                Log.d("FCM_TEST", startTime);
-                Log.d("FCM_TEST", endTime);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -95,12 +89,9 @@ public class NotificationService extends FirebaseMessagingService {
 
         // Check if message contains a notification payload.
         if (remoteMessage.getNotification() != null) {
-            Log.d(TAG, "Message Notification Body: " + remoteMessage.getNotification().getBody());
-
             title = remoteMessage.getNotification().getTitle();
             message = remoteMessage.getNotification().getBody();
             clickAction = remoteMessage.getNotification().getClickAction();
-            Log.d("FCM_TEST", clickAction);
 
             sendNotification(data, title, message, clickAction);
         }
