@@ -15,7 +15,9 @@ import retrofit2.http.Query;
 
 public interface ItemClient {
     @GET("/items")
-    Call<List<Item>> getItems(@Query("category_id") String categoryId, @Query("warehouse_id") String warehouseId);
+    Call<List<Item>> getItems(@Query("category_id") String categoryId,
+                              @Query("warehouse_id") String warehouseId,
+                              @Query(value = "between", encoded=true) String timeRange);
 
     @GET("/items/{id}")
     Call<Item> getItem(@Path("id") String id);
