@@ -1,9 +1,8 @@
 package com.cpen391group13.inventorymanager.ui.adapters;
 
-import android.app.Activity;
 import android.content.Context;
-import android.os.Bundle;
-import android.support.v7.widget.CardView;
+import android.support.annotation.Nullable;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,9 +11,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.cpen391group13.inventorymanager.R;
-import com.cpen391group13.inventorymanager.ui.adapters.OverviewAdapterItem;
-
-import org.w3c.dom.Text;
 
 import java.util.List;
 
@@ -26,22 +22,43 @@ import butterknife.ButterKnife;
  */
 
 public class OverviewAdapter extends RecyclerView.Adapter<OverviewAdapter.ViewHolder> {
+    private static final int HEADER_VIEW = 1;
+    private static final int LIST_ITEM_VIEW = 2;
+
     private Context context;
     private List<OverviewAdapterItem> values;
+    private List<CategoryAdapterItem> listValues;
 
     // Provide a reference to the views for each data item
     public class ViewHolder extends RecyclerView.ViewHolder{
-        @BindView(R.id.overview_warehouse_text) TextView warehouseText;
-        @BindView(R.id.overview_all_text) TextView allText;
-        @BindView(R.id.overview_all_count_text) TextView allCountText;
-        @BindView(R.id.overview_red_text) TextView redText;
-        @BindView(R.id.overview_red_count_text) TextView redCountText;
-        @BindView(R.id.overview_green_text) TextView greenText;
-        @BindView(R.id.overview_green_count_text) TextView greenCountText;
-        @BindView(R.id.overview_blue_text) TextView blueText;
-        @BindView(R.id.overview_blue_count_text) TextView blueCountText;
-
+        @Nullable@BindView(R.id.overview_warehouse_text) TextView warehouseText;
+        @Nullable@BindView(R.id.overview_category_text) TextView categoryText;
+        @Nullable@BindView(R.id.overview_category_count_text) TextView categoryCountText;
         public ViewHolder(View v) {
+            super(v);
+            ButterKnife.bind(this, v);
+        }
+
+        public void bindViewList(int pos){
+            pos -= 1;
+            categoryText.setText(listValues.get(pos).getCategory());
+            categoryCountText.setText(Integer.toString(listValues.get(pos).getCategoryCount()));
+        }
+
+        public void bindViewHeader(int pos){
+            warehouseText.setText(values.get(pos).getWarehouseLocation());
+        }
+    }
+
+    public class HeaderViewHolder extends OverviewAdapter.ViewHolder{
+        public HeaderViewHolder(View v) {
+            super(v);
+            ButterKnife.bind(this, v);
+        }
+    }
+
+    public class ListViewHolder extends OverviewAdapter.ViewHolder{
+        public ListViewHolder(View v) {
             super(v);
             ButterKnife.bind(this, v);
         }
@@ -51,7 +68,6 @@ public class OverviewAdapter extends RecyclerView.Adapter<OverviewAdapter.ViewHo
     public OverviewAdapter(Context context, List<OverviewAdapterItem> values) {
         this.context = context;
         this.values = values;
-        Log.d("VALUES:", values.get(0).getWarehouseLocation() + String.valueOf(values.get(1).getCategoryAdapterItem(1).getCategoryCount()));
     }
 
     // Create new views (invoked by the layout manager)
@@ -60,45 +76,56 @@ public class OverviewAdapter extends RecyclerView.Adapter<OverviewAdapter.ViewHo
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
         // create a new view
-        View v = inflater.inflate(R.layout.overview_recycler_item, parent, false);
-        return new OverviewAdapter.ViewHolder(v);
+        Log.d("Viewtype", Integer.toString(viewType));
+        if (viewType == HEADER_VIEW){
+            Log.d("block", "Header viewtype");
+            View v = inflater.inflate(R.layout.overview_recycler_item, parent, false);
+            return new OverviewAdapter.HeaderViewHolder(v);
+        }
+        else{
+            Log.d("block", "List viewtype");
+            View v = inflater.inflate(R.layout.overview_categories_recycler_item, parent, false);
+            return new OverviewAdapter.ListViewHolder(v);
+        }
     }
 
     // Replace the contents of a view (invoked by the layout manager)
     @Override
     public void onBindViewHolder(OverviewAdapter.ViewHolder holder, int position) {
         // - get element from your dataset at this position
-        OverviewAdapterItem item = values.get(position);
-        TextView warehouseText = holder.warehouseText;
-        TextView allText = holder.allText;
-        TextView redText = holder.redText;
-        TextView greenText = holder.greenText;
-        TextView blueText = holder.blueText;
-        TextView allCountText = holder.allCountText;
-        TextView redCountText = holder.redCountText;
-        TextView greenCountText = holder.greenCountText;
-        TextView blueCountText = holder.blueCountText;
-
-        Log.d("Current item: ", "Location: " + item.getWarehouseLocation());
-        warehouseText.setText(item.getWarehouseLocation());
-        Log.d("TEXT", "Setting text");
-
-        allText.setText(item.getCategoryAdapterItem(0).getCategory().toString());
-        allCountText.setText(Integer.toString(item.getCategoryAdapterItem(0).getCategoryCount()));
-
-        redText.setText(item.getCategoryAdapterItem(1).getCategory().toString());
-        redCountText.setText(Integer.toString(item.getCategoryAdapterItem(1).getCategoryCount()));
-
-        greenText.setText(item.getCategoryAdapterItem(2).getCategory().toString());
-        greenCountText.setText(Integer.toString(item.getCategoryAdapterItem(2).getCategoryCount()));
-
-        blueText.setText(item.getCategoryAdapterItem(3).getCategory().toString());
-        blueCountText.setText(Integer.toString(item.getCategoryAdapterItem(3).getCategoryCount()));
+        listValues = values.get(position).getCategoryAdapterItems();
+        Log.d("values at", Integer.toString(position));
+        if (holder instanceof HeaderViewHolder) {
+            HeaderViewHolder vh = (HeaderViewHolder) holder;
+            vh.bindViewHeader(position);
+            Log.d("Holder: ", "Header");
+        } else if (holder instanceof ListViewHolder) {
+            ListViewHolder vh = (ListViewHolder) holder;
+            vh.bindViewList(position);
+            Log.d("Holder: ", "List");
+        }
     }
 
     // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
         return values.size();
+    }
+
+    @Override
+    public int getItemViewType(int position){
+        if (position == 0){
+            Log.d("Get view type", "Header");
+            return HEADER_VIEW;
+        }
+        else if (position > 0){
+            Log.d("Get view type", "List");
+            return LIST_ITEM_VIEW;
+        }
+        else {
+
+            Log.d("Get view type", "Other");
+            return super.getItemViewType(position);
+        }
     }
 }

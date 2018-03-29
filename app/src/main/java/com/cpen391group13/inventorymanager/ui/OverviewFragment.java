@@ -146,8 +146,8 @@ public class OverviewFragment extends Fragment implements SwipeRefreshLayout.OnR
                     // Get each item and for corresponding warehouse increment all count and specific category count
                     for (Item item : items) {
                         OverviewAdapterItem currentItem = overviewAdapterItems.get(item.getWarehouseId() - 1);
-                        currentItem.getCategoryAdapterItem(0).incrementCategoryCount();
-                        currentItem.getCategoryAdapterItem(item.getCategoryId()).incrementCategoryCount();
+                        currentItem.getCategoryAdapterItems().get(0).incrementCategoryCount();
+                        currentItem.getCategoryAdapterItems().get(item.getCategoryId()).incrementCategoryCount();
                     }
                     recyclerView.setAdapter(new OverviewAdapter(getActivity(), overviewAdapterItems));
                 } else {

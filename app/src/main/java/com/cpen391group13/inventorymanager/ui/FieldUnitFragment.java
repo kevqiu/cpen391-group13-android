@@ -11,6 +11,8 @@ import android.view.ViewGroup;
 import com.cpen391group13.inventorymanager.R;
 
 public class FieldUnitFragment extends Fragment {
+    //TODO: Retrofit post
+    //TODO: send lat long + datatime and server will map to nearest
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
