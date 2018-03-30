@@ -2,8 +2,10 @@ package com.cpen391group13.inventorymanager.api.models;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.TimeZone;
 
 /**
  * Created by Kevin on 3/7/2018.
@@ -31,6 +33,20 @@ public class Cycle {
     }
 
     public String getStartTimeString() {
+//        SimpleDateFormat isoFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+//        isoFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+//        Date date = null;
+//        try {
+//            date = isoFormat.parse(new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").format(startTime));
+//        } catch (ParseException e) {
+//            e.printStackTrace();
+//        }
+//        return new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.SSS")
+//                .format(date);
+//        DateFormat df = new SimpleDateFormat("E dd MMM yyyy HH:mm:ss z");
+//        df.setTimeZone(TimeZone.getTimeZone("GMT"));
+//        return df.toString();
+//        return startTime.toGMTString().replace("GMT", "");
         return new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.SSS")
                 .format(this.startTime);
     }
@@ -40,6 +56,7 @@ public class Cycle {
     }
 
     public String getEndTimeString() {
+//        return endTime.toGMTString().replace("GMT", "");
         return new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.SSS")
                 .format(this.endTime);
     }
