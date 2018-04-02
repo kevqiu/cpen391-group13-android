@@ -13,7 +13,7 @@ import retrofit2.http.Part;
  * Created by Kevin on 4/1/2018.
  */
 
-public interface CaptureClient {
+public interface CaptureService {
     @Multipart
     @POST("/capture/mobile")
     Call<CaptureResponseBody> mobileCapture(

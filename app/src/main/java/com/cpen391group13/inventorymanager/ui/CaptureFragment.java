@@ -16,8 +16,8 @@ import android.widget.Toast;
 
 import com.cpen391group13.inventorymanager.R;
 import com.cpen391group13.inventorymanager.api.models.CaptureResponseBody;
-import com.cpen391group13.inventorymanager.api.service.CaptureClient;
-import com.cpen391group13.inventorymanager.api.service.RetrofitClient;
+import com.cpen391group13.inventorymanager.api.service.CaptureService;
+import com.cpen391group13.inventorymanager.api.service.RetrofitService;
 import com.cpen391group13.inventorymanager.helpers.CategoryHelper;
 
 import java.io.File;
@@ -38,7 +38,7 @@ import retrofit2.Retrofit;
 public class CaptureFragment extends Fragment {
     @BindView(R.id.test_button) Button testButton;
 
-    private CaptureClient client;
+    private CaptureService client;
     private Location location;
 
     @SuppressLint("MissingPermission")
@@ -51,8 +51,8 @@ public class CaptureFragment extends Fragment {
         // Inflate the layout for this fragment
         getActivity().setTitle("Capture");
 
-        Retrofit retrofit = RetrofitClient.getClient(this.getContext());
-        client = retrofit.create(CaptureClient.class);
+        Retrofit retrofit = RetrofitService.getClient(this.getContext());
+        client = retrofit.create(CaptureService.class);
 
         LocationManager lm = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
         location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
