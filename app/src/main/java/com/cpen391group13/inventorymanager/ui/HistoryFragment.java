@@ -13,7 +13,7 @@ import android.widget.Toast;
 import com.cpen391group13.inventorymanager.R;
 import com.cpen391group13.inventorymanager.api.models.Cycle;
 import com.cpen391group13.inventorymanager.api.service.CycleClient;
-import com.cpen391group13.inventorymanager.api.service.RetrofitClient;
+import com.cpen391group13.inventorymanager.api.service.RetrofitService;
 import com.cpen391group13.inventorymanager.ui.adapters.HistoryAdapter;
 
 import java.util.Collections;
@@ -55,7 +55,7 @@ public class HistoryFragment extends Fragment implements SwipeRefreshLayout.OnRe
 
         swipeRefreshLayout.setOnRefreshListener(this);
 
-        Retrofit retrofit = RetrofitClient.getClient(this.getContext());
+        Retrofit retrofit = RetrofitService.getClient(this.getContext());
         client = retrofit.create(CycleClient.class);
 
         fetchCycles();

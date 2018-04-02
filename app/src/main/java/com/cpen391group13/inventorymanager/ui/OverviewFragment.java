@@ -136,7 +136,7 @@ public class OverviewFragment extends Fragment implements SwipeRefreshLayout.OnR
     }
 
     private void fetchItems() {
-        Call<List<Item>> itemCall = itemService.getItems(null, null);
+        Call<List<Item>> itemCall = itemService.getItems(null, null, null);
         itemCall.enqueue(new Callback<List<Item>>() {
             @Override
             public void onResponse(Call<List<Item>> itemCall, Response<List<Item>> itemResponse) {
