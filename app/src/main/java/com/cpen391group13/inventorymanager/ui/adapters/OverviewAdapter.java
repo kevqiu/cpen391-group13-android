@@ -1,18 +1,18 @@
 package com.cpen391group13.inventorymanager.ui.adapters;
 
+import android.app.Activity;
 import android.content.Context;
-import android.support.annotation.Nullable;
+import android.os.Bundle;
 import android.support.v7.widget.CardView;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.cpen391group13.inventorymanager.R;
+import com.cpen391group13.inventorymanager.ui.CategoryFragment;
 
 import java.util.List;
 
@@ -23,12 +23,12 @@ import butterknife.ButterKnife;
  * Created by Logan on 2018-03-27.
  */
 
-public class OverviewAdapter extends RecyclerView.Adapter<OverviewAdapter.ViewHolder> {
+public class OverviewAdapter extends RecyclerView.Adapter<OverviewAdapter.ViewHolder>{
     private Context context;
     private List<OverviewAdapterItem> values;
 
     // Provide a reference to the views for each data item
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         @BindView(R.id.overview_warehouse_text) TextView warehouseText;
         @BindView(R.id.overview_all_text) TextView allText;
         @BindView(R.id.overview_all_count_text) TextView allCountText;
@@ -39,9 +39,27 @@ public class OverviewAdapter extends RecyclerView.Adapter<OverviewAdapter.ViewHo
         @BindView(R.id.overview_blue_text) TextView blueText;
         @BindView(R.id.overview_blue_count_text) TextView blueCountText;
         @BindView(R.id.overview_cardview) CardView overviewCardView;
+        @BindView(R.id.overview_other_text) TextView otherText;
+        @BindView(R.id.overview_other_count_text) TextView otherCountText;
         public ViewHolder(View v) {
             super(v);
             ButterKnife.bind(this, v);
+            v.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v){
+            OverviewAdapterItem item = values.get(getAdapterPosition());
+            Log.d("Warehouse pressed", item.getWarehouseLocation());
+            CategoryFragment categoryFrag = new CategoryFragment();
+            Bundle bundle = new Bundle();
+            bundle.putInt("warehouse_id", item.getWarehouseId());
+            categoryFrag.setArguments(bundle);
+            ((Activity) context).getFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.main_layout, categoryFrag)
+                    .addToBackStack(null)
+                    .commit();
         }
     }
     // Constructor for this dataset
@@ -70,10 +88,12 @@ public class OverviewAdapter extends RecyclerView.Adapter<OverviewAdapter.ViewHo
         TextView redText = holder.redText;
         TextView greenText = holder.greenText;
         TextView blueText = holder.blueText;
+        TextView otherText = holder.otherText;
         TextView allCountText = holder.allCountText;
         TextView redCountText = holder.redCountText;
         TextView greenCountText = holder.greenCountText;
         TextView blueCountText = holder.blueCountText;
+        TextView otherCountText = holder.otherCountText;
 
         //RelativeLayout relativeLayout = holder.relativeLayout;
         warehouseText.setText(item.getWarehouseLocation());
@@ -95,6 +115,11 @@ public class OverviewAdapter extends RecyclerView.Adapter<OverviewAdapter.ViewHo
         blueTextString = blueTextString.substring(0,1).toUpperCase() + blueTextString.substring(1);
         blueText.setText(blueTextString + ": ");
         blueCountText.setText(Integer.toString(item.getCategoryAdapterItem(3).getCategoryCount()));
+
+        String otherTextString = item.getCategoryAdapterItem(4).getCategory();
+        otherTextString = otherTextString.substring(0,1).toUpperCase() + otherTextString.substring(1);
+        otherText.setText(otherTextString + ": ");
+        otherCountText.setText(Integer.toString(item.getCategoryAdapterItem(4).getCategoryCount()));
 
         CardView overviewCardView = holder.overviewCardView;
         overviewCardView.setBackgroundResource(R.drawable.other_gradient);
