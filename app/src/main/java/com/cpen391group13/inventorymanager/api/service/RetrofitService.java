@@ -20,7 +20,9 @@ public class RetrofitService {
     private static String lastBaseUrl = "";
 
     public static Retrofit getClient(Context context) {
-        Gson gson = new GsonBuilder().registerTypeAdapter(Date.class, new GsonUTCDateAdapter()).create();
+        Gson gson = new GsonBuilder()
+                .registerTypeAdapter(Date.class, new GsonUTCDateAdapter())
+                .create();
         String baseUrl = PreferencesHelper.getServerPath(context);
         if (retrofit == null || !lastBaseUrl.equals(baseUrl)) {
             retrofit = new Retrofit.Builder()

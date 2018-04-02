@@ -60,7 +60,7 @@ public class ImageFragment extends Fragment {
                 if (response.isSuccessful()) {
                     Item item = response.body();
                     labelText.setText("Item " + item.getId());
-                    String time = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss")
+                    String time = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
                             .format(item.getDatetime());
                     descriptionText.setText("Time Taken: " + time + " GMT");
                 }

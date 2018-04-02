@@ -33,21 +33,7 @@ public class Cycle {
     }
 
     public String getStartTimeString() {
-//        SimpleDateFormat isoFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
-//        isoFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
-//        Date date = null;
-//        try {
-//            date = isoFormat.parse(new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").format(startTime));
-//        } catch (ParseException e) {
-//            e.printStackTrace();
-//        }
-//        return new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.SSS")
-//                .format(date);
-//        DateFormat df = new SimpleDateFormat("E dd MMM yyyy HH:mm:ss z");
-//        df.setTimeZone(TimeZone.getTimeZone("GMT"));
-//        return df.toString();
-//        return startTime.toGMTString().replace("GMT", "");
-        return new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.SSS")
+        return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS")
                 .format(this.startTime);
     }
 
@@ -56,8 +42,7 @@ public class Cycle {
     }
 
     public String getEndTimeString() {
-//        return endTime.toGMTString().replace("GMT", "");
-        return new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.SSS")
+        return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS")
                 .format(this.endTime);
     }
 }
