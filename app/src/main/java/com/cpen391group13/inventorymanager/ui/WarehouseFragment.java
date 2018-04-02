@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.cpen391group13.inventorymanager.R;
-import com.cpen391group13.inventorymanager.api.client.WarehouseClient;
 import com.cpen391group13.inventorymanager.api.models.Warehouse;
 import com.cpen391group13.inventorymanager.api.service.RetrofitService;
 import com.cpen391group13.inventorymanager.api.service.WarehouseService;
@@ -36,7 +35,6 @@ public class WarehouseFragment extends Fragment implements SwipeRefreshLayout.On
     @BindView(R.id.swipe_refresh_warehouse) SwipeRefreshLayout swipeRefreshLayout;
 
     private WarehouseService service;
-    private WarehouseClient warehouseClient;
     private RecyclerView.LayoutManager layoutManager;
 
     @Override
@@ -58,9 +56,6 @@ public class WarehouseFragment extends Fragment implements SwipeRefreshLayout.On
         Retrofit retrofit = RetrofitService.getClient(this.getContext());
         service = retrofit.create(WarehouseService.class);
 
-        //warehouseClient = new WarehouseClient();
-        //warehouseClient.fetchWarehouses(service);
-
         refreshWarehouses();
 
         layoutManager = new LinearLayoutManager(getActivity());
@@ -72,7 +67,6 @@ public class WarehouseFragment extends Fragment implements SwipeRefreshLayout.On
     @Override
     public void onRefresh() {
         refreshWarehouses();
-        //warehouseClient.fetchWarehouses(service);
         if (swipeRefreshLayout.isRefreshing()) {
             swipeRefreshLayout.setRefreshing(false);
         }
