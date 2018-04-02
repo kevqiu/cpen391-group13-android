@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.cpen391group13.inventorymanager.R;
@@ -32,6 +33,7 @@ public class OverviewAdapter extends RecyclerView.Adapter<OverviewAdapter.ViewHo
     // Provide a reference to the views for each data item
     public class ViewHolder extends RecyclerView.ViewHolder{
         @BindView(R.id.overview_warehouse_text) TextView warehouseText;
+        @BindView(R.id.overview_relative_layout) RelativeLayout relativeLayout;
         @BindView(R.id.overview_all_text) TextView allText;
         @BindView(R.id.overview_all_count_text) TextView allCountText;
         @BindView(R.id.overview_red_text) TextView redText;
@@ -51,7 +53,7 @@ public class OverviewAdapter extends RecyclerView.Adapter<OverviewAdapter.ViewHo
     public OverviewAdapter(Context context, List<OverviewAdapterItem> values) {
         this.context = context;
         this.values = values;
-        Log.d("VALUES:", values.get(0).getWarehouseLocation() + String.valueOf(values.get(1).getCategoryAdapterItem(1).getCategoryCount()));
+        //Log.d("VALUES:", values.get(0).getWarehouseLocation() + String.valueOf(values.get(1).getCategoryAdapterItem(1).getCategoryCount()));
     }
 
     // Create new views (invoked by the layout manager)
@@ -70,30 +72,21 @@ public class OverviewAdapter extends RecyclerView.Adapter<OverviewAdapter.ViewHo
         // - get element from your dataset at this position
         OverviewAdapterItem item = values.get(position);
         TextView warehouseText = holder.warehouseText;
-        TextView allText = holder.allText;
-        TextView redText = holder.redText;
-        TextView greenText = holder.greenText;
-        TextView blueText = holder.blueText;
-        TextView allCountText = holder.allCountText;
-        TextView redCountText = holder.redCountText;
-        TextView greenCountText = holder.greenCountText;
-        TextView blueCountText = holder.blueCountText;
-
-        Log.d("Current item: ", "Location: " + item.getWarehouseLocation());
+        RelativeLayout relativeLayout = holder.relativeLayout;
         warehouseText.setText(item.getWarehouseLocation());
-        Log.d("TEXT", "Setting text");
 
-        allText.setText(item.getCategoryAdapterItem(0).getCategory().toString());
-        allCountText.setText(Integer.toString(item.getCategoryAdapterItem(0).getCategoryCount()));
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        params.addRule(RelativeLayout.BELOW, R.id.overview_warehouse_text);
 
-        redText.setText(item.getCategoryAdapterItem(1).getCategory().toString());
-        redCountText.setText(Integer.toString(item.getCategoryAdapterItem(1).getCategoryCount()));
-
-        greenText.setText(item.getCategoryAdapterItem(2).getCategory().toString());
-        greenCountText.setText(Integer.toString(item.getCategoryAdapterItem(2).getCategoryCount()));
-
-        blueText.setText(item.getCategoryAdapterItem(3).getCategory().toString());
-        blueCountText.setText(Integer.toString(item.getCategoryAdapterItem(3).getCategoryCount()));
+        //TODO: Make sure this is under the correct item
+        for(CategoryAdapterItem categoryAdapterItem : item.getCategoryAdapterItems()){
+            final TextView categoryTitle = new TextView(context);
+            final TextView categoryCount = new TextView(context);
+            categoryTitle.setText(categoryAdapterItem.getCategory());
+            categoryCount.setText(categoryAdapterItem.getCategoryCount());
+            relativeLayout.addView(categoryTitle, params);
+            relativeLayout.addView(categoryCount, params);
+        }
     }
 
     // Return the size of your dataset (invoked by the layout manager)

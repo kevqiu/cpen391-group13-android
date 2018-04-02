@@ -27,8 +27,12 @@ public class OverviewAdapterItem {
         return warehouseId;
     }
 
-    public CategoryAdapterItem getCategoryAdapterItem(int i) {
+    public CategoryAdapterItem getCategoryAdapterItem(int i){
         return categoryAdapterItems.get(i);
+    }
+
+    public List<CategoryAdapterItem> getCategoryAdapterItems() {
+        return categoryAdapterItems;
     }
 
     public String getWarehouseLocation(){
