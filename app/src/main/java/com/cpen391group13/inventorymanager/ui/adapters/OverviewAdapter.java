@@ -1,9 +1,8 @@
 package com.cpen391group13.inventorymanager.ui.adapters;
 
-import android.app.Activity;
 import android.content.Context;
-import android.os.Bundle;
-import android.support.v7.widget.CardView;
+import android.support.annotation.Nullable;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,9 +12,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.cpen391group13.inventorymanager.R;
-import com.cpen391group13.inventorymanager.ui.adapters.OverviewAdapterItem;
-
-import org.w3c.dom.Text;
 
 import java.util.List;
 
@@ -27,35 +23,29 @@ import butterknife.ButterKnife;
  */
 
 public class OverviewAdapter extends RecyclerView.Adapter<OverviewAdapter.ViewHolder> {
+    private static final int HEADER_VIEW = 1;
+    private static final int LIST_ITEM_VIEW = 2;
+
     private Context context;
     private List<OverviewAdapterItem> values;
+    private List<CategoryAdapterItem> listValues;
 
     // Provide a reference to the views for each data item
     public class ViewHolder extends RecyclerView.ViewHolder{
         @BindView(R.id.overview_warehouse_text) TextView warehouseText;
         @BindView(R.id.overview_relative_layout) RelativeLayout relativeLayout;
-        @BindView(R.id.overview_all_text) TextView allText;
-        @BindView(R.id.overview_all_count_text) TextView allCountText;
-        @BindView(R.id.overview_red_text) TextView redText;
-        @BindView(R.id.overview_red_count_text) TextView redCountText;
-        @BindView(R.id.overview_green_text) TextView greenText;
-        @BindView(R.id.overview_green_count_text) TextView greenCountText;
-        @BindView(R.id.overview_blue_text) TextView blueText;
-        @BindView(R.id.overview_blue_count_text) TextView blueCountText;
-
         public ViewHolder(View v) {
             super(v);
             ButterKnife.bind(this, v);
         }
     }
-
     // Constructor for this dataset
     public OverviewAdapter(Context context, List<OverviewAdapterItem> values) {
         this.context = context;
         this.values = values;
-        //Log.d("VALUES:", values.get(0).getWarehouseLocation() + String.valueOf(values.get(1).getCategoryAdapterItem(1).getCategoryCount()));
     }
 
+    // Create new views (invoked by the layout manager)
     // Create new views (invoked by the layout manager)
     @Override
     public OverviewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
