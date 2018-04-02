@@ -12,8 +12,8 @@ import android.widget.Toast;
 
 import com.cpen391group13.inventorymanager.R;
 import com.cpen391group13.inventorymanager.api.models.Item;
-import com.cpen391group13.inventorymanager.api.service.ItemClient;
-import com.cpen391group13.inventorymanager.api.service.RetrofitClient;
+import com.cpen391group13.inventorymanager.api.service.ItemService;
+import com.cpen391group13.inventorymanager.api.service.RetrofitService;
 import com.cpen391group13.inventorymanager.helpers.PreferencesHelper;
 import com.squareup.picasso.Picasso;
 
@@ -32,7 +32,7 @@ public class ImageFragment extends Fragment {
     @BindView(R.id.image_description) TextView descriptionText;
     @BindView(R.id.close_img_btn) ImageButton closeImageButton;
 
-    ItemClient itemClient;
+    ItemService itemService;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -50,10 +50,10 @@ public class ImageFragment extends Fragment {
         // load image from server
         Picasso.get().load(url).into(imageView);
 
-        Retrofit retrofit = RetrofitClient.getClient(this.getContext());
-        itemClient = retrofit.create(ItemClient.class);
+        Retrofit retrofit = RetrofitService.getClient(this.getContext());
+        itemService = retrofit.create(ItemService.class);
 
-        Call<Item> call = itemClient.getItem(String.valueOf(itemId));
+        Call<Item> call = itemService.getItem(String.valueOf(itemId));
         call.enqueue(new Callback<Item>() {
             @Override
             public void onResponse(Call<Item> call, Response<Item> response) {

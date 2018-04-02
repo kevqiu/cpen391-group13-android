@@ -13,7 +13,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * Singleton class for the Retrofit client.
  * Only gets initialized on first call or on baseUrl change
  */
-public class RetrofitClient {
+public class RetrofitService {
     private static Retrofit retrofit = null;
     private static String lastBaseUrl = "";
 

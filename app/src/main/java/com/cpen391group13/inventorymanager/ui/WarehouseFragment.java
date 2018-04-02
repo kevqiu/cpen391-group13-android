@@ -12,8 +12,8 @@ import android.widget.Toast;
 
 import com.cpen391group13.inventorymanager.R;
 import com.cpen391group13.inventorymanager.api.models.Warehouse;
-import com.cpen391group13.inventorymanager.api.service.RetrofitClient;
-import com.cpen391group13.inventorymanager.api.service.WarehouseClient;
+import com.cpen391group13.inventorymanager.api.service.RetrofitService;
+import com.cpen391group13.inventorymanager.api.service.WarehouseService;
 import com.cpen391group13.inventorymanager.ui.adapters.WarehouseAdapter;
 
 import java.util.List;
@@ -34,7 +34,7 @@ public class WarehouseFragment extends Fragment implements SwipeRefreshLayout.On
     @BindView(R.id.warehouse_recycler_view) RecyclerView recyclerView;
     @BindView(R.id.swipe_refresh_warehouse) SwipeRefreshLayout swipeRefreshLayout;
 
-    private WarehouseClient client;
+    private WarehouseService service;
     private RecyclerView.LayoutManager layoutManager;
 
     @Override
@@ -53,8 +53,8 @@ public class WarehouseFragment extends Fragment implements SwipeRefreshLayout.On
 
         swipeRefreshLayout.setOnRefreshListener(this);
 
-        Retrofit retrofit = RetrofitClient.getClient(this.getContext());
-        client = retrofit.create(WarehouseClient.class);
+        Retrofit retrofit = RetrofitService.getClient(this.getContext());
+        service = retrofit.create(WarehouseService.class);
 
         refreshWarehouses();
 
@@ -67,10 +67,13 @@ public class WarehouseFragment extends Fragment implements SwipeRefreshLayout.On
     @Override
     public void onRefresh() {
         refreshWarehouses();
+        if (swipeRefreshLayout.isRefreshing()) {
+            swipeRefreshLayout.setRefreshing(false);
+        }
     }
 
     private void refreshWarehouses() {
-        Call<List<Warehouse>> call = client.getWarehouses();
+        Call<List<Warehouse>> call = service.getWarehouses();
         call.enqueue(new Callback<List<Warehouse>>() {
             @Override
             public void onResponse(Call<List<Warehouse>> call, Response<List<Warehouse>> response) {
@@ -87,9 +90,5 @@ public class WarehouseFragment extends Fragment implements SwipeRefreshLayout.On
                 Toast.makeText(getActivity(), "error :(", Toast.LENGTH_SHORT).show();
             }
         });
-
-        if (swipeRefreshLayout.isRefreshing()) {
-            swipeRefreshLayout.setRefreshing(false);
-        }
     }
 }

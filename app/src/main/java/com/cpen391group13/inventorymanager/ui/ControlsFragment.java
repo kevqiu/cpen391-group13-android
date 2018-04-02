@@ -8,9 +8,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.cpen391group13.inventorymanager.R;
-import com.cpen391group13.inventorymanager.api.service.ControlsClient;
+import com.cpen391group13.inventorymanager.api.service.ControlsService;
 import com.cpen391group13.inventorymanager.api.service.EmptyCallback;
-import com.cpen391group13.inventorymanager.api.service.RetrofitClient;
+import com.cpen391group13.inventorymanager.api.service.RetrofitService;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -26,7 +26,7 @@ public class ControlsFragment extends Fragment {
     @BindView(R.id.position_3_btn) Button pos3Button;
     @BindView(R.id.position_4_btn) Button pos4Button;
 
-    private ControlsClient client;
+    private ControlsService client;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -35,8 +35,8 @@ public class ControlsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_controls, container, false);
         ButterKnife.bind(this, view);
 
-        Retrofit retrofit = RetrofitClient.getClient(this.getContext());
-        client = retrofit.create(ControlsClient.class);
+        Retrofit retrofit = RetrofitService.getClient(this.getContext());
+        client = retrofit.create(ControlsService.class);
 
         autosortButton.setOnClickListener(new View.OnClickListener() {
             @Override

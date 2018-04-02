@@ -21,9 +21,9 @@ import retrofit2.Retrofit;
 import com.cpen391group13.inventorymanager.R;
 import com.cpen391group13.inventorymanager.api.models.Category;
 import com.cpen391group13.inventorymanager.api.models.Item;
-import com.cpen391group13.inventorymanager.api.service.CategoryClient;
-import com.cpen391group13.inventorymanager.api.service.ItemClient;
-import com.cpen391group13.inventorymanager.api.service.RetrofitClient;
+import com.cpen391group13.inventorymanager.api.service.CategoryService;
+import com.cpen391group13.inventorymanager.api.service.ItemService;
+import com.cpen391group13.inventorymanager.api.service.RetrofitService;
 import com.cpen391group13.inventorymanager.ui.adapters.CategoryAdapter;
 import com.cpen391group13.inventorymanager.ui.adapters.CategoryAdapterItem;
 
@@ -38,8 +38,8 @@ public class CategoryFragment extends Fragment implements SwipeRefreshLayout.OnR
     @BindView(R.id.swipe_refresh_category) SwipeRefreshLayout swipeRefreshLayout;
 
     private int warehouse_id;
-    private CategoryClient categoryClient;
-    private ItemClient itemClient;
+    private CategoryService categoryService;
+    private ItemService itemService;
     private RecyclerView.LayoutManager layoutManager;
     List<CategoryAdapterItem> categoryAdapterItems;
 
@@ -61,10 +61,10 @@ public class CategoryFragment extends Fragment implements SwipeRefreshLayout.OnR
 
         getActivity().setTitle(getWarehouseById(warehouse_id) + "Categories");
 
-        Retrofit retrofit = RetrofitClient.getClient(this.getContext());
+        Retrofit retrofit = RetrofitService.getClient(this.getContext());
 
-        categoryClient = retrofit.create(CategoryClient.class);
-        itemClient = retrofit.create(ItemClient.class);
+        categoryService = retrofit.create(CategoryService.class);
+        itemService = retrofit.create(ItemService.class);
 
         fetchCategories();
 
@@ -80,7 +80,7 @@ public class CategoryFragment extends Fragment implements SwipeRefreshLayout.OnR
     }
 
     private void fetchCategories() {
-        Call<List<Category>> call = categoryClient.getCategories();
+        Call<List<Category>> call = categoryService.getCategories();
         call.enqueue(new Callback<List<Category>>() {
             @Override
             public void onResponse(Call<List<Category>> call, final Response<List<Category>> response) {
@@ -111,7 +111,7 @@ public class CategoryFragment extends Fragment implements SwipeRefreshLayout.OnR
     }
 
     private void fetchItems() {
-        Call<List<Item>> itemCall = itemClient.getItems(null, String.valueOf(warehouse_id), null);
+        Call<List<Item>> itemCall = itemService.getItems(null, String.valueOf(warehouse_id), null);
         itemCall.enqueue(new Callback<List<Item>>() {
             @Override
             public void onResponse(Call<List<Item>> itemCall, Response<List<Item>> itemResponse) {

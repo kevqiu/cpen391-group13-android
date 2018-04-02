@@ -13,7 +13,7 @@ import retrofit2.http.Query;
  * Created by Logan on 3/15/2018.
  */
 
-public interface ItemClient {
+public interface ItemService {
     @GET("/items")
     Call<List<Item>> getItems(@Query("category_id") String categoryId,
                               @Query("warehouse_id") String warehouseId,
