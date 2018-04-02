@@ -52,6 +52,28 @@ public class MainMenu extends AppCompatActivity implements NavigationView.OnNavi
 
         navigationView.setNavigationItemSelectedListener(this);
 
+        // if we access the MainMenu from a notification, send to ItemFragment with cycle data
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null) {
+            ItemFragment itemFragment = new ItemFragment();
+            Bundle itemBundle = new Bundle();
+
+            String startTime = bundle.getString("start_time");
+            String endTime = bundle.getString("end_time");
+
+            if (startTime != null && endTime != null) {
+                String timeRange = startTime + "," + endTime;
+                itemBundle.putString("time_range", timeRange);
+                itemFragment.setArguments(itemBundle);
+
+                getFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.main_layout, itemFragment)
+                        .addToBackStack(null)
+                        .commit();
+            }
+        }
+
         drawer.addDrawerListener(new DrawerLayout.DrawerListener() {
             @Override public void onDrawerSlide(View drawerView, float slideOffset) {}
             @Override public void onDrawerOpened(View drawerView) {}
@@ -118,6 +140,9 @@ public class MainMenu extends AppCompatActivity implements NavigationView.OnNavi
         else if (id == R.id.nav_warehouses) {
             fragment = new WarehouseFragment();
         }
+        else if (id == R.id.nav_history) {
+            fragment = new HistoryFragment();
+        }
         else if (id == R.id.nav_controls) {
             toolbar.setTitle("Controls");
             fragment = new ControlsFragment();
@@ -128,7 +153,6 @@ public class MainMenu extends AppCompatActivity implements NavigationView.OnNavi
         else if (id == R.id.nav_settings) {
             fragment = new SettingsFragment();
         }
-
 
         if (fragment != null) {
             drawer.closeDrawers();

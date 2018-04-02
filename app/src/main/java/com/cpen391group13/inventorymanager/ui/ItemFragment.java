@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,6 +39,7 @@ public class ItemFragment extends Fragment{
     private int warehouse_id;
     private int category_id;
     private ItemService itemService;
+    private String time_range;
     private RecyclerView.LayoutManager layoutManager;
 
     @Override
@@ -59,6 +61,7 @@ public class ItemFragment extends Fragment{
         Bundle bundle = getArguments();
         warehouse_id = bundle.getInt("warehouse_id");
         category_id = bundle.getInt("category_id");
+        time_range = bundle.getString("time_range");
 
         getActivity().setTitle(getWarehouseById(warehouse_id) + "Items");
 
@@ -76,12 +79,11 @@ public class ItemFragment extends Fragment{
 
     private void fetchItems(boolean refresh){
         Call<List<Item>> call;
-        if(category_id != 0){
-            call = itemService.getItems(String.valueOf(category_id), String.valueOf(warehouse_id));
-        }
-        else{
-            call = itemService.getItems(null, String.valueOf(warehouse_id));
-        }
+        String categoryQuery = category_id != 0 ? String.valueOf(category_id) : null;
+        String warehouseQuery = warehouse_id != 0 ? String.valueOf(warehouse_id) : null;
+
+        call = itemService.getItems(categoryQuery, warehouseQuery, time_range);
+
         call.enqueue(new Callback<List<Item>>(){
             @Override
             public void onResponse(Call<List<Item>> call, Response<List<Item>> response){
