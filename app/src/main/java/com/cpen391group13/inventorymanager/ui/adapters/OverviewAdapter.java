@@ -95,7 +95,6 @@ public class OverviewAdapter extends RecyclerView.Adapter<OverviewAdapter.ViewHo
         TextView blueCountText = holder.blueCountText;
         TextView otherCountText = holder.otherCountText;
 
-        //RelativeLayout relativeLayout = holder.relativeLayout;
         warehouseText.setText(item.getWarehouseLocation());
 
         allText.setText(item.getCategoryAdapterItem(0).getCategory().toString() + ": ");
