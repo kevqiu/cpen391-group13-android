@@ -39,8 +39,12 @@ public class MainMenu extends AppCompatActivity implements NavigationView.OnNavi
 
         // get location permissions for Google maps
         ActivityCompat.requestPermissions(this,
-                new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-                1);
+            new String[] {
+                Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.READ_EXTERNAL_STORAGE,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.CAMERA
+            }, 1);
 
         // subscribe to the 'sort' topic for FCM
         FirebaseMessaging.getInstance().subscribeToTopic("sort");
@@ -144,11 +148,10 @@ public class MainMenu extends AppCompatActivity implements NavigationView.OnNavi
             fragment = new HistoryFragment();
         }
         else if (id == R.id.nav_controls) {
-            toolbar.setTitle("Controls");
             fragment = new ControlsFragment();
         }
         else if (id == R.id.nav_scan) {
-            toolbar.setTitle("New Scan");
+            fragment = new CaptureFragment();
         }
         else if (id == R.id.nav_settings) {
             fragment = new SettingsFragment();

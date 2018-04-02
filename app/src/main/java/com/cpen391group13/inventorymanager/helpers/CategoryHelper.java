@@ -7,7 +7,7 @@ import com.cpen391group13.inventorymanager.R;
  */
 
 public class CategoryHelper {
-    public static int getCategoryById(int id) {
+    public static int getGradientCategoryId(int id) {
         switch (id) {
             case 1:
                 return R.drawable.red_gradient;
@@ -17,6 +17,19 @@ public class CategoryHelper {
                 return R.drawable.blue_gradient;
             default:
                 return R.drawable.other_gradient;
+        }
+    }
+
+    public static String getCategoryById(int id) {
+        switch (id) {
+            case 1:
+                return "Red";
+            case 2:
+                return "Green";
+            case 3:
+                return "Blue";
+            default:
+                return "Other";
         }
     }
 }

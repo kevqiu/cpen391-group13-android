@@ -2,11 +2,9 @@ package com.cpen391group13.inventorymanager.ui.adapters;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +19,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-import static com.cpen391group13.inventorymanager.helpers.CategoryHelper.getCategoryById;
+import static com.cpen391group13.inventorymanager.helpers.CategoryHelper.getGradientCategoryId;
 
 /**
  * Created by Logan on 2018-03-20.
@@ -78,7 +76,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
         itemName.setText("Item " + String.valueOf(item.getId()));
 
         CardView itemCardView = holder.itemCardView;
-        itemCardView.setBackgroundResource(getCategoryById(item.getCategoryId()));
+        itemCardView.setBackgroundResource(getGradientCategoryId(item.getCategoryId()));
     }
 
     @Override
