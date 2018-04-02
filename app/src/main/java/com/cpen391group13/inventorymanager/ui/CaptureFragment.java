@@ -1,5 +1,6 @@
 package com.cpen391group13.inventorymanager.ui;
 
+import android.annotation.SuppressLint;
 import android.app.Fragment;
 import android.content.Context;
 import android.location.Location;
@@ -40,6 +41,7 @@ public class CaptureFragment extends Fragment {
     private CaptureClient client;
     private Location location;
 
+    @SuppressLint("MissingPermission")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
