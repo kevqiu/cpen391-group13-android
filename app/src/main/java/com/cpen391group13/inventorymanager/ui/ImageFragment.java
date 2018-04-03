@@ -15,6 +15,7 @@ import com.cpen391group13.inventorymanager.api.models.Item;
 import com.cpen391group13.inventorymanager.api.service.ItemService;
 import com.cpen391group13.inventorymanager.api.service.RetrofitService;
 import com.cpen391group13.inventorymanager.helpers.PreferencesHelper;
+import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
@@ -48,7 +49,10 @@ public class ImageFragment extends Fragment {
                 itemId);
 
         // load image from server
-        Picasso.get().load(url).into(imageView);
+        Picasso.get()
+                .load(url)
+                .memoryPolicy(MemoryPolicy.NO_STORE)
+                .into(imageView);
 
         Retrofit retrofit = RetrofitService.getClient(this.getContext());
         itemService = retrofit.create(ItemService.class);
