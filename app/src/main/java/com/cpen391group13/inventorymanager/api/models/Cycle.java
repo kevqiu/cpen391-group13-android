@@ -31,7 +31,7 @@ public class Cycle {
     }
 
     public String getStartTimeString() {
-        return new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.SSS")
+        return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS")
                 .format(this.startTime);
     }
 
@@ -40,7 +40,7 @@ public class Cycle {
     }
 
     public String getEndTimeString() {
-        return new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.SSS")
+        return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS")
                 .format(this.endTime);
     }
 }
