@@ -5,6 +5,7 @@ import android.annotation.SuppressLint;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.graphics.SurfaceTexture;
 import android.location.Location;
 import android.location.LocationManager;
@@ -41,6 +42,7 @@ import com.cpen391group13.inventorymanager.api.service.RetrofitService;
 import com.cpen391group13.inventorymanager.helpers.CategoryHelper;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Collection;
@@ -59,7 +61,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 
 public class CaptureFragment extends Fragment {
-    @BindView(R.id.test_button) Button testButton;
+    @BindView(R.id.capture_button) Button captureButton;
     @BindView(R.id.capture_texture) TextureView textureView;
 
     private CaptureService client;
@@ -76,6 +78,7 @@ public class CaptureFragment extends Fragment {
     private Object cameraCaptureSession;
     private CaptureRequest.Builder captureRequestBuilder;
     protected CaptureRequest captureRequest;
+    private File galleryFolder;
 
     @SuppressLint("MissingPermission")
     @Override
@@ -95,6 +98,8 @@ public class CaptureFragment extends Fragment {
 
         cameraManager = (CameraManager) getActivity().getSystemService(Context.CAMERA_SERVICE);
         cameraFacing = CameraCharacteristics.LENS_FACING_BACK;
+
+        createImageGallery();
 
         surfaceTextureListener = new TextureView.SurfaceTextureListener() {
             @Override
@@ -139,7 +144,7 @@ public class CaptureFragment extends Fragment {
             }
         };
 
-        testButton.setOnClickListener(new View.OnClickListener() {
+        captureButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String dt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS").format(new Date());
@@ -150,9 +155,24 @@ public class CaptureFragment extends Fragment {
                 RequestBody lngBody =
                         RequestBody.create(MediaType.parse("text/plain"), String.valueOf(location.getLongitude()));
 
+                FileOutputStream outputPhoto = null;
+                try{
+                    outputPhoto = new FileOutputStream(createImageFile(galleryFolder));
+                    textureView.getBitmap().compress(Bitmap.CompressFormat.JPEG, 100, outputPhoto);
+                } catch (Exception e){
+                    e.printStackTrace();
+                }finally{
+                    try{
+                        if (outputPhoto != null){
+                            outputPhoto.close();
+                        }
+                    } catch (IOException e){
+                        e.printStackTrace();
+                    }
+                }
                 // add image to request body
-                File dlDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
-                File image = new File(dlDir.getAbsolutePath() + "/665.jpg");
+                File image = new File(galleryFolder + "/photo_capture.jpg");
+                Log.d("File stored", image.getAbsolutePath());
                 RequestBody requestFile =
                         RequestBody.create(MediaType.parse("multipart/form-data"), image);
                 MultipartBody.Part imageBody =
@@ -287,6 +307,22 @@ public class CaptureFragment extends Fragment {
             }, backgroundHandler);
         } catch (CameraAccessException e){
             e.printStackTrace();
+        }
+    }
+
+    private File createImageFile(File galleryFolder) throws IOException{
+        String imageFileName = "photo_capture";
+        return new File(galleryFolder + "/" + imageFileName + ".jpg");
+    }
+
+    private void createImageGallery(){
+        File storageDirectory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+        galleryFolder = new File(storageDirectory, getResources().getString(R.string.project_id));
+        if (!galleryFolder.exists()){
+            boolean created = galleryFolder.mkdirs();
+            if (!created){
+                Log.d("Storage", "Couldn't create folder");
+            }
         }
     }
 }
