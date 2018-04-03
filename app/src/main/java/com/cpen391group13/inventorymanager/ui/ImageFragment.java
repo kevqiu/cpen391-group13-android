@@ -22,6 +22,7 @@ import java.text.SimpleDateFormat;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -87,5 +88,10 @@ public class ImageFragment extends Fragment {
         });
 
         return view;
+    }
+
+    @OnClick(R.id.image_fragment_background)
+    void onBackgroundClick() {
+        getFragmentManager().popBackStack();
     }
 }
