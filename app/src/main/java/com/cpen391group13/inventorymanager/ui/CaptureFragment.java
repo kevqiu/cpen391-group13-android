@@ -30,9 +30,7 @@ import android.hardware.camera2.CameraAccessException;
 import android.hardware.camera2.CameraCaptureSession;
 import android.hardware.camera2.CameraCharacteristics;
 import android.hardware.camera2.CameraDevice;
-import android.hardware.camera2.CameraMetadata;
 import android.hardware.camera2.CaptureRequest;
-import android.hardware.camera2.TotalCaptureResult;
 import android.hardware.camera2.params.StreamConfigurationMap;
 
 import com.cpen391group13.inventorymanager.R;
@@ -45,10 +43,9 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
-import java.util.stream.Stream;
+import java.util.TimeZone;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -75,7 +72,7 @@ public class CaptureFragment extends Fragment {
     private CameraDevice.StateCallback stateCallback;
     private Handler backgroundHandler;
     private HandlerThread backgroundThread;
-    private Object cameraCaptureSession;
+    private CameraCaptureSession cameraCaptureSession;
     private CaptureRequest.Builder captureRequestBuilder;
     protected CaptureRequest captureRequest;
     private File galleryFolder;
@@ -147,26 +144,32 @@ public class CaptureFragment extends Fragment {
         captureButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String dt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS").format(new Date());
+                SimpleDateFormat dt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+                dt.setTimeZone(TimeZone.getTimeZone("GMT"));
+                String datetime = dt.format(new Date());
                 RequestBody dtBody =
-                        RequestBody.create(MediaType.parse("text/plain"), dt);
+                        RequestBody.create(MediaType.parse("text/plain"), datetime);
                 RequestBody latBody =
                         RequestBody.create(MediaType.parse("text/plain"), String.valueOf(location.getLatitude()));
                 RequestBody lngBody =
                         RequestBody.create(MediaType.parse("text/plain"), String.valueOf(location.getLongitude()));
 
+                freeze();
                 FileOutputStream outputPhoto = null;
-                try{
+                Bitmap bitmap = textureView.getBitmap();
+                Bitmap scaledBitmap = Bitmap.createScaledBitmap(bitmap, 480, 640, true);
+                try {
                     outputPhoto = new FileOutputStream(createImageFile(galleryFolder));
-                    textureView.getBitmap().compress(Bitmap.CompressFormat.JPEG, 100, outputPhoto);
-                } catch (Exception e){
+                    scaledBitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputPhoto);
+                } catch (Exception e) {
                     e.printStackTrace();
-                }finally{
-                    try{
-                        if (outputPhoto != null){
+                } finally {
+                    resume();
+                    try {
+                        if (outputPhoto != null) {
                             outputPhoto.close();
                         }
-                    } catch (IOException e){
+                    } catch (IOException e) {
                         e.printStackTrace();
                     }
                 }
@@ -195,6 +198,7 @@ public class CaptureFragment extends Fragment {
                             }
                         }
                     }
+
                     @Override
                     public void onFailure(Call<CaptureResponseBody> call, Throwable t) {
                         Toast.makeText(getActivity(), "Capture Failed", Toast.LENGTH_SHORT).show();
@@ -219,34 +223,35 @@ public class CaptureFragment extends Fragment {
     }
 
     @Override
-    public void onStop(){
+    public void onStop() {
         super.onStop();
         closeCamera();
         closeBackgroundThread();
     }
 
-    private void setUpCamera(){
-        try{
-            for (String cameraId : cameraManager.getCameraIdList()){
+    private void setUpCamera() {
+        try {
+            String[] cameraIdList = cameraManager.getCameraIdList();
+            for (String cameraId : cameraIdList) {
                 CameraCharacteristics cameraCharacteristics = cameraManager.getCameraCharacteristics(cameraId);
-                if (cameraCharacteristics.get(CameraCharacteristics.LENS_FACING) == cameraFacing){
+                if (cameraCharacteristics.get(CameraCharacteristics.LENS_FACING) == cameraFacing) {
                     StreamConfigurationMap streamConfigurationMap = cameraCharacteristics.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP);
                     // getOutputSizes return array of size objects and 0th index is the highest available resolution
                     previewSize = streamConfigurationMap.getOutputSizes(SurfaceTexture.class)[0];
-                    this.cameraId = cameraId;
+                    this.cameraId = cameraIdList[0];
                 }
             }
-        } catch (CameraAccessException e){
+        } catch (CameraAccessException e) {
             e.printStackTrace();
         }
     }
 
-    private void openCamera(){
-        try{
-            if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED){
+    private void openCamera() {
+        try {
+            if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
                 cameraManager.openCamera(cameraId, stateCallback, backgroundHandler);
             }
-        } catch (CameraAccessException e){
+        } catch (CameraAccessException e) {
             e.printStackTrace();
         }
     }
@@ -257,72 +262,88 @@ public class CaptureFragment extends Fragment {
         backgroundHandler = new Handler(backgroundThread.getLooper());
     }
 
-    private void closeCamera(){
-        if (cameraCaptureSession != null){
-            //cameraCaptureSession.close();
+    private void closeCamera() {
+        if (cameraCaptureSession != null) {
             cameraCaptureSession = null;
         }
 
-        if (cameraDevice != null){
+        if (cameraDevice != null) {
             cameraDevice.close();
             cameraDevice = null;
         }
     }
 
-    private void closeBackgroundThread(){
-        if (backgroundHandler != null){
+    private void closeBackgroundThread() {
+        if (backgroundHandler != null) {
             backgroundThread.quitSafely();
             backgroundThread = null;
             backgroundHandler = null;
         }
     }
 
-    private void createPreviewSession(){
-        try{
+    private void createPreviewSession() {
+        try {
             SurfaceTexture surfaceTexture = textureView.getSurfaceTexture();
             surfaceTexture.setDefaultBufferSize(previewSize.getWidth(), previewSize.getHeight());
             Surface previewSurface = new Surface(surfaceTexture);
             captureRequestBuilder = cameraDevice.createCaptureRequest(CameraDevice.TEMPLATE_PREVIEW);
             captureRequestBuilder.addTarget(previewSurface);
 
-            cameraDevice.createCaptureSession(Collections.singletonList(previewSurface), new CameraCaptureSession.StateCallback(){
+            cameraDevice.createCaptureSession(Collections.singletonList(previewSurface), new CameraCaptureSession.StateCallback() {
                 @Override
                 public void onConfigured(CameraCaptureSession cameraCaptureSession) {
-                    if(cameraDevice == null){
+                    if (cameraDevice == null) {
                         return;
                     }
-                    try{
+                    try {
                         captureRequest = captureRequestBuilder.build();
                         cameraCaptureSession.setRepeatingRequest(captureRequest, null, backgroundHandler);
                         CaptureFragment.this.cameraCaptureSession = cameraCaptureSession;
 
-                    } catch (CameraAccessException e){
+                    } catch (CameraAccessException e) {
                         e.printStackTrace();
                     }
                 }
 
                 @Override
-                public void onConfigureFailed(@NonNull CameraCaptureSession cameraCaptureSession) {}
+                public void onConfigureFailed(@NonNull CameraCaptureSession cameraCaptureSession) {
+                }
 
             }, backgroundHandler);
-        } catch (CameraAccessException e){
+        } catch (CameraAccessException e) {
             e.printStackTrace();
         }
     }
 
-    private File createImageFile(File galleryFolder) throws IOException{
+    private File createImageFile(File galleryFolder) throws IOException {
         String imageFileName = "photo_capture";
         return new File(galleryFolder + "/" + imageFileName + ".jpg");
     }
 
-    private void createImageGallery(){
+    private void createImageGallery() {
         File storageDirectory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
         galleryFolder = new File(storageDirectory, getResources().getString(R.string.project_id));
-        if (!galleryFolder.exists()){
+        if (!galleryFolder.exists()) {
             boolean created = galleryFolder.mkdirs();
-            if (!created){
+            if (!created) {
                 Log.d("Storage", "Couldn't create folder");
             }
+        }
+    }
+
+    private void freeze() {
+        try {
+            cameraCaptureSession.capture(captureRequestBuilder.build(), null, backgroundHandler);
+        } catch (CameraAccessException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void resume() {
+        try {
+            cameraCaptureSession.setRepeatingRequest(captureRequestBuilder.build(), null, backgroundHandler);
+        } catch (CameraAccessException e) {
+            e.printStackTrace();
         }
     }
 }
