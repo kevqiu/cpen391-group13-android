@@ -18,5 +18,6 @@
         <item>KNN</item>
         <item>CNN</item>
         <item>CLST</item>
+        <item>ENSM</item>
     </string-array>
 </resources>
