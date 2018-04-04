@@ -5,7 +5,10 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Spinner;
 
 import com.cpen391group13.inventorymanager.R;
 import com.cpen391group13.inventorymanager.api.service.ControlsService;
@@ -25,6 +28,7 @@ public class ControlsFragment extends Fragment {
     @BindView(R.id.position_2_btn) Button pos2Button;
     @BindView(R.id.position_3_btn) Button pos3Button;
     @BindView(R.id.position_4_btn) Button pos4Button;
+    @BindView(R.id.ml_dropdown) Spinner mlDropdown;
 
     private ControlsService client;
 
@@ -37,6 +41,11 @@ public class ControlsFragment extends Fragment {
 
         Retrofit retrofit = RetrofitService.getClient(this.getContext());
         client = retrofit.create(ControlsService.class);
+
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(),
+                R.array.ml_array, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        mlDropdown.setAdapter(adapter);
         
         autosortButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -83,6 +92,20 @@ public class ControlsFragment extends Fragment {
             public void onClick(View view) {
                 Call<Void> call = client.setPosition("4");
                 call.enqueue(new EmptyCallback<Void>());
+            }
+        });
+
+        mlDropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                String mlModel = (String) adapterView.getItemAtPosition(i);
+                Call<Void> call = client.setMLModel(mlModel);
+                call.enqueue(new EmptyCallback<Void>());
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
             }
         });
 

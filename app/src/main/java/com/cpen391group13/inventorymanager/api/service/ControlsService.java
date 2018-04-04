@@ -20,4 +20,9 @@ public interface ControlsService {
     Call<Void> setPosition(
             @Path("position") String position
     );
+
+    @POST("/controls/model/{model}")
+    Call<Void> setMLModel(
+            @Path("model") String model
+    );
 }

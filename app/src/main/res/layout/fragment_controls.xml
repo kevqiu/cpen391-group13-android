@@ -1,101 +1,136 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="horizontal">
+    android:layout_height="match_parent">
 
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_gravity="center_vertical"
-        android:layout_weight="1"
-        android:gravity="center_vertical"
-        android:orientation="vertical">
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="500dp"
+        android:orientation="horizontal"
+        android:id="@+id/control_btn_layout">
 
-        <Button
-            android:id="@+id/autosort_btn"
-            android:layout_width="@dimen/controls_button_width"
-            android:layout_height="@dimen/controls_button_height"
-            android:layout_centerHorizontal="true"
-            android:layout_gravity="center"
-            android:layout_marginBottom="20dp"
-            android:layout_marginTop="20dp"
-            android:backgroundTint="@android:color/holo_blue_light"
-            android:text="Automated Sort"
-            android:textColor="@android:color/white"
-            android:textSize="18sp" />
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:orientation="vertical">
 
-        <Button
-            android:id="@+id/position_1_btn"
-            android:layout_width="@dimen/controls_button_width"
-            android:layout_height="@dimen/controls_button_height"
-            android:layout_centerHorizontal="true"
-            android:layout_gravity="center"
-            android:layout_marginBottom="20dp"
-            android:layout_marginTop="20dp"
-            android:backgroundTint="@android:color/white"
-            android:text="Position 1"
-            android:textColor="@android:color/holo_red_dark"
-            android:textSize="18sp" />
+            <Button
+                android:id="@+id/autosort_btn"
+                android:layout_width="@dimen/controls_button_width"
+                android:layout_height="@dimen/controls_button_height"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center"
+                android:layout_marginBottom="20dp"
+                android:layout_marginTop="20dp"
+                android:backgroundTint="@android:color/holo_blue_light"
+                android:text="Automated Sort"
+                android:textColor="@android:color/white"
+                android:textSize="18sp" />
 
-        <Button
-            android:id="@+id/position_3_btn"
-            android:layout_width="@dimen/controls_button_width"
-            android:layout_height="@dimen/controls_button_height"
-            android:layout_centerHorizontal="true"
-            android:layout_gravity="center"
-            android:layout_marginBottom="20dp"
-            android:layout_marginTop="20dp"
-            android:backgroundTint="@android:color/white"
-            android:text="Position 3"
-            android:textColor="@android:color/holo_blue_light"
-            android:textSize="18sp" />
+            <Button
+                android:id="@+id/position_1_btn"
+                android:layout_width="@dimen/controls_button_width"
+                android:layout_height="@dimen/controls_button_height"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center"
+                android:layout_marginBottom="20dp"
+                android:layout_marginTop="20dp"
+                android:backgroundTint="@android:color/white"
+                android:text="Position 1"
+                android:textColor="@android:color/holo_red_dark"
+                android:textSize="18sp" />
+
+            <Button
+                android:id="@+id/position_3_btn"
+                android:layout_width="@dimen/controls_button_width"
+                android:layout_height="@dimen/controls_button_height"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center"
+                android:layout_marginBottom="20dp"
+                android:layout_marginTop="20dp"
+                android:backgroundTint="@android:color/white"
+                android:text="Position 3"
+                android:textColor="@android:color/holo_blue_light"
+                android:textSize="18sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/stop_btn"
+                android:layout_width="@dimen/controls_button_width"
+                android:layout_height="@dimen/controls_button_height"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center"
+                android:layout_marginBottom="20dp"
+                android:layout_marginTop="20dp"
+                android:backgroundTint="@android:color/holo_red_dark"
+                android:text="STOP"
+                android:textColor="@android:color/white"
+                android:textSize="18sp" />
+
+            <Button
+                android:id="@+id/position_2_btn"
+                android:layout_width="@dimen/controls_button_width"
+                android:layout_height="@dimen/controls_button_height"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center"
+                android:layout_marginBottom="20dp"
+                android:layout_marginTop="20dp"
+                android:backgroundTint="@android:color/white"
+                android:text="Position 2"
+                android:textColor="@android:color/holo_green_light"
+                android:textSize="18sp" />
+
+            <Button
+                android:id="@+id/position_4_btn"
+                android:layout_width="@dimen/controls_button_width"
+                android:layout_height="@dimen/controls_button_height"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center"
+                android:layout_marginBottom="20dp"
+                android:layout_marginTop="20dp"
+                android:backgroundTint="@android:color/white"
+                android:text="Position 4"
+                android:textSize="18sp" />
+
+        </LinearLayout>
+
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:gravity="center_vertical"
-        android:orientation="vertical">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/control_btn_layout"
+        android:layout_marginTop="30dp">
 
-        <Button
-            android:id="@+id/stop_btn"
-            android:layout_width="@dimen/controls_button_width"
-            android:layout_height="@dimen/controls_button_height"
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Select ML Model"
             android:layout_centerHorizontal="true"
-            android:layout_gravity="center"
-            android:layout_marginBottom="20dp"
-            android:layout_marginTop="20dp"
-            android:backgroundTint="@android:color/holo_red_dark"
-            android:text="STOP"
-            android:textColor="@android:color/white"
-            android:textSize="18sp" />
+            android:textSize="18sp"/>
 
-        <Button
-            android:id="@+id/position_2_btn"
-            android:layout_width="@dimen/controls_button_width"
-            android:layout_height="@dimen/controls_button_height"
+        <Spinner
+            android:id="@+id/ml_dropdown"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textView"
             android:layout_centerHorizontal="true"
-            android:layout_gravity="center"
-            android:layout_marginBottom="20dp"
-            android:layout_marginTop="20dp"
-            android:backgroundTint="@android:color/white"
-            android:text="Position 2"
-            android:textColor="@android:color/holo_green_light"
-            android:textSize="18sp" />
+            android:layout_marginTop="20dp"/>
 
-        <Button
-            android:id="@+id/position_4_btn"
-            android:layout_width="@dimen/controls_button_width"
-            android:layout_height="@dimen/controls_button_height"
-            android:layout_centerHorizontal="true"
-            android:layout_gravity="center"
-            android:layout_marginBottom="20dp"
-            android:layout_marginTop="20dp"
-            android:backgroundTint="@android:color/white"
-            android:text="Position 4"
-            android:textSize="18sp" />
-    </LinearLayout>
+    </RelativeLayout>
 
-</LinearLayout>
+</RelativeLayout>
