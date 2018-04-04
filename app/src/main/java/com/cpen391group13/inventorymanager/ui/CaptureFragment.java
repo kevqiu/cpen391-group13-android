@@ -264,6 +264,7 @@ public class CaptureFragment extends Fragment {
 
     private void closeCamera() {
         if (cameraCaptureSession != null) {
+            cameraCaptureSession.close();
             cameraCaptureSession = null;
         }
 
