@@ -23,6 +23,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class LocationFragment extends Fragment {
     @BindView(R.id.location_text) TextView locationText;
@@ -117,5 +118,10 @@ public class LocationFragment extends Fragment {
     public void onPause() {
         super.onPause();
         mapView.onPause();
+    }
+
+    @OnClick(R.id.location_fragment_background)
+    void onBackgroundClick() {
+        getFragmentManager().popBackStack();
     }
 }

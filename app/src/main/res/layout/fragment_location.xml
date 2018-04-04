@@ -4,8 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/transparent"
-    android:clickable="true">
+    android:background="@color/common_google_signin_btn_text_light_focused"
+    android:clickable="true"
+    android:id="@+id/location_fragment_background">
 
     <RelativeLayout
         android:layout_width="match_parent"
