@@ -39,6 +39,8 @@ public class ControlsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_controls, container, false);
         ButterKnife.bind(this, view);
 
+        getActivity().setTitle("Controls");
+
         Retrofit retrofit = RetrofitService.getClient(this.getContext());
         client = retrofit.create(ControlsService.class);
 
