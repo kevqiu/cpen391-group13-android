@@ -18,9 +18,9 @@ public interface CaptureService {
     @POST("/capture/mobile")
     Call<CaptureResponseBody> mobileCapture(
             @Part("datetime") RequestBody datetime,
-                                            @Part("latitude") RequestBody latitude,
-                                            @Part("longitude") RequestBody longitude,
-                                            @Part MultipartBody.Part image);
+            @Part("latitude") RequestBody latitude,
+            @Part("longitude") RequestBody longitude,
+            @Part MultipartBody.Part image);
 
 }
 

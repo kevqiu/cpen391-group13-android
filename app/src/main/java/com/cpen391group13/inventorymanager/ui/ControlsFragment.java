@@ -37,8 +37,7 @@ public class ControlsFragment extends Fragment {
 
         Retrofit retrofit = RetrofitService.getClient(this.getContext());
         client = retrofit.create(ControlsService.class);
-
-
+        
         autosortButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

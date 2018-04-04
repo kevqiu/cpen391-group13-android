@@ -106,19 +106,13 @@ public class CaptureFragment extends Fragment {
             }
 
             @Override
-            public void onSurfaceTextureSizeChanged(SurfaceTexture surfaceTexture, int i, int i1) {
-
-            }
+            public void onSurfaceTextureSizeChanged(SurfaceTexture surfaceTexture, int i, int i1) {}
 
             @Override
-            public boolean onSurfaceTextureDestroyed(SurfaceTexture surfaceTexture) {
-                return false;
-            }
+            public boolean onSurfaceTextureDestroyed(SurfaceTexture surfaceTexture) { return false; }
 
             @Override
-            public void onSurfaceTextureUpdated(SurfaceTexture surfaceTexture) {
-
-            }
+            public void onSurfaceTextureUpdated(SurfaceTexture surfaceTexture) {}
         };
 
         stateCallback = new CameraDevice.StateCallback() {
