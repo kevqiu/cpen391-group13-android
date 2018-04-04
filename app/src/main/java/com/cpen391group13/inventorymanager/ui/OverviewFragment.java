@@ -18,8 +18,6 @@ import com.cpen391group13.inventorymanager.api.service.CategoryService;
 import com.cpen391group13.inventorymanager.api.service.ItemService;
 import com.cpen391group13.inventorymanager.api.service.RetrofitService;
 import com.cpen391group13.inventorymanager.api.service.WarehouseService;
-import com.cpen391group13.inventorymanager.ui.adapters.CategoryAdapter;
-import com.cpen391group13.inventorymanager.ui.adapters.CategoryAdapterItem;
 import com.cpen391group13.inventorymanager.ui.adapters.OverviewAdapter;
 import com.cpen391group13.inventorymanager.ui.adapters.OverviewAdapterItem;
 import com.cpen391group13.inventorymanager.ui.adapters.WarehouseAdapter;
@@ -92,7 +90,6 @@ public class OverviewFragment extends Fragment implements SwipeRefreshLayout.OnR
                         overviewAdapterItems.add(overviewAdapterItem);
                     }
                     fetchCategories();
-                    recyclerView.setAdapter(new WarehouseAdapter(getActivity(), warehouses));
                 } else {
                     Toast.makeText(getActivity(), "AHHHHHHHH :(", Toast.LENGTH_SHORT).show();
                 }

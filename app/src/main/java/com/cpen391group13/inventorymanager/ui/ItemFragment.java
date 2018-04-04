@@ -12,11 +12,14 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.cpen391group13.inventorymanager.R;
+import com.cpen391group13.inventorymanager.api.models.Cycle;
 import com.cpen391group13.inventorymanager.api.models.Item;
 import com.cpen391group13.inventorymanager.api.service.ItemService;
 import com.cpen391group13.inventorymanager.api.service.RetrofitService;
 import com.cpen391group13.inventorymanager.ui.adapters.ItemAdapter;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import butterknife.BindView;
@@ -89,6 +92,15 @@ public class ItemFragment extends Fragment{
             public void onResponse(Call<List<Item>> call, Response<List<Item>> response){
                 if (response.isSuccessful()){
                     List<Item> items = response.body();
+                    if (items != null) {
+                        Collections.sort(items, new Comparator<Item>() {
+                            @Override
+                            public int compare(Item i1, Item i2) {
+                                return Integer.compare(i1.getId(), i2.getId());
+                            }
+                        });
+                        Collections.reverse(items);
+                    }
                     recyclerView.setAdapter(new ItemAdapter(getActivity(), items));
                 } else{
                     Toast.makeText(getActivity(), "AHHHHH :(", Toast.LENGTH_SHORT).show();
