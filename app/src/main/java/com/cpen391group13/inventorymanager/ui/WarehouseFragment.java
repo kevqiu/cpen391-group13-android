@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.cpen391group13.inventorymanager.R;
@@ -33,6 +34,7 @@ import retrofit2.Retrofit;
 public class WarehouseFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
     @BindView(R.id.warehouse_recycler_view) RecyclerView recyclerView;
     @BindView(R.id.swipe_refresh_warehouse) SwipeRefreshLayout swipeRefreshLayout;
+    @BindView(R.id.warehouse_progress_bar) ProgressBar warehouseProgressBar;
 
     private WarehouseService service;
     private RecyclerView.LayoutManager layoutManager;
@@ -50,6 +52,8 @@ public class WarehouseFragment extends Fragment implements SwipeRefreshLayout.On
         ButterKnife.bind(this, view);
 
         getActivity().setTitle("Warehouses");
+
+        warehouseProgressBar.setVisibility(View.VISIBLE);
 
         swipeRefreshLayout.setOnRefreshListener(this);
 
@@ -78,6 +82,7 @@ public class WarehouseFragment extends Fragment implements SwipeRefreshLayout.On
             @Override
             public void onResponse(Call<List<Warehouse>> call, Response<List<Warehouse>> response) {
                 if (response.isSuccessful()) {
+                    warehouseProgressBar.setVisibility(View.INVISIBLE);
                     List<Warehouse> warehouses = response.body();
                     recyclerView.setAdapter(new WarehouseAdapter(getActivity(), warehouses));
                 } else {

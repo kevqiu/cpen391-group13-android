@@ -1,14 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v4.widget.SwipeRefreshLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/swipe_refresh_overview"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
-    <!-- A RecyclerView with some commonly used attributes -->
-    <android.support.v7.widget.RecyclerView
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/overview_recycler_view"
-        android:layout_height="match_parent"
+
+
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:paddingBottom="16dp" />
+        android:layout_height="match_parent"
+        android:background="@android:color/transparent">
+
+        <ProgressBar
+            android:id="@+id/overview_progress_bar"
+            style="@style/Widget.AppCompat.ProgressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true" />
+
+        <!-- A RecyclerView with some commonly used attributes -->
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/overview_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingBottom="16dp" />
+
+    </RelativeLayout>
+
 </android.support.v4.widget.SwipeRefreshLayout>

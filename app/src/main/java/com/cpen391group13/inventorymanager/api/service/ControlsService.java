@@ -1,6 +1,9 @@
 package com.cpen391group13.inventorymanager.api.service;
 
+import com.cpen391group13.inventorymanager.api.models.MLModel;
+
 import retrofit2.Call;
+import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 
@@ -25,4 +28,7 @@ public interface ControlsService {
     Call<Void> setMLModel(
             @Path("model") String model
     );
+
+    @GET("/controls/model")
+    Call<MLModel> getCurrentModel();
 }
