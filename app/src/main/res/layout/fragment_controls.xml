@@ -113,21 +113,55 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/control_btn_layout"
-        android:layout_marginTop="30dp">
+        android:layout_marginTop="20dp">
+
+        <RelativeLayout
+            android:id="@+id/current_ml_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true">
+
+            <TextView
+                android:id="@+id/current_ml_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Current ML Model: "
+                android:textSize="18sp"
+                android:layout_centerVertical="true"/>
+            <TextView
+                android:id="@+id/current_ml_model"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:layout_toEndOf="@id/current_ml_text"
+                android:textSize="18sp"
+                android:layout_centerVertical="true"/>
+
+            <ProgressBar
+                android:id="@+id/ml_progress_bar"
+                style="@android:style/Widget.DeviceDefault.Light.ProgressBar.Small"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@id/current_ml_text"
+                android:layout_marginLeft="10dp"/>
+        </RelativeLayout>
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/select_ml_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Select ML Model"
             android:layout_centerHorizontal="true"
+            android:layout_below="@id/current_ml_container"
+            android:layout_marginTop="30dp"
             android:textSize="18sp"/>
 
         <Spinner
             android:id="@+id/ml_dropdown"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/textView"
+            android:layout_below="@+id/select_ml_text"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="20dp"/>
 

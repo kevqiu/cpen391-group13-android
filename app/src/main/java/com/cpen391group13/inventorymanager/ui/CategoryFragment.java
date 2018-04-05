@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import butterknife.BindView;
@@ -36,6 +37,7 @@ import static com.cpen391group13.inventorymanager.helpers.WarehouseHelper.getWar
 public class CategoryFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
     @BindView(R.id.category_recycler_view) RecyclerView recyclerView;
     @BindView(R.id.swipe_refresh_category) SwipeRefreshLayout swipeRefreshLayout;
+    @BindView(R.id.category_progress_bar) ProgressBar categoryProgressBar;
 
     private int warehouse_id;
     private CategoryService categoryService;
@@ -53,6 +55,8 @@ public class CategoryFragment extends Fragment implements SwipeRefreshLayout.OnR
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_category, container, false);
         ButterKnife.bind(this, view);
+
+        categoryProgressBar.setVisibility(View.VISIBLE);
 
         swipeRefreshLayout.setOnRefreshListener(this);
 
@@ -85,6 +89,7 @@ public class CategoryFragment extends Fragment implements SwipeRefreshLayout.OnR
             @Override
             public void onResponse(Call<List<Category>> call, final Response<List<Category>> response) {
                 if (response.isSuccessful()) {
+                    categoryProgressBar.setVisibility(View.INVISIBLE);
                     final List<Category> categories = response.body();
                     categoryAdapterItems = new ArrayList<>();
                     // Add a 'all' category

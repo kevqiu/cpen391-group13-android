@@ -5,10 +5,26 @@
     android:layout_height="match_parent"
     android:layout_margin="10dp">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/item_recycler_view"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="match_parent"
+        android:background="@android:color/transparent">
+
+        <ProgressBar
+            android:id="@+id/item_progress_bar"
+            style="@style/Widget.AppCompat.ProgressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true" />
+
+        <!-- A RecyclerView with some commonly used attributes -->
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/item_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </RelativeLayout>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/item_fab"

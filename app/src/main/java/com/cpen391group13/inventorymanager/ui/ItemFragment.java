@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.cpen391group13.inventorymanager.R;
@@ -38,6 +39,7 @@ import static com.cpen391group13.inventorymanager.helpers.WarehouseHelper.getWar
 public class ItemFragment extends Fragment{
     @BindView(R.id.item_recycler_view) RecyclerView recyclerView;
     @BindView(R.id.item_fab) FloatingActionButton itemFab;
+    @BindView(R.id.item_progress_bar) ProgressBar itemProgressBar;
 
     private int warehouse_id;
     private int category_id;
@@ -54,6 +56,8 @@ public class ItemFragment extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         View view = inflater.inflate(R.layout.fragment_item, container, false);
         ButterKnife.bind(this, view);
+
+        itemProgressBar.setVisibility(View.VISIBLE);
 
         itemFab.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
@@ -91,6 +95,7 @@ public class ItemFragment extends Fragment{
             @Override
             public void onResponse(Call<List<Item>> call, Response<List<Item>> response){
                 if (response.isSuccessful()){
+                    itemProgressBar.setVisibility(View.INVISIBLE);
                     List<Item> items = response.body();
                     if (items != null) {
                         Collections.sort(items, new Comparator<Item>() {

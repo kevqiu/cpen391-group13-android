@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.cpen391group13.inventorymanager.R;
@@ -35,6 +36,7 @@ import retrofit2.Retrofit;
 public class HistoryFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
     @BindView(R.id.history_recycler_view) RecyclerView recyclerView;
     @BindView(R.id.swipe_refresh_history) SwipeRefreshLayout swipeRefreshLayout;
+    @BindView(R.id.history_progress_bar) ProgressBar historyProgressBar;
 
     private CycleClient client;
     private RecyclerView.LayoutManager layoutManager;
@@ -52,6 +54,8 @@ public class HistoryFragment extends Fragment implements SwipeRefreshLayout.OnRe
         ButterKnife.bind(this, view);
 
         getActivity().setTitle("History");
+
+        historyProgressBar.setVisibility(View.VISIBLE);
 
         swipeRefreshLayout.setOnRefreshListener(this);
 
@@ -77,6 +81,7 @@ public class HistoryFragment extends Fragment implements SwipeRefreshLayout.OnRe
             @Override
             public void onResponse(Call<List<Cycle>> call, Response<List<Cycle>> response) {
                 if (response.isSuccessful()) {
+                    historyProgressBar.setVisibility(View.INVISIBLE);
                     List<Cycle> cycles = response.body();
                     if (cycles != null) {
                         Collections.sort(cycles, new Comparator<Cycle>() {
