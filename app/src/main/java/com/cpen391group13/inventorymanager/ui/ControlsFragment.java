@@ -112,10 +112,22 @@ public class ControlsFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 String mlModel = (String) adapterView.getItemAtPosition(i);
-                Call<Void> call = controlsService.setMLModel(mlModel);
-                call.enqueue(new EmptyCallback<Void>());
-                // update model on screen
-                fetchCurrentModel();
+                if (!mlModel.equals("")) {
+                    Call<Void> call = controlsService.setMLModel(mlModel);
+                    call.enqueue(new Callback<Void>() {
+                        @Override
+                        public void onResponse(Call<Void> call, Response<Void> response) {
+                            // update model on screen
+                            fetchCurrentModel();
+                        }
+
+                        @Override
+                        public void onFailure(Call<Void> call, Throwable t) {
+
+                        }
+                    });
+
+                }
             }
 
             @Override

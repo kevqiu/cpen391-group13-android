@@ -15,6 +15,7 @@
     <string name="notificataion_channel_id">Sort</string>
 
     <string-array name="ml_array">
+        <item></item>
         <item>KNN</item>
         <item>CNN</item>
         <item>CLST</item>
