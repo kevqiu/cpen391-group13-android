@@ -113,6 +113,8 @@ public class ControlsFragment extends Fragment {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 String mlModel = (String) adapterView.getItemAtPosition(i);
                 if (!mlModel.equals("")) {
+                    currentMLModel.setVisibility(View.INVISIBLE);
+                    mlProgressBar.setVisibility(View.VISIBLE);
                     Call<Void> call = controlsService.setMLModel(mlModel);
                     call.enqueue(new Callback<Void>() {
                         @Override
@@ -140,8 +142,6 @@ public class ControlsFragment extends Fragment {
     }
 
     private void fetchCurrentModel() {
-        currentMLModel.setVisibility(View.INVISIBLE);
-        mlProgressBar.setVisibility(View.VISIBLE);
         Call<MLModel> call = controlsService.getCurrentModel();
         call.enqueue(new Callback<MLModel>() {
             @Override
